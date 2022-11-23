@@ -18,6 +18,8 @@
 		5CE36D2D292D210F00558212 /* NASA_APODUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */; };
 		5CE36D3A292D213000558212 /* APOD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D39292D213000558212 /* APOD.swift */; };
 		5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D3C292D42F700558212 /* APODAPI.swift */; };
+		5CE36D3F292D699100558212 /* APODAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D3E292D699100558212 /* APODAPITests.swift */; };
+		5CE36D41292E0A2000558212 /* APODAPIMockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D40292E0A2000558212 /* APODAPIMockURLProtocol.swift */; };
 		5CE36D46292E0AA800558212 /* APODDemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D45292E0AA800558212 /* APODDemoData.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +56,8 @@
 		5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5CE36D39292D213000558212 /* APOD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APOD.swift; sourceTree = "<group>"; };
 		5CE36D3C292D42F700558212 /* APODAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPI.swift; sourceTree = "<group>"; };
+		5CE36D3E292D699100558212 /* APODAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPITests.swift; sourceTree = "<group>"; };
+		5CE36D40292E0A2000558212 /* APODAPIMockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPIMockURLProtocol.swift; sourceTree = "<group>"; };
 		5CE36D45292E0AA800558212 /* APODDemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODDemoData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +126,7 @@
 			children = (
 				5CE36D44292E0A7700558212 /* Helpers */,
 				5CE36D20292D210F00558212 /* APODTests.swift */,
+				5CE36D3E292D699100558212 /* APODAPITests.swift */,
 			);
 			path = "NASA-APODTests";
 			sourceTree = "<group>";
@@ -148,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				5CE36D45292E0AA800558212 /* APODDemoData.swift */,
+				5CE36D40292E0A2000558212 /* APODAPIMockURLProtocol.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -296,6 +302,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CE36D46292E0AA800558212 /* APODDemoData.swift in Sources */,
+				5CE36D3F292D699100558212 /* APODAPITests.swift in Sources */,
+				5CE36D41292E0A2000558212 /* APODAPIMockURLProtocol.swift in Sources */,
 				5CE36D21292D210F00558212 /* APODTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
