@@ -301,7 +301,7 @@ final class APODAPITests: XCTestCase {
     
     
     
-    // MARK: Helpers
+    // MARK: - Helpers
     
     /// Creates a request handler for the mocked URLSession, which first checks that a given expected URL is sent and then responds with mock data.
     ///
