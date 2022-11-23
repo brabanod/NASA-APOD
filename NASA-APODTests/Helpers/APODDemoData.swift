@@ -19,7 +19,7 @@ enum APODDemoData {
             "title":"A Double Star Cluster in Perseus",
             "url":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"
         }
-        """,
+        """
     
     static let multipleAPODJSON = """
         [{
@@ -41,7 +41,7 @@ enum APODDemoData {
             "title":"Galaxies: Wild's Triplet from Hubble",
             "url":"https://apod.nasa.gov/apod/image/2211/WildTriplet_Hubble_960.jpg"
         }]
-        """,
+        """
     
     static let invalidDateAPODJSON = """
         {
