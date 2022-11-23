@@ -17,6 +17,7 @@
 		5CE36D2B292D210F00558212 /* NASA_APODUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D2A292D210F00558212 /* NASA_APODUITests.swift */; };
 		5CE36D2D292D210F00558212 /* NASA_APODUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */; };
 		5CE36D3A292D213000558212 /* APOD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D39292D213000558212 /* APOD.swift */; };
+		5CE36D46292E0AA800558212 /* APODDemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D45292E0AA800558212 /* APODDemoData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		5CE36D2A292D210F00558212 /* NASA_APODUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODUITests.swift; sourceTree = "<group>"; };
 		5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5CE36D39292D213000558212 /* APOD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APOD.swift; sourceTree = "<group>"; };
+		5CE36D45292E0AA800558212 /* APODDemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODDemoData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		5CE36D1F292D210F00558212 /* NASA-APODTests */ = {
 			isa = PBXGroup;
 			children = (
+				5CE36D44292E0A7700558212 /* Helpers */,
 				5CE36D20292D210F00558212 /* APODTests.swift */,
 			);
 			path = "NASA-APODTests";
@@ -136,6 +139,14 @@
 				5CE36D39292D213000558212 /* APOD.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5CE36D44292E0A7700558212 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5CE36D45292E0AA800558212 /* APODDemoData.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CE36D46292E0AA800558212 /* APODDemoData.swift in Sources */,
 				5CE36D21292D210F00558212 /* APODTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
