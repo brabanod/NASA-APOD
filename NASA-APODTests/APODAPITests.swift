@@ -28,20 +28,9 @@ final class APODAPITests: XCTestCase {
         let testDateString = "2022-11-22"
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = { request in
-            guard let url = request.url else { fatalError("Could not extract url from request.") }
-            
-            // Test that request url is as expected, with expected query params
-            XCTAssertEqual(
-                url.absoluteString,
-                "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)"
-            )
-            
-            // Respond with demo data
-            let data = APODDemoData.singleAPODJSON.data(using: .utf8)
-            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, data)
-        }
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)",
+            responseData: APODDemoData.singleAPODJSON.data(using: .utf8))
         
         // Call API
         let singleAPOD = try await apodAPI.apodByDate(testDate)
@@ -58,7 +47,37 @@ final class APODAPITests: XCTestCase {
     // TODO: Test success cases for all API endpoint calls
     // TODO: Test all failure cases for API endpoint calls
     
-    func testApodByDateRangeSuccess() {}
+    func testApodByDateRangeSuccess() async throws {
+        let testStartDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 19))!
+        let testStartDateString = "2022-11-19"
+        let testEndDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
+        let testEndDateString = "2022-11-22"
+        
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&start_date=\(testStartDateString)&end_date=\(testEndDateString)",
+            responseData: APODDemoData.multipleAPODJSON.data(using: .utf8))
+        
+        let multipleAPOD = try await apodAPI.apodsByDateRange(start: testStartDate, end: testEndDate)
+        
+        XCTAssertEqual(multipleAPOD.count, 4)
+        
+        let expectedDate2 = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 21))!
+        XCTAssertEqual(multipleAPOD[2].date, expectedDate2)
+        XCTAssertNil(multipleAPOD[2].copyright)
+        XCTAssertEqual(multipleAPOD[2].explanation, "Stars can make beautiful patterns ...")
+        XCTAssertEqual(multipleAPOD[2].title, "The Butterfly Nebula from Hubble")
+        XCTAssertEqual(multipleAPOD[2].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_3656.jpg"))
+        XCTAssertEqual(multipleAPOD[2].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_960.jpg"))
+        
+        let expectedDate3 = testEndDate
+        XCTAssertEqual(multipleAPOD[3].date, expectedDate3)
+        XCTAssertEqual(multipleAPOD[3].copyright, "Tommy Lease")
+        XCTAssertEqual(multipleAPOD[3].explanation, "Few star clusters are this close to each other ...")
+        XCTAssertEqual(multipleAPOD[3].title, "A Double Star Cluster in Perseus")
+        XCTAssertEqual(multipleAPOD[3].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
+        XCTAssertEqual(multipleAPOD[3].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
+    }
     
     func testThumbnailSuccess() {}
     
@@ -85,4 +104,21 @@ final class APODAPITests: XCTestCase {
         
         print(apod, apods, apods.count, thumbnail, image)
     }*/
+    
+    
+    
+    // MARK: Helpers
+    
+    func mockRequestHandler(expectedURL: String, responseData: Data?) -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
+        return { (request: URLRequest) in
+            guard let url = request.url else { fatalError("Could not extract url from request.") }
+            
+            // Test that request url is as expected, with expected query params
+            XCTAssertEqual(url.absoluteString, expectedURL)
+            
+            // Respond with demo data
+            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+            return (response, responseData)
+        }
+    }
 }
