@@ -90,5 +90,10 @@ class APODDemoData {
         guard let path = Bundle(for: Self.self).path(forResource: "SampleImage", ofType: ".png") else { return nil }
         return UIImage(contentsOfFile: path)
     }
+    
+    static var sampleImage2: UIImage? {
+        guard let path = Bundle(for: Self.self).path(forResource: "SampleImage2", ofType: ".png") else { return nil }
+        return UIImage(contentsOfFile: path)
+    }
 
 }
