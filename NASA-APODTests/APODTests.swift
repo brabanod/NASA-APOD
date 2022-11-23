@@ -24,21 +24,23 @@ final class APODTests: XCTestCase {
     func testMultipleAPOD() throws {
         let multipleAPOD = try JSONDecoder().decode([APOD].self, from: APODDemoData.multipleAPODJSON.data(using: .utf8)!)
         
-        let expectedDate0 = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
-        XCTAssertEqual(multipleAPOD[0].date, expectedDate0)
-        XCTAssertEqual(multipleAPOD[0].copyright, "Tommy Lease")
-        XCTAssertEqual(multipleAPOD[0].explanation, "Few star clusters this close to each other ...")
-        XCTAssertEqual(multipleAPOD[0].title, "A Double Star Cluster in Perseus")
-        XCTAssertEqual(multipleAPOD[0].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
-        XCTAssertEqual(multipleAPOD[0].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
+        XCTAssertEqual(multipleAPOD.count, 4)
         
-        let expectedDate1 = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 08))!
-        XCTAssertEqual(multipleAPOD[1].date, expectedDate1)
-        XCTAssertNil(multipleAPOD[1].copyright)
-        XCTAssertEqual(multipleAPOD[1].explanation, "How many galaxies are interacting here ...")
-        XCTAssertEqual(multipleAPOD[1].title, "Galaxies: Wild's Triplet from Hubble")
-        XCTAssertEqual(multipleAPOD[1].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/WildTriplet_Hubble_3623.jpg"))
-        XCTAssertEqual(multipleAPOD[1].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/WildTriplet_Hubble_960.jpg"))
+        let expectedDate2 = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 21))!
+        XCTAssertEqual(multipleAPOD[2].date, expectedDate2)
+        XCTAssertNil(multipleAPOD[2].copyright)
+        XCTAssertEqual(multipleAPOD[2].explanation, "Stars can make beautiful patterns ...")
+        XCTAssertEqual(multipleAPOD[2].title, "The Butterfly Nebula from Hubble")
+        XCTAssertEqual(multipleAPOD[2].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_3656.jpg"))
+        XCTAssertEqual(multipleAPOD[2].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_960.jpg"))
+        
+        let expectedDate3 = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
+        XCTAssertEqual(multipleAPOD[3].date, expectedDate3)
+        XCTAssertEqual(multipleAPOD[3].copyright, "Tommy Lease")
+        XCTAssertEqual(multipleAPOD[3].explanation, "Few star clusters are this close to each other ...")
+        XCTAssertEqual(multipleAPOD[3].title, "A Double Star Cluster in Perseus")
+        XCTAssertEqual(multipleAPOD[3].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
+        XCTAssertEqual(multipleAPOD[3].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
     
     func testInvalidDateAPOD() throws {
