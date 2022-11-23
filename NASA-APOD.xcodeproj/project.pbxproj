@@ -17,6 +17,7 @@
 		5CE36D2B292D210F00558212 /* NASA_APODUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D2A292D210F00558212 /* NASA_APODUITests.swift */; };
 		5CE36D2D292D210F00558212 /* NASA_APODUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */; };
 		5CE36D3A292D213000558212 /* APOD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D39292D213000558212 /* APOD.swift */; };
+		5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D3C292D42F700558212 /* APODAPI.swift */; };
 		5CE36D46292E0AA800558212 /* APODDemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D45292E0AA800558212 /* APODDemoData.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		5CE36D2A292D210F00558212 /* NASA_APODUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODUITests.swift; sourceTree = "<group>"; };
 		5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5CE36D39292D213000558212 /* APOD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APOD.swift; sourceTree = "<group>"; };
+		5CE36D3C292D42F700558212 /* APODAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPI.swift; sourceTree = "<group>"; };
 		5CE36D45292E0AA800558212 /* APODDemoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODDemoData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				5CE36D39292D213000558212 /* APOD.swift */,
+				5CE36D3C292D42F700558212 /* APODAPI.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CE36D0E292D210D00558212 /* ViewController.swift in Sources */,
+				5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */,
 				5CE36D3A292D213000558212 /* APOD.swift in Sources */,
 				5CE36D0A292D210D00558212 /* AppDelegate.swift in Sources */,
 				5CE36D0C292D210D00558212 /* SceneDelegate.swift in Sources */,
