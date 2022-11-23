@@ -6,8 +6,11 @@
 //
 
 import Foundation
+@testable import NASA_APOD
+import UIKit
 
-enum APODDemoData {
+class APODDemoData {
+    
     static let singleAPODJSON = """
         {
             "copyright":"Tommy Lease",
@@ -77,5 +80,15 @@ enum APODDemoData {
             "url":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"
         }
         """
+    
+    static var sampleAPOD: APOD? {
+        guard let data = Self.singleAPODJSON.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(APOD.self, from: data)
+    }
+    
+    static var sampleImage: UIImage? {
+        guard let path = Bundle(for: Self.self).path(forResource: "SampleImage", ofType: ".png") else { return nil }
+        return UIImage(contentsOfFile: path)
+    }
 
 }

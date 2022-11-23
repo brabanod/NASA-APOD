@@ -35,7 +35,7 @@ final class APODAPITests: XCTestCase {
         // Call API
         let singleAPOD = try await apodAPI.apodByDate(testDate)
         
-        // Test that demo data JSON string was decoded correctly into an APOD object
+        // Test that demo data was returned correclty from API
         XCTAssertEqual(singleAPOD.date, testDate)
         XCTAssertEqual(singleAPOD.copyright, "Tommy Lease")
         XCTAssertEqual(singleAPOD.explanation, "Few star clusters this close to each other ...")
@@ -43,9 +43,6 @@ final class APODAPITests: XCTestCase {
         XCTAssertEqual(singleAPOD.imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
         XCTAssertEqual(singleAPOD.thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
-    
-    // TODO: Test success cases for all API endpoint calls
-    // TODO: Test all failure cases for API endpoint calls
     
     func testApodByDateRangeSuccess() async throws {
         let testStartDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 19))!
@@ -58,8 +55,10 @@ final class APODAPITests: XCTestCase {
             expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&start_date=\(testStartDateString)&end_date=\(testEndDateString)",
             responseData: APODDemoData.multipleAPODJSON.data(using: .utf8))
         
+        // Call API
         let multipleAPOD = try await apodAPI.apodsByDateRange(start: testStartDate, end: testEndDate)
         
+        // Test that demo data was returned correclty from API
         XCTAssertEqual(multipleAPOD.count, 4)
         
         let expectedDate2 = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 21))!
@@ -79,9 +78,42 @@ final class APODAPITests: XCTestCase {
         XCTAssertEqual(multipleAPOD[3].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
     
-    func testThumbnailSuccess() {}
+    func testThumbnailSuccess() async throws {
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleImage = APODDemoData.sampleImage else { fatalError("Could not load sample image.") }
+        guard let sampleImageData = sampleImage.pngData() else { fatalError("Could not transform image to Data object.") }
+        
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: sampleAPOD.thumbnailURL.absoluteString,
+            responseData: sampleImageData)
+        
+        // Call API
+        let thumbnail = try await apodAPI.thumbnail(of: sampleAPOD)
+        
+        // Test that demo image was returned correctly from API
+        guard let thumbnailData = thumbnail.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertTrue(thumbnailData == sampleImageData)
+    }
     
-    func testImageSuccess() {}
+    func testImageSuccess() async throws {
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleImage = APODDemoData.sampleImage else { fatalError("Could not load sample image.") }
+        guard let sampleImageData = sampleImage.pngData() else { fatalError("Could not transform image to Data object.") }
+        
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: sampleAPOD.imageURL.absoluteString,
+            responseData: sampleImageData)
+        
+        // Call API
+        let image = try await apodAPI.image(of: sampleAPOD)
+        
+        // Test that demo image was returned correctly from API
+        guard let imageData = image.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertTrue(imageData == sampleImageData)
+    }
+    
+    // TODO: Test success cases for all API endpoint calls
+    // TODO: Test all failure cases for API endpoint calls
     
     
     // This test is for manual testing purposes only, since it calls the real API endpoints.
