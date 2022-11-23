@@ -22,6 +22,9 @@ final class APODAPITests: XCTestCase {
         apodAPI = try APODAPI(urlSession: urlSession)
         apiKey = (Bundle.main.object(forInfoDictionaryKey: "NASAAPIKey") as! String)
     }
+    
+    
+    // MARK: apodByDate Tests
 
     func testAPODByDateSuccess() async throws {
         let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
@@ -43,6 +46,51 @@ final class APODAPITests: XCTestCase {
         XCTAssertEqual(singleAPOD.imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
         XCTAssertEqual(singleAPOD.thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
+    
+    func testAPODByDateThrowsBadResponse() async throws {
+        let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
+        
+        // Setup mock request handerl
+        APODAPIMockURLProtocol.requestHandler = { (request: URLRequest) in
+            guard let url = request.url else { fatalError("Could not extract url from request.") }
+            
+            // Respond with HTTP 400 status code
+            let response = HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil)!
+            return (response, nil)
+        }
+        
+        do {
+            let _ = try await apodAPI.apodByDate(testDate)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.badResponse(let errorMessage) {
+            XCTAssertTrue(errorMessage.contains("Response status code should be 200 but was 400"))
+        } catch {
+            XCTFail("Shoudl have catched APODAPIError.badResponse but catched a different error:\n\(error)")
+        }
+    }
+    
+    func testAPODByDateThrowsDecodingFailure() async throws {
+        let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
+        let testDateString = "2022-11-22"
+        
+        // Setup mock request handerl
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)",
+            responseData: "Invalid JSON string".data(using: .utf8))
+        
+        do {
+            let _ = try await apodAPI.apodByDate(testDate)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.decodingFailure(let errorMessage) {
+            XCTAssertTrue(errorMessage.contains("Failed to decode APOD data"))
+            print(errorMessage)
+        } catch {
+            XCTFail("Shoudl have catched APODAPIError.decodingFailure but catched a different error:\n\(error)")
+        }
+    }
+    
+    
+    // MARK: apodsByDateRange Tests
     
     func testApodByDateRangeSuccess() async throws {
         let testStartDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 19))!
@@ -78,6 +126,9 @@ final class APODAPITests: XCTestCase {
         XCTAssertEqual(multipleAPOD[3].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
     
+    
+    // MARK: APOD thumbnail Tests
+    
     func testThumbnailSuccess() async throws {
         guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         guard let sampleImage = APODDemoData.sampleImage else { fatalError("Could not load sample image.") }
@@ -94,6 +145,9 @@ final class APODAPITests: XCTestCase {
         guard let thumbnailData = thumbnail.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(thumbnailData == sampleImageData)
     }
+    
+    
+    // MARK: APOD image Tests
     
     func testImageSuccess() async throws {
         guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }

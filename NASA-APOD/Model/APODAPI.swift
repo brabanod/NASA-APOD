@@ -60,7 +60,7 @@ class APODAPI {
             return apod
         } catch {
             let apodDataString = String(data: apodData, encoding: .utf8)
-            throw APODAPIError.decodingFailure("Failed to decode APOD data.\n\(error)\nResponse data: \(apodDataString != nil ? apodDataString! : "Could not encode response data to string")")
+            throw APODAPIError.decodingFailure("Failed to decode APOD data.\n\(error)\nReceived data: \"\(apodDataString != nil ? apodDataString! : "Could not encode response data to string")\"")
         }
     }
     
