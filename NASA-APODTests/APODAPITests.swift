@@ -50,22 +50,17 @@ final class APODAPITests: XCTestCase {
     func testAPODByDateThrowsBadResponse() async throws {
         let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
         
-        // Setup mock request handerl
-        APODAPIMockURLProtocol.requestHandler = { (request: URLRequest) in
-            guard let url = request.url else { fatalError("Could not extract url from request.") }
-            
-            // Respond with HTTP 400 status code
-            let response = HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil)!
-            return (response, nil)
-        }
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
         
         do {
+            // Call API
             let _ = try await apodAPI.apodByDate(testDate)
             XCTFail("Calling API should throw error.")
         } catch APODAPIError.badResponse(let errorMessage) {
             XCTAssertTrue(errorMessage.contains("Response status code should be 200 but was 400"))
         } catch {
-            XCTFail("Shoudl have catched APODAPIError.badResponse but catched a different error:\n\(error)")
+            XCTFail("Should have catched APODAPIError.badResponse but catched a different error:\n\(error)")
         }
     }
     
@@ -73,19 +68,20 @@ final class APODAPITests: XCTestCase {
         let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
         let testDateString = "2022-11-22"
         
-        // Setup mock request handerl
+        // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
             expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)",
             responseData: "Invalid JSON string".data(using: .utf8))
         
         do {
+            // Call API
             let _ = try await apodAPI.apodByDate(testDate)
             XCTFail("Calling API should throw error.")
         } catch APODAPIError.decodingFailure(let errorMessage) {
             XCTAssertTrue(errorMessage.contains("Failed to decode APOD data"))
             print(errorMessage)
         } catch {
-            XCTFail("Shoudl have catched APODAPIError.decodingFailure but catched a different error:\n\(error)")
+            XCTFail("Should have catched APODAPIError.decodingFailure but catched a different error:\n\(error)")
         }
     }
     
@@ -126,6 +122,47 @@ final class APODAPITests: XCTestCase {
         XCTAssertEqual(multipleAPOD[3].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
     
+    func testAPODsByDateRangeThrowsBadResponse() async throws {
+        let testStartDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 19))!
+        let testEndDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
+        
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
+        
+        do {
+            // Call API
+            let _ = try await apodAPI.apodsByDateRange(start: testStartDate, end: testEndDate)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.badResponse(let errorMessage) {
+            XCTAssertTrue(errorMessage.contains("Response status code should be 200 but was 400"))
+        } catch {
+            XCTFail("Should have catched APODAPIError.badResponse but catched a different error:\n\(error)")
+        }
+    }
+    
+    func testAPODsByDateRangeThrowsDecodingFailure() async throws {
+        let testStartDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 19))!
+        let testStartDateString = "2022-11-19"
+        let testEndDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
+        let testEndDateString = "2022-11-22"
+        
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&start_date=\(testStartDateString)&end_date=\(testEndDateString)",
+            responseData: "Invalid JSON string".data(using: .utf8))
+        
+        do {
+            // Call API
+            let _ = try await apodAPI.apodsByDateRange(start: testStartDate, end: testEndDate)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.decodingFailure(let errorMessage) {
+            XCTAssertTrue(errorMessage.contains("Failed to decode APOD data"))
+            print(errorMessage)
+        } catch {
+            XCTFail("Should have catched APODAPIError.decodingFailure but catched a different error:\n\(error)")
+        }
+    }
+    
     
     // MARK: APOD thumbnail Tests
     
@@ -144,6 +181,42 @@ final class APODAPITests: XCTestCase {
         // Test that demo image was returned correctly from API
         guard let thumbnailData = thumbnail.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(thumbnailData == sampleImageData)
+    }
+    
+    func testThumbnailThrowsBadResponse() async throws {
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
+        
+        do {
+            // Call API
+            let _ = try await apodAPI.thumbnail(of: sampleAPOD)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.badResponse(let errorMessage) {
+            XCTAssertTrue(errorMessage.contains("Response status code should be 200 but was 400"))
+        } catch {
+            XCTFail("Should have catched APODAPIError.badResponse but catched a different error:\n\(error)")
+        }
+    }
+    
+    func testThumbnailThrowsDecodingFailure() async throws {
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        let corruptImageData = "Corrup Image Data".data(using: .utf8)
+        
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: sampleAPOD.thumbnailURL.absoluteString,
+            responseData: corruptImageData)
+        
+        do {
+            // Call API
+            let _ = try await apodAPI.thumbnail(of: sampleAPOD)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.decodingFailure(let errorMessage) {
+            XCTAssertEqual(errorMessage, "Failed to create image from data.")
+        } catch {
+            XCTFail("Should have catched APODAPIError.badResponse but catched a different error:\n\(error)")
+        }
     }
     
     
@@ -166,11 +239,46 @@ final class APODAPITests: XCTestCase {
         XCTAssertTrue(imageData == sampleImageData)
     }
     
-    // TODO: Test success cases for all API endpoint calls
-    // TODO: Test all failure cases for API endpoint calls
+    func testImageThrowsBadResponse() async throws {
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
+        
+        do {
+            // Call API
+            let _ = try await apodAPI.image(of: sampleAPOD)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.badResponse(let errorMessage) {
+            XCTAssertTrue(errorMessage.contains("Response status code should be 200 but was 400"))
+        } catch {
+            XCTFail("Should have catched APODAPIError.badResponse but catched a different error:\n\(error)")
+        }
+    }
+    
+    func testImageThrowsDecodingFailure() async throws {
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        let corruptImageData = "Corrup Image Data".data(using: .utf8)
+        
+        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
+            expectedURL: sampleAPOD.imageURL.absoluteString,
+            responseData: corruptImageData)
+        
+        do {
+            // Call API
+            let _ = try await apodAPI.image(of: sampleAPOD)
+            XCTFail("Calling API should throw error.")
+        } catch APODAPIError.decodingFailure(let errorMessage) {
+            XCTAssertEqual(errorMessage, "Failed to create image from data.")
+        } catch {
+            XCTFail("Should have catched APODAPIError.badResponse but catched a different error:\n\(error)")
+        }
+    }
     
     
-    // This test is for manual testing purposes only, since it calls the real API endpoints.
+    // MARK: Manual Test
+    
+    /// This test is for manual testing purposes only, since it calls the real API endpoints.
     /*func testRealAPISample() async throws {
         let apodAPI = try APODAPI()
         
@@ -195,6 +303,13 @@ final class APODAPITests: XCTestCase {
     
     // MARK: Helpers
     
+    /// Creates a request handler for the mocked URLSession, which first checks that a given expected URL is sent and then responds with mock data.
+    ///
+    /// - Parameters:
+    ///     - expectedURL: The URL that is expected from the given request.
+    ///     - responseData: The data that should be sent to the client.
+    ///
+    /// - Returns: A closure which handles the request.
     func mockRequestHandler(expectedURL: String, responseData: Data?) -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
         return { (request: URLRequest) in
             guard let url = request.url else { fatalError("Could not extract url from request.") }
@@ -205,6 +320,22 @@ final class APODAPITests: XCTestCase {
             // Respond with demo data
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (response, responseData)
+        }
+    }
+    
+    /// Creates a request handler for the mocked URLSession, which returns a given HTTP status code and no data.
+    ///
+    /// - Parameters:
+    ///     - statusCode: An HTTP status code, which should be returned.
+    ///
+    /// - Returns: A closure which handles the request.
+    func mockRequestHandlerEmpty(statusCode: Int) -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
+        return { (request: URLRequest) in
+            guard let url = request.url else { fatalError("Could not extract url from request.") }
+            
+            // Respond with HTTP 400 status code
+            let response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+            return (response, nil)
         }
     }
 }
