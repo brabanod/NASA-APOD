@@ -10,8 +10,13 @@ import UIKit
 /// An image view that shows a loading screen, when the `image` property is not set.
 class LoadableImageView: UIView {
     
+    // MARK: Views
+    
     private var imageView: UIImageView!
     private var loadingView: UIView!
+    
+    
+    // MARK: Model
     
     /// Specifies the duration of the loading view's show animation.
     var showLoadingViewAnimationDuration: TimeInterval = 0.5
@@ -25,13 +30,18 @@ class LoadableImageView: UIView {
             return self.imageView.image
         }
         set {
-            self.imageView.image = newValue
-            
             // Show/Hide loading view if image is nil/present
-            if self.image != nil {
+            if newValue != nil {
+                // Set newValue directly, if it's not nil and hide loading view thereafter
+                self.imageView.image = newValue
                 hideLoadingView()
             } else {
-                showLoadingView()
+                // If new value is nil, set it first after hiding
+                showLoadingView { finished in
+                    if newValue == nil {
+                        self.imageView.image = newValue
+                    }
+                }
             }
         }
     }
@@ -77,11 +87,16 @@ class LoadableImageView: UIView {
     /// - Parameters:
     ///     - animated: If set to `true`, showing will be animated. Default is `true`.
     ///     - duration: The show animation's duration in seconds. Defaults to `showLoadingViewAnimationDuration`.
-    func showLoadingView(animated: Bool = true, duration: TimeInterval? = nil) {
-        UIView.animate(withDuration: duration ?? showLoadingViewAnimationDuration, animations: {
-            self.loadingView.alpha = 1
-        }) { (finished) in
-            self.loadingView.isHidden = !finished
+    ///     - completion: Handler that gets executed when the animation sequence ends. Receives a boolean value indicating, whether the animation was completed successfully.
+    func showLoadingView(animated: Bool = true, duration: TimeInterval? = nil, completion: ((Bool) -> ())? = nil) {
+        // Show only if not already shown
+        if self.loadingView.isHidden {
+            self.loadingView.isHidden = false
+            UIView.animate(withDuration: duration ?? showLoadingViewAnimationDuration, animations: {
+                self.loadingView.alpha = 1
+            }) { (finished) in
+                completion?(finished)
+            }
         }
     }
     
@@ -90,11 +105,16 @@ class LoadableImageView: UIView {
     /// - Parameters:
     ///     - animated: If set to `true`, hiding will be animated. Default is `true`.
     ///     - duration: The hide animation's duration in seconds. Defaults to `hideLoadingViewAnimationDuration`.
-    func hideLoadingView(animated: Bool = true, duration: TimeInterval? = nil) {
-        UIView.animate(withDuration: duration ?? hideLoadingViewAnimationDuration, animations: {
-            self.loadingView.alpha = 0
-        }) { (finished) in
-            self.loadingView.isHidden = finished
+    ///     - completion: Handler that gets executed when the animation sequence ends. Receives a boolean value indicating, whether the animation was completed successfully.
+    func hideLoadingView(animated: Bool = true, duration: TimeInterval? = nil, completion: ((Bool) -> ())? = nil) {
+        // Hide only if not already hidden
+        if !self.loadingView.isHidden {
+            UIView.animate(withDuration: duration ?? hideLoadingViewAnimationDuration, animations: {
+                self.loadingView.alpha = 0
+            }) { (finished) in
+                self.loadingView.isHidden = finished
+                completion?(finished)
+            }
         }
     }
 
