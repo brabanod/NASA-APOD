@@ -186,6 +186,10 @@ final class APODAPITests: XCTestCase {
         guard let sampleImage2 = APODDemoData.sampleImage2 else { fatalError("Could not load sample image.") }
         guard let sampleImage2Data = sampleImage2.pngData() else { fatalError("Could not transform image to Data object.") }
         
+        // Test that image was also set in sampleAPOD
+        guard let sampleAPODImageData = sampleAPOD.thumbnail?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        XCTAssertTrue(sampleAPODImageData == sampleImageData)
+        
         APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
             expectedURL: sampleAPOD.thumbnailURL.absoluteString,
             responseData: sampleImage2Data)
@@ -204,6 +208,10 @@ final class APODAPITests: XCTestCase {
         guard let image3Data = image3.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(image3Data == sampleImage2Data)
         XCTAssertTrue(image3Data != sampleImageData)
+        
+        // Test that image was set in sampleAPOD
+        guard let sampleAPODImageData = sampleAPOD.thumbnail?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        XCTAssertTrue(sampleAPODImageData == sampleImage2Data)
     }
     
     func testThumbnailThrowsBadResponse() async throws {
@@ -261,6 +269,10 @@ final class APODAPITests: XCTestCase {
         guard let imageData = image.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(imageData == sampleImageData)
         
+        // Test that image was also set in sampleAPOD
+        guard let sampleAPODImageData = sampleAPOD.image?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        XCTAssertTrue(sampleAPODImageData == sampleImageData)
+        
         // Test that cached result is returned, when present
         guard let sampleImage2 = APODDemoData.sampleImage2 else { fatalError("Could not load sample image.") }
         guard let sampleImage2Data = sampleImage2.pngData() else { fatalError("Could not transform image to Data object.") }
@@ -283,6 +295,10 @@ final class APODAPITests: XCTestCase {
         guard let image3Data = image3.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(image3Data == sampleImage2Data)
         XCTAssertTrue(image3Data != sampleImageData)
+        
+        // Test that image was also set in sampleAPOD
+        guard let sampleAPODImageData = sampleAPOD.image?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        XCTAssertTrue(sampleAPODImageData == sampleImage2Data)
     }
     
     func testImageThrowsBadResponse() async throws {
