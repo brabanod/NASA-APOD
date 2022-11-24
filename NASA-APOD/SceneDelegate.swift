@@ -16,7 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let scene = (scene as? UIWindowScene) else { return }
+        
+        // Create APOD API instance and pass it to the HomeViewController
+        if let homeVC = scene.windows.first?.rootViewController as? HomeViewController {
+            do {
+                homeVC.apodAPI = try APODAPI()
+            } catch {
+                // This should never happen, when NASAAPIKey is set.
+                Log.default.log("Failed to create API. Error:\n\(error)")
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

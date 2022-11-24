@@ -25,15 +25,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(white: 0.07, alpha: 1.0)
         
-        // Create API instance and pass it to the view's
-        do {
-            // TODO: Make this as an injected dependency from AppDelegate, so it is easier in UI Testing to use a mock.
-            apodAPI = try APODAPI()
-        } catch {
-            // This should never happen, when NASAAPIKey is set.
-            Log.default.log("Failed to create API. Error:\n\(error)")
-        }
-        
         // Add a loadable view
         apodHighlightView = APODHighlightView(frame: .zero, apodAPI: apodAPI)
         self.view.addSubview(apodHighlightView)
