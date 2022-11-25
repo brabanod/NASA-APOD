@@ -11,7 +11,8 @@ class HomeViewController: UIViewController {
     
     // MARK: Views
     
-    var apodHighlightView: APODHighlightView!
+//    var apodHighlightView: APODHighlightView!
+    var apodListView: APODListView!
     
     
     // MARK: Model
@@ -30,13 +31,22 @@ class HomeViewController: UIViewController {
         self.view.backgroundColor = UIColor(white: 0.07, alpha: 1.0)
         
         // Add a highlight view
-        apodHighlightView = APODHighlightView(apodAPI: apodAPI)
-        self.view.addSubview(apodHighlightView)
-        apodHighlightView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.leftAnchor.constraint(equalTo: apodHighlightView.leftAnchor).isActive = true
-        self.view.rightAnchor.constraint(equalTo: apodHighlightView.rightAnchor).isActive = true
-        self.view.topAnchor.constraint(equalTo: apodHighlightView.topAnchor).isActive = true
-        self.view.bottomAnchor.constraint(equalTo: apodHighlightView.bottomAnchor).isActive = true
+//        apodHighlightView = APODHighlightView(apodAPI: apodAPI)
+//        self.view.addSubview(apodHighlightView)
+//        apodHighlightView.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.leftAnchor.constraint(equalTo: apodHighlightView.leftAnchor).isActive = true
+//        self.view.rightAnchor.constraint(equalTo: apodHighlightView.rightAnchor).isActive = true
+//        self.view.topAnchor.constraint(equalTo: apodHighlightView.topAnchor).isActive = true
+//        self.view.bottomAnchor.constraint(equalTo: apodHighlightView.bottomAnchor).isActive = true
+        
+        // Add a list view
+        apodListView = APODListView(apodAPI: apodAPI)
+        self.view.addSubview(apodListView)
+        apodListView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.leftAnchor.constraint(equalTo: apodListView.leftAnchor).isActive = true
+        self.view.rightAnchor.constraint(equalTo: apodListView.rightAnchor).isActive = true
+        self.view.topAnchor.constraint(equalTo: apodListView.topAnchor).isActive = true
+        self.view.bottomAnchor.constraint(equalTo: apodListView.bottomAnchor).isActive = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
