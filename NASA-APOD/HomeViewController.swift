@@ -18,6 +18,10 @@ class HomeViewController: UIViewController {
     
     var apodAPI: APODAPI?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     
     // MARK: -
     
