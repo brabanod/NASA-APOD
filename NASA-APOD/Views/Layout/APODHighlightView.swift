@@ -44,9 +44,9 @@ class APODHighlightView: UIView {
         setup()
     }
 
-    init(frame: CGRect, apodAPI: APODAPI?) {
+    init(frame: CGRect = .zero, apodAPI: APODAPI?) {
         self.apodAPI = apodAPI
-        super.init(frame: .zero)
+        super.init(frame: frame)
         setup()
     }
     
@@ -76,6 +76,7 @@ class APODHighlightView: UIView {
         
         // Add the title label
         titleLabel = UILabel(frame: .zero)
+        titleLabel.numberOfLines = 0
         self.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: -20.0).isActive = true
@@ -90,6 +91,7 @@ class APODHighlightView: UIView {
         
         // Add the copyright label
         copyrightLabel = UILabel(frame: .zero)
+        copyrightLabel.numberOfLines = 0
         self.addSubview(copyrightLabel)
         copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
         self.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: copyrightLabel.leftAnchor, constant: -20.0).isActive = true
