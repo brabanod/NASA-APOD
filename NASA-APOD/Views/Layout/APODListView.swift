@@ -43,7 +43,7 @@ class APODListView: UIView {
         setup()
     }
 
-    init(frame: CGRect = .zero, apodAPI: APODAPI?) {
+    init(frame: CGRect = .zero, api apodAPI: APODAPI?) {
         self.apodAPI = apodAPI
         super.init(frame: frame)
         setup()

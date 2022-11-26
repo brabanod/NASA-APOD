@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
         self.view.backgroundColor = UIColor(white: 0.07, alpha: 1.0)
         
         // Add a highlight view
-//        apodHighlightView = APODHighlightView(apodAPI: apodAPI)
+//        apodHighlightView = APODHighlightView(api: apodAPI)
 //        self.view.addSubview(apodHighlightView)
 //        apodHighlightView.translatesAutoresizingMaskIntoConstraints = false
 //        self.view.leftAnchor.constraint(equalTo: apodHighlightView.leftAnchor).isActive = true
@@ -40,7 +40,7 @@ class HomeViewController: UIViewController {
 //        self.view.bottomAnchor.constraint(equalTo: apodHighlightView.bottomAnchor).isActive = true
         
         // Add a list view
-        apodListView = APODListView(apodAPI: apodAPI)
+        apodListView = APODListView(api: apodAPI)
         self.view.addSubview(apodListView)
         apodListView.translatesAutoresizingMaskIntoConstraints = false
         self.view.leftAnchor.constraint(equalTo: apodListView.leftAnchor).isActive = true
