@@ -31,9 +31,9 @@ final class APODAPITests: XCTestCase {
         let testDateString = "2022-11-22"
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)",
-            responseData: APODDemoData.singleAPODJSON.data(using: .utf8))
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: APODDemoData.singleAPODJSON.data(using: .utf8),
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)")
         
         // Call API
         let singleAPOD = try await apodAPI.apodByDate(testDate)
@@ -51,7 +51,7 @@ final class APODAPITests: XCTestCase {
         let testDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.empty(statusCode: 400)
         
         do {
             // Call API
@@ -69,9 +69,9 @@ final class APODAPITests: XCTestCase {
         let testDateString = "2022-11-22"
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)",
-            responseData: "Invalid JSON string".data(using: .utf8))
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: "Invalid JSON string".data(using: .utf8),
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(testDateString)")
         
         do {
             // Call API
@@ -95,9 +95,9 @@ final class APODAPITests: XCTestCase {
         let testEndDateString = "2022-11-22"
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&start_date=\(testStartDateString)&end_date=\(testEndDateString)",
-            responseData: APODDemoData.multipleAPODJSON.data(using: .utf8))
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: APODDemoData.multipleAPODJSON.data(using: .utf8),
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&start_date=\(testStartDateString)&end_date=\(testEndDateString)")
         
         // Call API
         let multipleAPOD = try await apodAPI.apodsByDateRange(start: testStartDate, end: testEndDate)
@@ -127,7 +127,7 @@ final class APODAPITests: XCTestCase {
         let testEndDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.empty(statusCode: 400)
         
         do {
             // Call API
@@ -147,9 +147,9 @@ final class APODAPITests: XCTestCase {
         let testEndDateString = "2022-11-22"
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&start_date=\(testStartDateString)&end_date=\(testEndDateString)",
-            responseData: "Invalid JSON string".data(using: .utf8))
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: "Invalid JSON string".data(using: .utf8),
+            expectedURL: "\(self.apiBaseURL)?api_key=\(self.apiKey!)&start_date=\(testStartDateString)&end_date=\(testEndDateString)")
         
         do {
             // Call API
@@ -171,9 +171,9 @@ final class APODAPITests: XCTestCase {
         guard let sampleImage = APODDemoData.sampleImage else { fatalError("Could not load sample image.") }
         guard let sampleImageData = sampleImage.pngData() else { fatalError("Could not transform image to Data object.") }
         
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: sampleAPOD.thumbnailURL.absoluteString,
-            responseData: sampleImageData)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: sampleImageData,
+            expectedURL: sampleAPOD.thumbnailURL.absoluteString)
         
         // Call API
         let thumbnail = try await apodAPI.thumbnail(of: &sampleAPOD)
@@ -190,9 +190,9 @@ final class APODAPITests: XCTestCase {
         guard let sampleAPODImageData = sampleAPOD.thumbnail?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
         XCTAssertTrue(sampleAPODImageData == sampleImageData)
         
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: sampleAPOD.thumbnailURL.absoluteString,
-            responseData: sampleImage2Data)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: sampleImage2Data,
+            expectedURL: sampleAPOD.thumbnailURL.absoluteString)
         
         // Call API
         let image2 = try await apodAPI.thumbnail(of: &sampleAPOD)
@@ -218,7 +218,7 @@ final class APODAPITests: XCTestCase {
         guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.empty(statusCode: 400)
         
         do {
             // Call API
@@ -235,9 +235,9 @@ final class APODAPITests: XCTestCase {
         guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         let corruptImageData = "Corrup Image Data".data(using: .utf8)
         
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: sampleAPOD.thumbnailURL.absoluteString,
-            responseData: corruptImageData)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: corruptImageData,
+            expectedURL: sampleAPOD.thumbnailURL.absoluteString)
         
         do {
             // Call API
@@ -258,9 +258,9 @@ final class APODAPITests: XCTestCase {
         guard let sampleImage = APODDemoData.sampleImage else { fatalError("Could not load sample image.") }
         guard let sampleImageData = sampleImage.pngData() else { fatalError("Could not transform image to Data object.") }
         
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: sampleAPOD.imageURL.absoluteString,
-            responseData: sampleImageData)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: sampleImageData,
+            expectedURL: sampleAPOD.imageURL.absoluteString)
         
         // Call API
         let image = try await apodAPI.image(of: &sampleAPOD)
@@ -277,9 +277,9 @@ final class APODAPITests: XCTestCase {
         guard let sampleImage2 = APODDemoData.sampleImage2 else { fatalError("Could not load sample image.") }
         guard let sampleImage2Data = sampleImage2.pngData() else { fatalError("Could not transform image to Data object.") }
         
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: sampleAPOD.imageURL.absoluteString,
-            responseData: sampleImage2Data)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: sampleImage2Data,
+            expectedURL: sampleAPOD.imageURL.absoluteString)
         
         // Call API
         let image2 = try await apodAPI.image(of: &sampleAPOD)
@@ -305,7 +305,7 @@ final class APODAPITests: XCTestCase {
         guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         
         // Setup mock request handler
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandlerEmpty(statusCode: 400)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.empty(statusCode: 400)
         
         do {
             // Call API
@@ -322,9 +322,9 @@ final class APODAPITests: XCTestCase {
         guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         let corruptImageData = "Corrup Image Data".data(using: .utf8)
         
-        APODAPIMockURLProtocol.requestHandler = mockRequestHandler(
-            expectedURL: sampleAPOD.imageURL.absoluteString,
-            responseData: corruptImageData)
+        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
+            data: corruptImageData,
+            expectedURL: sampleAPOD.imageURL.absoluteString)
         
         do {
             // Call API
@@ -360,44 +360,4 @@ final class APODAPITests: XCTestCase {
         
         print(apod, apods, apods.count, thumbnail, image)
     }*/
-    
-    
-    
-    // MARK: - Helpers
-    
-    /// Creates a request handler for the mocked URLSession, which first checks that a given expected URL is sent and then responds with mock data.
-    ///
-    /// - Parameters:
-    ///     - expectedURL: The URL that is expected from the given request.
-    ///     - responseData: The data that should be sent to the client.
-    ///
-    /// - Returns: A closure which handles the request.
-    func mockRequestHandler(expectedURL: String, responseData: Data?) -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
-        return { (request: URLRequest) in
-            guard let url = request.url else { fatalError("Could not extract url from request.") }
-            
-            // Test that request url is as expected, with expected query params
-            XCTAssertEqual(url.absoluteString, expectedURL)
-            
-            // Respond with demo data
-            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, responseData)
-        }
-    }
-    
-    /// Creates a request handler for the mocked URLSession, which returns a given HTTP status code and no data.
-    ///
-    /// - Parameters:
-    ///     - statusCode: An HTTP status code, which should be returned.
-    ///
-    /// - Returns: A closure which handles the request.
-    func mockRequestHandlerEmpty(statusCode: Int) -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
-        return { (request: URLRequest) in
-            guard let url = request.url else { fatalError("Could not extract url from request.") }
-            
-            // Respond with HTTP 400 status code
-            let response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
-            return (response, nil)
-        }
-    }
 }
