@@ -10,7 +10,7 @@ import UIKit
 
 enum APODAPIError: Error {
     case apiKeyUndefined(String)
-    case urlCompositionFailure(String)
+    case queryCompositionFailure(String)
     case badResponse(String)
     case decodingFailure(String)
 }
@@ -114,12 +114,12 @@ class APODAPI {
     private func queryAPI<T: Decodable>(options queryItems: [URLQueryItem]?, type: T.Type) async throws -> T {
         // Compose request URL
         guard var urlComponents = URLComponents(string: apiBaseURL) else {
-            throw APODAPIError.urlCompositionFailure("Failed to compose URL for request. Could not create URLComponents from apiBaseURL.")
+            throw APODAPIError.queryCompositionFailure("Failed to compose URL for request. Could not create URLComponents from apiBaseURL.")
         }
         urlComponents.queryItems = [URLQueryItem(name: "api_key", value: apiKey)] + (queryItems ?? [])
         
         guard let url = urlComponents.url else {
-            throw APODAPIError.urlCompositionFailure("Failed to compose URL for request. Could not create URL from URLComponents.")
+            throw APODAPIError.queryCompositionFailure("Failed to compose URL for request. Could not create URL from URLComponents.")
         }
         
         // Query api with request
