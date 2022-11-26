@@ -344,8 +344,8 @@ final class APODAPITests: XCTestCase {
     /*func testRealAPISample() async throws {
         let apodAPI = try APODAPI()
         
-        // Load one and multiple APOD's
-        print("Loading APOD's ...")
+        // Load one and multiple APODs
+        print("Loading APODs ...")
         let apod = try await apodAPI.apodByDate(Date())
         let apods = try await apodAPI.apodsByDateRange(
             start: Date(timeIntervalSince1970: 1668063213),

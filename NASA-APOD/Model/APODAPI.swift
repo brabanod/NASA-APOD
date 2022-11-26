@@ -40,12 +40,12 @@ class APODAPI {
             type: APOD.self)
     }
     
-    /// Returns an array of APOD's in a given date range. The date range is inclusive.
+    /// Returns an array of APODs in a given date range. The date range is inclusive.
     ///
     /// - Parameters:
     ///     - startDate: The start date for the query.
     ///     - endDate: The end date for the query.
-    /// - Returns: An array of `APOD` object, which contains the APOD's in the specified date range.
+    /// - Returns: An array of `APOD` object, which contains the APODs in the specified date range.
     func apodsByDateRange(start startDate: Date, end endDate: Date) async throws -> [APOD] {
         return try await queryAPI(
             options: [URLQueryItem(name: "start_date", value: startDate.ISO8601Format(.iso8601Date(timeZone: TimeZone.current))),
