@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
+		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
 		5C744BE9292E897700F210FF /* LoadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C744BE8292E897700F210FF /* LoadableImageView.swift */; };
 		5C744BED292E95CF00F210FF /* APODHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C744BEC292E95CF00F210FF /* APODHighlightView.swift */; };
 		5C744BEF292EC1B700F210FF /* SampleImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C744BEE292EC1B700F210FF /* SampleImage2.png */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		5C2D9186293108D8006AF534 /* APODCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellView.swift; sourceTree = "<group>"; };
+		5C2D918829321357006AF534 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		5C744BE8292E897700F210FF /* LoadableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableImageView.swift; sourceTree = "<group>"; };
 		5C744BEC292E95CF00F210FF /* APODHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODHighlightView.swift; sourceTree = "<group>"; };
 		5C744BEE292EC1B700F210FF /* SampleImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleImage2.png; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				5C744BF1292F494800F210FF /* Logger.swift */,
+				5C2D918829321357006AF534 /* DateUtils.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -158,12 +161,12 @@
 		5CE36D08292D210D00558212 /* NASA-APOD */ = {
 			isa = PBXGroup;
 			children = (
-				5C744BF0292F493400F210FF /* Helpers */,
 				5CE36D09292D210D00558212 /* AppDelegate.swift */,
 				5CE36D0B292D210D00558212 /* SceneDelegate.swift */,
 				5CE36D0D292D210D00558212 /* HomeViewController.swift */,
 				5C744BE7292E88DF00F210FF /* Views */,
 				5CE36D3B292D334400558212 /* Model */,
+				5C744BF0292F493400F210FF /* Helpers */,
 				5CE36D0F292D210D00558212 /* Main.storyboard */,
 				5CE36D12292D210F00558212 /* Assets.xcassets */,
 				5CE36D14292D210F00558212 /* LaunchScreen.storyboard */,
@@ -352,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C2D918929321357006AF534 /* DateUtils.swift in Sources */,
 				5CE36D0E292D210D00558212 /* HomeViewController.swift in Sources */,
 				5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */,
 				5CE36D3A292D213000558212 /* APOD.swift in Sources */,
