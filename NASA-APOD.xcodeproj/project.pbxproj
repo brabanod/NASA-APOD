@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
 		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
+		5C2D918D29323873006AF534 /* APODCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918C29323873006AF534 /* APODCache.swift */; };
 		5C744BE9292E897700F210FF /* LoadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C744BE8292E897700F210FF /* LoadableImageView.swift */; };
 		5C744BED292E95CF00F210FF /* APODHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C744BEC292E95CF00F210FF /* APODHighlightView.swift */; };
 		5C744BEF292EC1B700F210FF /* SampleImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C744BEE292EC1B700F210FF /* SampleImage2.png */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		5C2D9186293108D8006AF534 /* APODCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellView.swift; sourceTree = "<group>"; };
 		5C2D918829321357006AF534 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
+		5C2D918C29323873006AF534 /* APODCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCache.swift; sourceTree = "<group>"; };
 		5C744BE8292E897700F210FF /* LoadableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableImageView.swift; sourceTree = "<group>"; };
 		5C744BEC292E95CF00F210FF /* APODHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODHighlightView.swift; sourceTree = "<group>"; };
 		5C744BEE292EC1B700F210FF /* SampleImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleImage2.png; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				5CE36D39292D213000558212 /* APOD.swift */,
+				5C2D918C29323873006AF534 /* APODCache.swift */,
 				5CE36D3C292D42F700558212 /* APODAPI.swift */,
 			);
 			path = Model;
@@ -361,6 +364,7 @@
 				5CE36D3A292D213000558212 /* APOD.swift in Sources */,
 				5CE36D0A292D210D00558212 /* AppDelegate.swift in Sources */,
 				5C8D17B5293010CD000D88BF /* APODListView.swift in Sources */,
+				5C2D918D29323873006AF534 /* APODCache.swift in Sources */,
 				5C744BE9292E897700F210FF /* LoadableImageView.swift in Sources */,
 				5CE36D0C292D210D00558212 /* SceneDelegate.swift in Sources */,
 				5C744BED292E95CF00F210FF /* APODHighlightView.swift in Sources */,
