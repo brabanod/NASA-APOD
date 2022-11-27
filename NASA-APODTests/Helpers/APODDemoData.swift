@@ -95,5 +95,20 @@ class APODDemoData {
         guard let path = Bundle(for: Self.self).path(forResource: "SampleImage2", ofType: ".png") else { return nil }
         return UIImage(contentsOfFile: path)
     }
+    
+    static func singleAPODJSON(with date: Date) -> String {
+        return """
+            {
+                "copyright":"Tommy Lease",
+                "date":"\(date.ISO8601Format(.iso8601Date(timeZone: TimeZone.current)))",
+                "explanation":"Few star clusters this close to each other ...",
+                "hdurl":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg",
+                "media_type":"image",
+                "service_version":"v1",
+                "title":"A Double Star Cluster in Perseus",
+                "url":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"
+            }
+        """
+    }
 
 }
