@@ -50,7 +50,41 @@ class APODCache {
                 // Try next APOD
                 continue
             }
-            try await apod(for: date, completion: { _ in })
+            
+            // Load APOD with a continuation, so that it can await for all completion handlers to finish
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                // Keep track if all completition handlers are finished. Don' wait for thumbnails and images if not requested
+                // Continuation should only be resumed if alle are true
+                var isMetadataLoaded = false
+                var isThumbnailLoaded = false || !shouldLoadThumbnails
+                var isImageLoaded = false || !shouldLoadImages
+                
+                do {
+                    try apod(for: date,
+                             completion: { _ in
+                        isMetadataLoaded = true
+                        if isMetadataLoaded, isThumbnailLoaded, isImageLoaded {
+                            continuation.resume()
+                        }
+                    },
+                             withThumbnail: shouldLoadThumbnails,
+                             thumbnailCompletion: { _ in
+                        isThumbnailLoaded = true
+                        if isMetadataLoaded, isThumbnailLoaded, isImageLoaded {
+                            continuation.resume()
+                        }
+                    },
+                             withImage: shouldLoadImages,
+                             imageCompletion: { _ in
+                        isImageLoaded = true
+                        if isMetadataLoaded, isThumbnailLoaded, isImageLoaded {
+                            continuation.resume()
+                        }
+                    })
+                } catch {
+                    continuation.resume(with: .failure(error))
+                }
+            }
         }
     }
     
@@ -61,74 +95,76 @@ class APODCache {
         thumbnailCompletion: ( (APOD) -> ())? = nil,
         withImage shouldLoadImage: Bool = false,
         imageCompletion: ( (APOD) -> ())? = nil)
-    async throws {        
-        // 1. Get APOD
-        var apod: APOD!
-        
-        // APOD is in cache
-        if apods[date] != nil {
-            // Take it directly from cache
-            apod = apods[date]
-        }
-        // APOD is not in cache
-        else {
-            // Create a load task if none is already running
-            if apodTasks[date] == nil {
-                apodTasks[date] = Task {
-                    try await apodAPI.apodByDate(date)
-                }
-            }
-            // Wait for the load task to finish and remove it thereafter
-            apod = try await apodTasks[date]?.value
-            apodTasks[date] = nil
-        }
-        
-        // Store in cache and deliver APOD in completion
-        apods[date] = apod
-        completion(apod)
-                    
-        // 2. Get APOD thumbnail
-        if shouldLoadThumbnail {
-            // Create a load task if none is already running
-            // If the thumbnail was already loaded, still create a new load task
-            // This will call the APOD API and return the already loaded thumbnail from there, so no additional waiting time
-            if thumbnailTasks[date] == nil {
-                thumbnailTasks[date] = Task { [apod] in
-                    let thumbnail = try await apodAPI.thumbnail(of: apod!)
-                    var apodUpdate = apod!
-                    apodUpdate.thumbnail = thumbnail
-                    return apodUpdate
-                }
-            }
-            // Wait for the load task to finish and remove it thereafter
-            apod = try await thumbnailTasks[date]?.value
-            thumbnailTasks[date] = nil
+    throws {
+        Task {
+            // 1. Get APOD
+            var apod: APOD!
             
-            // Store in cache and call thumbnail completion handler
-            apods[date] = apod
-            thumbnailCompletion?(apod)
-        }
-        
-        // 3. Get APOD image
-        if shouldLoadImage {
-            // Create a load task if none is already running
-            // If the image was already loaded, still create a new load task
-            // This will call the APOD API and return the already loaded image from there, so no additional waiting time
-            if imageTasks[date] == nil {
-                imageTasks[date] = Task { [apod] in
-                    let image = try await apodAPI.thumbnail(of: apod!)
-                    var apodUpdate = apod!
-                    apodUpdate.image = image
-                    return apodUpdate
-                }
+            // APOD is in cache
+            if apods[date] != nil {
+                // Take it directly from cache
+                apod = apods[date]
             }
-            // Wait for the load task to finish and remove it thereafter
-            apod = try await imageTasks[date]?.value
-            imageTasks[date] = nil
+            // APOD is not in cache
+            else {
+                // Create a load task if none is already running
+                if apodTasks[date] == nil {
+                    apodTasks[date] = Task {
+                        try await apodAPI.apodByDate(date)
+                    }
+                }
+                // Wait for the load task to finish and remove it thereafter
+                apod = try await apodTasks[date]?.value
+                apodTasks[date] = nil
+            }
             
-            // Store in cache and call thumbnail completion handler
+            // Store in cache and deliver APOD in completion
             apods[date] = apod
-            imageCompletion?(apod)
+            completion(apod)
+            
+            // 2. Get APOD thumbnail
+            if shouldLoadThumbnail {
+                // Create a load task if none is already running
+                // If the thumbnail was already loaded, still create a new load task
+                // This will call the APOD API and return the already loaded thumbnail from there, so no additional waiting time
+                if thumbnailTasks[date] == nil {
+                    thumbnailTasks[date] = Task { [apod] in
+                        let thumbnail = try await apodAPI.thumbnail(of: apod!)
+                        var apodUpdate = apod!
+                        apodUpdate.thumbnail = thumbnail
+                        return apodUpdate
+                    }
+                }
+                // Wait for the load task to finish and remove it thereafter
+                apod = try await thumbnailTasks[date]?.value
+                thumbnailTasks[date] = nil
+                
+                // Store in cache and call thumbnail completion handler
+                apods[date] = apod
+                thumbnailCompletion?(apod)
+            }
+            
+            // 3. Get APOD image
+            if shouldLoadImage {
+                // Create a load task if none is already running
+                // If the image was already loaded, still create a new load task
+                // This will call the APOD API and return the already loaded image from there, so no additional waiting time
+                if imageTasks[date] == nil {
+                    imageTasks[date] = Task { [apod] in
+                        let image = try await apodAPI.thumbnail(of: apod!)
+                        var apodUpdate = apod!
+                        apodUpdate.image = image
+                        return apodUpdate
+                    }
+                }
+                // Wait for the load task to finish and remove it thereafter
+                apod = try await imageTasks[date]?.value
+                imageTasks[date] = nil
+                
+                // Store in cache and call thumbnail completion handler
+                apods[date] = apod
+                imageCompletion?(apod)
+            }
         }
     }
 }
