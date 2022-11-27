@@ -28,29 +28,25 @@ final class APODCacheTests: XCTestCase {
     
     /// Test initially loading (only metadata and thumbnails).
     func testInitialLoadOnlyMeta() async throws {
-        var requestCount = 0
-        APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.successCount(
-            data: { _ in
-                guard let date = DateUtils.today(adding: -requestCount) else { fatalError("Could not create date.") }
-                return APODDemoData.singleAPODJSON(with: date).data(using: .utf8)
-            }, expectedURL: { count in
-                guard let date = DateUtils.today(adding: -requestCount) else { fatalError("Could not create date.") }
-                return "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(date.ISO8601Format(.iso8601Date(timeZone: TimeZone.current)))"
-            },count: {
-                requestCount += 1
-                return requestCount
-            })
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
         // Initially load APODs
         let cache = try await APODCache(api: apodAPI)
         
+        XCTAssertEqual(requestCount, cache.initialLoadAmount)
+        XCTAssertEqual(requestCountMeta, cache.initialLoadAmount)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 0)
         let requestCountAfterInitialLoad = requestCount
+        let requestCountMetaAfterInitialLoad = requestCountMeta
+        let requestCountThumbnailAfterInitialLoad = requestCountThumbnail
+        let requestCountImageAfterInitialLoad = requestCountImage
         
         for days in (1...cache.initialLoadAmount) {
             // Get date, fail promise if date could not be retrieved
             guard let date = DateUtils.today(adding: -days) else { fatalError("Could not create date.") }
             
-            try await cache.apod(for: date) { apod in
+            try cache.apod(for: date) { apod in
                 XCTAssertEqual(apod.date, date)
                 XCTAssertEqual(apod.thumbnail, nil)
                 XCTAssertEqual(apod.image, nil)
@@ -59,11 +55,43 @@ final class APODCacheTests: XCTestCase {
         
         // Check that request count did not change i. e. all APODs were loaded from cache
         XCTAssertEqual(requestCountAfterInitialLoad, requestCount)
+        XCTAssertEqual(requestCountMetaAfterInitialLoad, requestCountMeta)
+        XCTAssertEqual(requestCountThumbnailAfterInitialLoad, requestCountThumbnail)
+        XCTAssertEqual(requestCountImageAfterInitialLoad, requestCountImage)
     }
     
     /// Test initially loading (only metadata and thumbnails).
     func testInitialLoadMetaAndThumbnail() async throws {
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
+        // Initially load APODs
+        let cache = try await APODCache(api: apodAPI, withThumbnails: true)
+        
+        XCTAssertEqual(requestCount, cache.initialLoadAmount * 2)
+        XCTAssertEqual(requestCountMeta, cache.initialLoadAmount)
+        XCTAssertEqual(requestCountThumbnail, cache.initialLoadAmount)
+        XCTAssertEqual(requestCountImage, 0)
+        let requestCountAfterInitialLoad = requestCount
+        let requestCountMetaAfterInitialLoad = requestCountMeta
+        let requestCountThumbnailAfterInitialLoad = requestCountThumbnail
+        let requestCountImageAfterInitialLoad = requestCountImage
+        
+        for days in (1...cache.initialLoadAmount) {
+            // Get date, fail promise if date could not be retrieved
+            guard let date = DateUtils.today(adding: -days) else { fatalError("Could not create date.") }
+            
+            try cache.apod(for: date) { apod in
+                XCTAssertEqual(apod.date, date)
+                XCTAssertEqual(apod.thumbnail, APODDemoData.sampleImage)
+                XCTAssertEqual(apod.image, nil)
+            }
+        }
+        
+        // Check that request count did not change i. e. all APODs were loaded from cache
+        XCTAssertEqual(requestCountAfterInitialLoad, requestCount)
+        XCTAssertEqual(requestCountMetaAfterInitialLoad, requestCountMeta)
+        XCTAssertEqual(requestCountThumbnailAfterInitialLoad, requestCountThumbnail)
+        XCTAssertEqual(requestCountImageAfterInitialLoad, requestCountImage)
     }
     
     /// Test initially loading (only metadata and images).
@@ -189,5 +217,71 @@ final class APODCacheTests: XCTestCase {
     /// Test accessing a different APOD simultaneously, so that another Task is still running (metadata, thumbnail and image).
     func testAccessDifferentAll() async throws {
         
+    }
+    
+    
+    // MARK: - Helpers
+    
+    /// Request count for all queries.
+    var requestCount: Int = 0
+    
+    /// Request count for metadata query.
+    var requestCountMeta: Int = 0
+    
+    /// Request count for thumbnail query.
+    var requestCountThumbnail: Int = 0
+    
+    /// Request count for image query.
+    var requestCountImage: Int = 0
+    
+    func sequenceMock() -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
+        requestCount = 0
+        requestCountMeta = 0
+        requestCountThumbnail = 0
+        requestCountImage = 0
+        
+        return APODAPIMockRequestHandler.successCount(
+            data: { url in
+                if url == APODDemoData.singleAPODThumbnailURL {
+                    // Request thumbnail
+                    guard let sampleImageData = APODDemoData.sampleImage?.pngData() else { fatalError("Could not create sample image.") }
+                    return sampleImageData
+                } else if url == APODDemoData.singleAPODImageURL {
+                    // Request image
+                    guard let sampleImage2Data = APODDemoData.sampleImage2?.pngData() else { fatalError("Could not create sample image.") }
+                    return sampleImage2Data
+                } else {
+                    // Request metadata
+                    guard let date = DateUtils.today(adding: -self.requestCountMeta) else { fatalError("Could not create date.") }
+                    return APODDemoData.singleAPODJSON(with: date).data(using: .utf8)
+                }
+            }, expectedURL: { url in
+                if url == APODDemoData.singleAPODThumbnailURL {
+                    // Request thumbnail
+                    return APODDemoData.singleAPODThumbnailURL
+                } else if url == APODDemoData.singleAPODImageURL {
+                    // Request image
+                    return APODDemoData.singleAPODImageURL
+                } else {
+                    // Request metadata
+                    guard let date = DateUtils.today(adding: -self.requestCountMeta) else { fatalError("Could not create date.") }
+                    return "\(self.apiBaseURL)?api_key=\(self.apiKey!)&date=\(date.ISO8601Format(.iso8601Date(timeZone: TimeZone.current)))"
+                }
+            }, count: { url in
+                // Increase overall request count.
+                self.requestCount += 1
+                
+                // Increase specific request counts
+                if url == APODDemoData.singleAPODThumbnailURL {
+                    // Request thumbnail
+                    self.requestCountThumbnail += 1
+                } else if url == APODDemoData.singleAPODImageURL {
+                    // Request image
+                    self.requestCountImage += 1
+                } else {
+                    // Request metadata
+                    self.requestCountMeta += 1
+                }
+            })
     }
 }

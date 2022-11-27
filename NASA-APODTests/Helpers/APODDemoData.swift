@@ -11,16 +11,19 @@ import UIKit
 
 class APODDemoData {
     
+    static let singleAPODThumbnailURL = "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"
+    static let singleAPODImageURL = "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"
+    
     static let singleAPODJSON = """
         {
             "copyright":"Tommy Lease",
             "date":"2022-11-22",
             "explanation":"Few star clusters this close to each other ...",
-            "hdurl":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg",
+            "hdurl":"\(singleAPODImageURL)",
             "media_type":"image",
             "service_version":"v1",
             "title":"A Double Star Cluster in Perseus",
-            "url":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"
+            "url":"\(singleAPODThumbnailURL)"
         }
         """
     
@@ -102,13 +105,12 @@ class APODDemoData {
                 "copyright":"Tommy Lease",
                 "date":"\(date.ISO8601Format(.iso8601Date(timeZone: TimeZone.current)))",
                 "explanation":"Few star clusters this close to each other ...",
-                "hdurl":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg",
+                "hdurl":"\(singleAPODImageURL)",
                 "media_type":"image",
                 "service_version":"v1",
                 "title":"A Double Star Cluster in Perseus",
-                "url":"https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"
+                "url":"\(singleAPODThumbnailURL)"
             }
         """
     }
-
 }

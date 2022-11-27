@@ -56,26 +56,30 @@ struct APODAPIMockRequestHandler {
     /// Creates a request handler for the mocked URLSession, which first checks that a given expected URL is sent and then responds with mock data. Also count the number of times, the returned handler is called.
     ///
     /// - Parameters:
-    ///     - expectedURL: A function which receives the number of the current request and returns the corresponding expected URL.
-    ///     - responseData: A function which receives the number of the current request and returns the data that should be sent to the client.
-    ///     - count: A function that is called everytime the handler is called. This function should return the current count of calls to this handler. This function is called before the other two.
+    ///     - expectedURL: A function which receives the request URL and returns the corresponding expected URL.
+    ///     - responseData: A function which receives the request URL and returns the data that should be sent to the client.
+    ///     - count: A  function which receives the request URL and is called everytime the handler is called. This function should return the current count of calls to this handler. This function is called before the other two.
     ///
     /// - Returns: A closure which handles the request.
-    static func successCount(data responseData: ((Int) -> (Data?))?, expectedURL: ((Int) -> (String))? = nil, count: @escaping () -> (Int)) -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
+    static func successCount(
+        data responseData: ((String) -> (Data?))?,
+        expectedURL: ((String) -> (String))? = nil,
+        count: @escaping (String) -> ())
+    -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
         return { (request: URLRequest) in
             guard let url = request.url else { fatalError("Could not extract url from request.") }
             
             // Increase count
-            let count = count()
+            count(url.absoluteString)
             
             // Test that request url is as expected, with expected query params
             if expectedURL != nil {
-                XCTAssertEqual(url.absoluteString, expectedURL!(count))
+                XCTAssertEqual(url.absoluteString, expectedURL!(url.absoluteString))
             }
             
             // Respond with demo data
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
-            return (response, responseData?(count))
+            return (response, responseData?(url.absoluteString))
         }
     }
 }
