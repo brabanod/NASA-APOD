@@ -124,15 +124,16 @@ class APODHighlightView: UIView {
         Task {
             do {
                 // Load APOD
-                if var apod = try await apodAPI?.apodByDate(Date())  {
+                if let apod = try await apodAPI?.apodByDate(Date())  {
                     // Update labels before image is loaded, because image loading takes more time
                     self.apod = apod
                     
                     // Load full size image for APOD (can't pass self.apod directly, because it is actor-isolated)
-                    let _ = try await apodAPI?.image(of: &apod)
+                    let image = try await apodAPI?.image(of: apod)
                     
                     // Update image
-                    self.apod = apod
+                    // TODO: If APOD is changed to actor, this won't trigger the didSet and therefore not update the UI
+                    self.apod?.image = image
                 }
             } catch {
                 Log.default.log("Failed to load APOD. Error:\n\(error)")

@@ -59,12 +59,13 @@ class APODAPI {
     ///     - apod: An `APOD` object, for which to retrieve the image.
     ///     - forceReload: If set to true, thumbnail image is loaded from API, even if it is already present in given APOD object.
     /// - Returns: The thumbnail image of the given `APOD`.
-    func thumbnail(of apod: inout APOD, forceReload: Bool = false) async throws -> UIImage {
+    func thumbnail(of apod: APOD, forceReload: Bool = false) async throws -> UIImage {
         // Load thumbnail image if needed or requested
-        if apod.thumbnail == nil || forceReload {
-            apod.thumbnail = try await queryImage(url: apod.thumbnailURL)
+        var thumbnail = apod.thumbnail
+        if thumbnail == nil || forceReload {
+            thumbnail = try await queryImage(url: apod.thumbnailURL)
         }
-        return apod.thumbnail!
+        return thumbnail!
     }
     
     /// Returns the full size image of an APOD and sets it as the image of the given APOD. If the given APOD already has an image loaded, the API query is skipped and the 'cached' image is returned directly.
@@ -73,12 +74,13 @@ class APODAPI {
     ///     - apod: An `APOD` object, for which to retrieve the image.
     ///     - forceReload: If set to true, thumbnail image is loaded from API, even if it is already present in given APOD object.
     /// - Returns: The full size image of the given `APOD`.
-    func image(of apod: inout APOD, forceReload: Bool = false) async throws -> UIImage {
+    func image(of apod: APOD, forceReload: Bool = false) async throws -> UIImage {
         // Load image if needed or requested
-        if apod.image == nil || forceReload {
-            apod.image = try await queryImage(url: apod.imageURL)
+        var image = apod.image
+        if image == nil || forceReload {
+            image = try await queryImage(url: apod.imageURL)
         }
-        return apod.image!
+        return image!
     }
     
     

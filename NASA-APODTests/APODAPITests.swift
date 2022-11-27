@@ -176,7 +176,8 @@ final class APODAPITests: XCTestCase {
             expectedURL: sampleAPOD.thumbnailURL.absoluteString)
         
         // Call API
-        let thumbnail = try await apodAPI.thumbnail(of: &sampleAPOD)
+        let thumbnail = try await apodAPI.thumbnail(of: sampleAPOD)
+        sampleAPOD.thumbnail = thumbnail
         
         // Test that demo image was returned correctly from API
         guard let thumbnailData = thumbnail.pngData() else { fatalError("Could not convert response image to Data object.") }
@@ -195,7 +196,8 @@ final class APODAPITests: XCTestCase {
             expectedURL: sampleAPOD.thumbnailURL.absoluteString)
         
         // Call API
-        let image2 = try await apodAPI.thumbnail(of: &sampleAPOD)
+        let image2 = try await apodAPI.thumbnail(of: sampleAPOD)
+        sampleAPOD.thumbnail = image2
         
         // Test that image was not overriden
         guard let image2Data = image2.pngData() else { fatalError("Could not convert response image to Data object.") }
@@ -203,7 +205,8 @@ final class APODAPITests: XCTestCase {
         XCTAssertTrue(image2Data == sampleImageData)
         
         // Test that cached result is overriden with force reload
-        let image3 = try await apodAPI.thumbnail(of: &sampleAPOD, forceReload: true)
+        let image3 = try await apodAPI.thumbnail(of: sampleAPOD, forceReload: true)
+        sampleAPOD.thumbnail = image3
         
         guard let image3Data = image3.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(image3Data == sampleImage2Data)
@@ -215,14 +218,14 @@ final class APODAPITests: XCTestCase {
     }
     
     func testThumbnailThrowsBadResponse() async throws {
-        guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.empty(statusCode: 400)
         
         do {
             // Call API
-            let _ = try await apodAPI.thumbnail(of: &sampleAPOD)
+            let _ = try await apodAPI.thumbnail(of: sampleAPOD)
             XCTFail("Calling API should throw error.")
         } catch APODAPIError.badResponse(let errorMessage) {
             XCTAssertTrue(errorMessage.contains("Response status code should be 200 but was 400"))
@@ -232,7 +235,7 @@ final class APODAPITests: XCTestCase {
     }
     
     func testThumbnailThrowsDecodingFailure() async throws {
-        guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         let corruptImageData = "Corrup Image Data".data(using: .utf8)
         
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
@@ -241,7 +244,7 @@ final class APODAPITests: XCTestCase {
         
         do {
             // Call API
-            let _ = try await apodAPI.thumbnail(of: &sampleAPOD)
+            let _ = try await apodAPI.thumbnail(of: sampleAPOD)
             XCTFail("Calling API should throw error.")
         } catch APODAPIError.decodingFailure(let errorMessage) {
             XCTAssertEqual(errorMessage, "Failed to create image from data.")
@@ -263,7 +266,8 @@ final class APODAPITests: XCTestCase {
             expectedURL: sampleAPOD.imageURL.absoluteString)
         
         // Call API
-        let image = try await apodAPI.image(of: &sampleAPOD)
+        let image = try await apodAPI.image(of: sampleAPOD)
+        sampleAPOD.image = image
         
         // Test that demo image was returned correctly from API
         guard let imageData = image.pngData() else { fatalError("Could not convert response image to Data object.") }
@@ -282,7 +286,8 @@ final class APODAPITests: XCTestCase {
             expectedURL: sampleAPOD.imageURL.absoluteString)
         
         // Call API
-        let image2 = try await apodAPI.image(of: &sampleAPOD)
+        let image2 = try await apodAPI.image(of: sampleAPOD)
+        sampleAPOD.image = image2
         
         // Test that image was not overriden
         guard let image2Data = image2.pngData() else { fatalError("Could not convert response image to Data object.") }
@@ -290,7 +295,8 @@ final class APODAPITests: XCTestCase {
         XCTAssertTrue(image2Data == sampleImageData)
         
         // Test that cached result is overriden with force reload
-        let image3 = try await apodAPI.image(of: &sampleAPOD, forceReload: true)
+        let image3 = try await apodAPI.image(of: sampleAPOD, forceReload: true)
+        sampleAPOD.image = image3
         
         guard let image3Data = image3.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(image3Data == sampleImage2Data)
@@ -302,14 +308,14 @@ final class APODAPITests: XCTestCase {
     }
     
     func testImageThrowsBadResponse() async throws {
-        guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.empty(statusCode: 400)
         
         do {
             // Call API
-            let _ = try await apodAPI.image(of: &sampleAPOD)
+            let _ = try await apodAPI.image(of: sampleAPOD)
             XCTFail("Calling API should throw error.")
         } catch APODAPIError.badResponse(let errorMessage) {
             XCTAssertTrue(errorMessage.contains("Response status code should be 200 but was 400"))
@@ -319,7 +325,7 @@ final class APODAPITests: XCTestCase {
     }
     
     func testImageThrowsDecodingFailure() async throws {
-        guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         let corruptImageData = "Corrup Image Data".data(using: .utf8)
         
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
@@ -328,7 +334,7 @@ final class APODAPITests: XCTestCase {
         
         do {
             // Call API
-            let _ = try await apodAPI.image(of: &sampleAPOD)
+            let _ = try await apodAPI.image(of: sampleAPOD)
             XCTFail("Calling API should throw error.")
         } catch APODAPIError.decodingFailure(let errorMessage) {
             XCTAssertEqual(errorMessage, "Failed to create image from data.")
