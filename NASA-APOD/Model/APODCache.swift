@@ -44,7 +44,7 @@ class APODCache {
     func initialLoad(withThumbnails shouldLoadThumbnails: Bool, withImages shouldLoadImages: Bool) async throws {
         // Store retrieved APODs at their individual position in the cache
         for days in (1...self.initialLoadAmount) {
-            // Get date, fail promise if date could not be retrieved
+            // Get date, continue to next if this fails
             guard let date = DateUtils.today(adding: -days)
             else {
                 // Try next APOD
@@ -151,7 +151,7 @@ class APODCache {
                 // This will call the APOD API and return the already loaded image from there, so no additional waiting time
                 if imageTasks[date] == nil {
                     imageTasks[date] = Task { [apod] in
-                        let image = try await apodAPI.thumbnail(of: apod!)
+                        let image = try await apodAPI.image(of: apod!)
                         var apodUpdate = apod!
                         apodUpdate.image = image
                         return apodUpdate
