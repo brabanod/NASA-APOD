@@ -89,14 +89,26 @@ class APODDemoData {
         return try? JSONDecoder().decode(APOD.self, from: data)
     }
     
-    static var sampleImage: UIImage? {
-        guard let path = Bundle(for: Self.self).path(forResource: "SampleImage", ofType: ".png") else { return nil }
-        return UIImage(contentsOfFile: path)
+    static var sampleImage: UIImage {
+        guard let path = Bundle(for: Self.self).path(forResource: "SampleImage", ofType: ".png") else { fatalError("Failed to get image path.") }
+        guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to load image from file.") }
+        return image
     }
     
-    static var sampleImage2: UIImage? {
-        guard let path = Bundle(for: Self.self).path(forResource: "SampleImage2", ofType: ".png") else { return nil }
-        return UIImage(contentsOfFile: path)
+    static var sampleImageData: Data {
+        guard let data = APODDemoData.sampleImage.pngData() else { fatalError("Could not convert image to Data object.") }
+        return data
+    }
+    
+    static var sampleImage2: UIImage {
+        guard let path = Bundle(for: Self.self).path(forResource: "SampleImage2", ofType: ".png") else { fatalError("Failed to get image path.") }
+        guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to load image from file.") }
+        return image
+    }
+    
+    static var sampleImage2Data: Data {
+        guard let data = APODDemoData.sampleImage2.pngData() else { fatalError("Could not convert image to Data object.") }
+        return data
     }
     
     static func singleAPODJSON(with date: Date) -> String {
