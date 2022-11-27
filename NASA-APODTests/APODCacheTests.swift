@@ -138,7 +138,40 @@ final class APODCacheTests: XCTestCase {
     
     /// Test initially loading (metadata, thumbnails and images).
     func testInitialLoadAll() async throws {
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
+        // Initially load APODs
+        let cache = try await APODCache(api: apodAPI, withThumbnails: true, withImages: true)
+        
+        XCTAssertEqual(requestCount, cache.initialLoadAmount * 3)
+        XCTAssertEqual(requestCountMeta, cache.initialLoadAmount)
+        XCTAssertEqual(requestCountThumbnail, cache.initialLoadAmount)
+        XCTAssertEqual(requestCountImage, cache.initialLoadAmount)
+        let requestCountAfterInitialLoad = requestCount
+        let requestCountMetaAfterInitialLoad = requestCountMeta
+        let requestCountThumbnailAfterInitialLoad = requestCountThumbnail
+        let requestCountImageAfterInitialLoad = requestCountImage
+        
+        // Check that all initially loaded APODs are present
+        for days in (1...cache.initialLoadAmount) {
+            guard let date = DateUtils.today(adding: -days) else { fatalError("Could not create date.") }
+            
+            try await MainActor.run {
+                try cache.apod(for: date) { apod in
+                    guard let apodThumbnailData = apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+                    guard let apodImageData = apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+                    XCTAssertEqual(apod.date, date)
+                    XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+                    XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+                }
+            }
+        }
+        
+        // Check that request count did not change i. e. all APODs were loaded from cache
+        XCTAssertEqual(requestCountAfterInitialLoad, requestCount)
+        XCTAssertEqual(requestCountMetaAfterInitialLoad, requestCountMeta)
+        XCTAssertEqual(requestCountThumbnailAfterInitialLoad, requestCountThumbnail)
+        XCTAssertEqual(requestCountImageAfterInitialLoad, requestCountImage)
     }
     
     
@@ -146,7 +179,7 @@ final class APODCacheTests: XCTestCase {
     
     /// Test loading an uncached APOD (only metadata).
     func testAccessAPODUncachedOnlyMeta() async throws {
-        
+        // Test uncached first, then cached (this eliminates the cached tests
     }
     
     /// Test loading an uncached APOD (metadata and thumbnail).
