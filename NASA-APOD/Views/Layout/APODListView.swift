@@ -57,6 +57,8 @@ class APODListView: UIView {
     }
     
     private func setup() {
+        self.backgroundColor = .clear
+        
         // Create and setup UICollectionView
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = collectionViewInsets
@@ -67,6 +69,7 @@ class APODListView: UIView {
         collectionView.dataSource = self
         collectionView.register(APODCellView.self, forCellWithReuseIdentifier: cellId)
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .clear
         
         // Add UICollectionView to subviews
         self.addSubview(collectionView)
@@ -86,7 +89,8 @@ extension APODListView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        // TODO: Read the initial value from initialAPODLoadAmount (SceneDelegate)
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,7 +99,25 @@ extension APODListView: UICollectionViewDataSource {
           withReuseIdentifier: cellId,
           for: indexPath
         ) as? APODCellView else { fatalError("Cell was not registered") }
-
+        
+        
+        guard let requestDate = DateUtils.today(adding: -indexPath.row) else {
+            // TODO: handle this
+            fatalError("Cell was not registered")
+        }
+        
+        Task {
+            // Load APOD metadata
+            var apod = try await apodCache?.apod(for: requestDate)
+            await cell.setTitle(await apod?.title)
+            await cell.setAccessoryText(await apod?.date.formatted(date: .numeric, time: .omitted))
+            
+            // Load APOD thumbnail
+            apod = try await apodCache?.apod(for: requestDate, withThumbnail: true)
+            await cell.setImage(await apod?.thumbnail)
+        }
+        
+        
         return cell
     }
     
