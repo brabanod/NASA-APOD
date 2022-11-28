@@ -883,7 +883,50 @@ final class APODCacheTests: XCTestCase {
     /// 2. Load thumbnail (only thumbnail is loaded form API, APOD metadata is from cache)
     /// 3. Load image (only image is loaded form API, APOD metadata and thumbnail is from cache)
     func testAccessWithReload() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 1, withThumbnails: false, withImages: false)
         
+        // Test access APOD from initial load
+        let apod = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
+
+        XCTAssertEqual(requestCount, 1)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 0)
+        XCTAssertEqual(apod.date, testDate)
+        XCTAssertEqual(apod.thumbnail, nil)
+        XCTAssertEqual(apod.image, nil)
+        
+        // Access again and load the thumbnail this time
+        let apod2 = try await cache.apod(for: testDate, withThumbnail: true, withImage: false)
+        
+        // Thumbnail request should go to API, metadata should already be loaded
+        XCTAssertEqual(requestCount, 2)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 1)
+        XCTAssertEqual(requestCountImage, 0)
+        guard let apod2ThumbnailData = apod2.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod2.date, testDate)
+        XCTAssertEqual(apod2ThumbnailData, APODDemoData.sampleImageData)
+        XCTAssertEqual(apod2.image, nil)
+        
+        // Access again and load the image this time
+        let apod3 = try await cache.apod(for: testDate, withThumbnail: true, withImage: true)
+        
+        // Thumbnail request should go to API, metadata should already be loaded
+        XCTAssertEqual(requestCount, 3)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 1)
+        XCTAssertEqual(requestCountImage, 1)
+        guard let apod3ThumbnailData = apod3.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        guard let apod3ImageData = apod3.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod3.date, testDate)
+        XCTAssertEqual(apod3ThumbnailData, APODDemoData.sampleImageData)
+        XCTAssertEqual(apod3ImageData, APODDemoData.sampleImage2Data)
     }
     
     
@@ -901,6 +944,7 @@ final class APODCacheTests: XCTestCase {
     /// Request count for image query.
     var requestCountImage: Int = 0
     
+    /// - Returns: A request handler for the mock API, which counts the requests to the individual endpoints.
     func sequenceMock() -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
         requestCount = 0
         requestCountMeta = 0
