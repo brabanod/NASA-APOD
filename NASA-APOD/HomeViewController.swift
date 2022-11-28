@@ -19,6 +19,8 @@ class HomeViewController: UIViewController {
     
     var apodAPI: APODAPI?
     
+    var apodCache: APODCache?
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -31,7 +33,7 @@ class HomeViewController: UIViewController {
         self.view.backgroundColor = UIColor(white: 0.07, alpha: 1.0)
         
         // Add a highlight view
-//        apodHighlightView = APODHighlightView(api: apodAPI)
+//        apodHighlightView = APODHighlightView(cache: apodCache)
 //        self.view.addSubview(apodHighlightView)
 //        apodHighlightView.translatesAutoresizingMaskIntoConstraints = false
 //        self.view.leftAnchor.constraint(equalTo: apodHighlightView.leftAnchor).isActive = true
@@ -40,7 +42,7 @@ class HomeViewController: UIViewController {
 //        self.view.bottomAnchor.constraint(equalTo: apodHighlightView.bottomAnchor).isActive = true
         
         // Add a list view
-        apodListView = APODListView(api: apodAPI)
+        apodListView = APODListView(cache: apodCache)
         self.view.addSubview(apodListView)
         apodListView.translatesAutoresizingMaskIntoConstraints = false
         self.view.leftAnchor.constraint(equalTo: apodListView.leftAnchor).isActive = true

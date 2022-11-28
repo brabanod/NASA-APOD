@@ -20,15 +20,23 @@ class APODHighlightView: UIView {
     
     // MARK: Model
     
-    /// APOD API object. Will load data and refresh UI if it is set.
-    var apodAPI: APODAPI? = nil {
+    /// APOD cache which will be used to load data. Will load data and refresh UI if it is set.
+    var apodCache: APODCache? = nil {
         didSet {
             loadAPODData()
         }
     }
     
     /// The currently displayed APOD.
-    private(set) var apod: APOD?
+    private(set) var apod: APOD? {
+        didSet {
+            if self.apod != nil {
+                Task {
+                    await self.showAPOD(self.apod!)
+                }
+            }
+        }
+    }
     
     
     // MARK: -
@@ -38,8 +46,10 @@ class APODHighlightView: UIView {
         setup()
     }
 
-    init(frame: CGRect = .zero, api apodAPI: APODAPI?) {
-        self.apodAPI = apodAPI
+    /// - Parameters:
+    ///     - apodCache: The `APODCache` instance to use, to load APODs.
+    init(frame: CGRect = .zero, cache apodCache: APODCache?) {
+        self.apodCache = apodCache
         super.init(frame: frame)
         setup()
     }
@@ -118,19 +128,11 @@ class APODHighlightView: UIView {
         Task {
             do {
                 // Load APOD
-                if let apod = try await apodAPI?.apodByDate(Date())  {
-                    // TODO: Use APODCache
-                    // Update labels before image is loaded, because image loading takes more time
+                try apodCache?.apod(for: Date(), completion: { apod in
                     self.apod = apod
-                    await showAPOD(self.apod!)
-                    
-                    // Load full size image for APOD (can't pass self.apod directly, because it is actor-isolated)
-                    let image = try await apodAPI?.image(of: self.apod!)
-                    
-                    // Update image and trigger showing APOD again
-                    await self.apod!.setImage(image)
-                    await showAPOD(self.apod!)
-                }
+                }, withImage: true, imageCompletion: { apod in
+                    self.apod = apod
+                })
             } catch {
                 Log.default.log("Failed to load APOD. Error:\n\(error)")
                 // Show alert, that loading APOD failed

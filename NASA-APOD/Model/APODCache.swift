@@ -34,7 +34,7 @@ class APODCache {
         self.apodAPI = apodAPI
     }
     
-    /// Loads a specified amount of APODs into the cache.
+    /// Loads a specified amount of APODs into the cache (excluding the first day)
     ///
     /// - Parameters:
     ///     - loadAmount: Specifies how many past days should be loaded. I. e. if a value of 10 is given, the last 10 APODs are loaded into the cache.

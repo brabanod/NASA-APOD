@@ -10,6 +10,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    private let initialCacheLoadAmount: Int = 10
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -21,7 +23,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create APOD API instance and pass it to the HomeViewController
         if let homeVC = scene.windows.first?.rootViewController as? HomeViewController {
             do {
-                homeVC.apodAPI = try APODAPI()
+                let apodAPI = try APODAPI()
+                homeVC.apodAPI = apodAPI
+                let apodCache = try APODCache(api: apodAPI)
+                homeVC.apodCache = apodCache
+                
+                // Start loading a few APODs in the background
+                Task{
+                    try await apodCache.load(pastDays: initialCacheLoadAmount, withThumbnails: true, withImages: false)
+                }
             } catch {
                 // This should never happen, when NASAAPIKey is set.
                 Log.default.log("Failed to create API. Error:\n\(error)")

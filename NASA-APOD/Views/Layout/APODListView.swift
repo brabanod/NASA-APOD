@@ -28,8 +28,8 @@ class APODListView: UIView {
     /// Reuse identifier for the cell in the `UICollectionView`.
     private let cellId = "APODCell"
     
-    /// APOD API object. Will load data and refresh UI if it is set.
-    var apodAPI: APODAPI? = nil {
+    /// APOD cache which will be used to load data. Will load data and refresh UI if it is set.
+    var apodCache: APODCache? = nil {
         didSet {
             // TODO: Reload data
         }
@@ -43,8 +43,10 @@ class APODListView: UIView {
         setup()
     }
 
-    init(frame: CGRect = .zero, api apodAPI: APODAPI?) {
-        self.apodAPI = apodAPI
+    /// - Parameters:
+    ///     - apodCache: The `APODCache` instance to use, to load APODs.
+    init(frame: CGRect = .zero, cache apodCache: APODCache?) {
+        self.apodCache = apodCache
         super.init(frame: frame)
         setup()
     }
