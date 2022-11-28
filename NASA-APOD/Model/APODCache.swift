@@ -55,7 +55,7 @@ class APODCache {
                 continue
             }
             
-            try await apod(for: date, withThumbnail: shouldLoadThumbnails, withImage: shouldLoadImages)
+            let _ = try await apod(for: date, withThumbnail: shouldLoadThumbnails, withImage: shouldLoadImages)
         }
     }
     
