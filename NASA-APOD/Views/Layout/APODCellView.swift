@@ -97,20 +97,32 @@ class APODCellView: UICollectionViewCell {
     }
     
     @MainActor func setTitle(_ title: String?) async {
-        UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
-            self.titleLabel.text = title
+        if titleLabel.text == nil || titleLabel.text == "" {
+            titleLabel.alpha = 0
+            titleLabel.text = title
+            UIView.animate(withDuration: 0.7) {
+                self.titleLabel.alpha = 1.0
+            }
+        } else {
+            titleLabel.text = title
         }
     }
     
     @MainActor func setImage(_ image: UIImage?) async {
-        UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
+        UIView.transition(with: titleLabel, duration: 0.9, options: .transitionCrossDissolve) {
             self.imageView.image = image
         }
     }
     
     @MainActor func setAccessoryText(_ text: String?) async {
-        UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
-            self.accessoryLabel.text = text
+        if accessoryLabel.text == nil || accessoryLabel.text == "" {
+            accessoryLabel.alpha = 0
+            accessoryLabel.text = text
+            UIView.animate(withDuration: 0.5) {
+                self.accessoryLabel.alpha = 1.0
+            }
+        } else {
+            accessoryLabel.text = text
         }
     }
 }
