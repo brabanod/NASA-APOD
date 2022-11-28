@@ -127,12 +127,12 @@ class APODHighlightView: UIView {
     func loadAPODData() {
         Task {
             do {
-                // Load APOD
-                try apodCache?.apod(for: Date(), completion: { apod in
-                    self.apod = apod
-                }, withImage: true, imageCompletion: { apod in
-                    self.apod = apod
-                })
+                let today = Date()
+                // Load APOD without thumbnail first
+                self.apod = try await apodCache?.apod(for: today)
+                
+                // Load APOD thumbnail
+                self.apod = try await apodCache?.apod(for: today, withThumbnail: true)
             } catch {
                 Log.default.log("Failed to load APOD. Error:\n\(error)")
                 // Show alert, that loading APOD failed

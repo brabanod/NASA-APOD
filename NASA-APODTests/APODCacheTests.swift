@@ -418,19 +418,17 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
         
         // Load APOD by request
-        try cache.apod(for: testDate) { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
         }
         
         // Load same APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate) { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectSecondAPOD.fulfill()
-            }
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectSecondAPOD.fulfill()
         }
         
         await waitForExpectations(timeout: 1.0)
@@ -461,32 +459,30 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPODThumbnail = expectation(description: "Load APOD thumbnail from cache")
         
         // Load APOD by request
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectFirstAPODThumbnail.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectFirstAPODThumbnail.fulfill()
+        }
         
         // Load same APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectSecondAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectSecondAPODThumbnail.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectSecondAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectSecondAPODThumbnail.fulfill()
+        }
         
         await waitForExpectations(timeout: 1.0)
         
@@ -518,32 +514,30 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPODImage = expectation(description: "Load APOD image from cache")
         
         // Load APOD by request
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectFirstAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectFirstAPODImage.fulfill()
+        }
         
         // Load same APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectSecondAPOD.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectSecondAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectSecondAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectSecondAPODImage.fulfill()
+        }
         
         await waitForExpectations(timeout: 1.0)
         
@@ -577,44 +571,42 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPODImage = expectation(description: "Load APOD image from cache")
         
         /// Load APOD by request
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectFirstAPODThumbnail.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectFirstAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectFirstAPODThumbnail.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectFirstAPODImage.fulfill()
+        }
         
         // Load same APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectSecondAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectSecondAPODThumbnail.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectSecondAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectSecondAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectSecondAPODThumbnail.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectSecondAPODImage.fulfill()
+        }
         
         await waitForExpectations(timeout: 1.0)
         
@@ -650,19 +642,17 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
         
         // Load APOD by request
-        try cache.apod(for: testDate) { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
         }
         
         // Load different APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate2) { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate2)
-                expectSecondAPOD.fulfill()
-            }
+        Task {
+            let apod = try await cache.apod(for: testDate2)
+            await AsyncAssertEqual(await apod.date, testDate2)
+            expectSecondAPOD.fulfill()
         }
         
         await waitForExpectations(timeout: 1.0)
@@ -697,32 +687,30 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPODThumbnail = expectation(description: "Load APOD thumbnail from cache")
         
         // Load APOD by request
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectFirstAPODThumbnail.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectFirstAPODThumbnail.fulfill()
+        }
         
         // Load different APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate2, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate2)
-                expectSecondAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectSecondAPODThumbnail.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate2)
+            await AsyncAssertEqual(await apod.date, testDate2)
+            expectSecondAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate2, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectSecondAPODThumbnail.fulfill()
+        }
         
         await waitForExpectations(timeout: 1.0)
         
@@ -760,32 +748,30 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPODImage = expectation(description: "Load APOD image from cache")
         
         // Load APOD by request
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectFirstAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectFirstAPODImage.fulfill()
+        }
         
         // Load different APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate2, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate2)
-                expectSecondAPOD.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectSecondAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate2)
+            await AsyncAssertEqual(await apod.date, testDate2)
+            expectSecondAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate2, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectSecondAPODImage.fulfill()
+        }
         
         await waitForExpectations(timeout: 1.0)
         
@@ -825,44 +811,42 @@ final class APODCacheTests: XCTestCase {
         let expectSecondAPODImage = expectation(description: "Load APOD image from cache")
         
         /// Load APOD by request
-        try cache.apod(for: testDate, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate)
-                expectFirstAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectFirstAPODThumbnail.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectFirstAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate)
+            await AsyncAssertEqual(await apod.date, testDate)
+            expectFirstAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectFirstAPODThumbnail.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectFirstAPODImage.fulfill()
+        }
         
         // Load different APOD should wait for the first load task to finish and then use cached APOD
-        try cache.apod(for: testDate2, completion: { apod in
-            Task {
-                await AsyncAssertEqual(await apod.date, testDate2)
-                expectSecondAPOD.fulfill()
-            }
-        }, withThumbnail: true, thumbnailCompletion: { apod in
-            Task {
-                guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
-                expectSecondAPODThumbnail.fulfill()
-            }
-        }, withImage: true, imageCompletion: { apod in
-            Task {
-                guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
-                XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
-                expectSecondAPODImage.fulfill()
-            }
-        })
+        Task {
+            let apod = try await cache.apod(for: testDate2)
+            await AsyncAssertEqual(await apod.date, testDate2)
+            expectSecondAPOD.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate2, withThumbnail: true)
+            guard let apodThumbnailData = await apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            expectSecondAPODThumbnail.fulfill()
+        }
+        Task {
+            let apod = try await cache.apod(for: testDate2, withImage: true)
+            guard let apodImageData = await apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            expectSecondAPODImage.fulfill()
+        }
         
         await waitForExpectations(timeout: 1.0)
         
