@@ -383,9 +383,15 @@ final class APODCacheTests: XCTestCase {
     }
     
     
-    // MARK: Test to be named
+    // MARK: Reload
     
-    // Erst metadaten laden (gecachet), dann nochmal auf APOD zugreifen und thumbnail laden, dann bild selbst. Also nachladen auf gecachtem APOD (1 Test)
+    /// Access data for APOD in three steps:
+    /// 1. Load metadata
+    /// 2. Load thumbnail (only thumbnail is loaded form API, APOD metadata is from cache)
+    /// 3. Load image (only image is loaded form API, APOD metadata and thumbnail is from cache)
+    func testAccessWithReload() async throws {
+        
+    }
     
     
     // MARK: - Helpers
