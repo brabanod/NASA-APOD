@@ -632,22 +632,247 @@ final class APODCacheTests: XCTestCase {
     
     /// Test accessing a different APOD simultaneously, so that another Task is still running (only metadata).
     func testAccessDifferentMeta() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+        guard let testDate2 = DateUtils.today(adding: -2) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
         
+        let expectation = expectation(description: "Load APOD")
+        var firstFinished = false
+        
+        // Load APOD by request
+        try cache.apod(for: testDate) { apod in
+            XCTAssertEqual(apod.date, testDate)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        }
+        
+        // Load same APOD should wait for the first load task to finish and then use cached APOD
+        try cache.apod(for: testDate2) { apod in
+            XCTAssertEqual(apod.date, testDate2)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        }
+        
+        await waitForExpectations(timeout: 1.0)
+        
+        // Access again, this time directly from cache, no other request running
+        let apod = try await cache.apod(for: testDate)
+        XCTAssertEqual(apod.date, testDate)
+        
+        let apod2 = try await cache.apod(for: testDate2)
+        XCTAssertEqual(apod2.date, testDate2)
+        
+        // Both requests were started simultaneously, however still only one request to the API should be made. The other access needs to wait for this to finish and then use the cache.
+        XCTAssertEqual(requestCount, 2)
+        XCTAssertEqual(requestCountMeta, 2)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 0)
     }
     
     /// Test accessing a different APOD simultaneously, so that another Task is still running (metadata and thumbnail).
     func testAccessDifferentMetaAndThumbnail() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+        guard let testDate2 = DateUtils.today(adding: -2) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
         
+        let expectation = expectation(description: "Load APOD")
+        var firstFinished = false
+        
+        // Load APOD by request
+        try cache.apod(for: testDate, completion: { apod in
+            XCTAssertEqual(apod.date, testDate)
+        }, withThumbnail: true, thumbnailCompletion: { apod in
+            guard let apodThumbnailData = apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        })
+        
+        // Load same APOD should wait for the first load task to finish and then use cached APOD
+        try cache.apod(for: testDate2, completion: { apod in
+            XCTAssertEqual(apod.date, testDate2)
+        }, withThumbnail: true, thumbnailCompletion: { apod in
+            guard let apodThumbnailData = apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        })
+        
+        await waitForExpectations(timeout: 1.0)
+        
+        // Access again, this time directly from cache, no other request running
+        let apod = try await cache.apod(for: testDate, withThumbnail: true)
+        guard let apodThumbnailData = apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod.date, testDate)
+        XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+        
+        let apod2 = try await cache.apod(for: testDate2, withThumbnail: true)
+        guard let apod2ThumbnailData = apod2.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod2.date, testDate2)
+        XCTAssertEqual(apod2ThumbnailData, APODDemoData.sampleImageData)
+        
+        // Both requests were started simultaneously, however still only one request to the API should be made. The other access needs to wait for this to finish and then use the cache.
+        XCTAssertEqual(requestCount, 4)
+        XCTAssertEqual(requestCountMeta, 2)
+        XCTAssertEqual(requestCountThumbnail, 2)
+        XCTAssertEqual(requestCountImage, 0)
     }
     
     /// Test accessing a different APOD simultaneously, so that another Task is still running (metadata and image).
     func testAccessDifferentMetaAndImage() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+        guard let testDate2 = DateUtils.today(adding: -2) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
         
+        let expectation = expectation(description: "Load APOD")
+        var firstFinished = false
+        
+        // Load APOD by request
+        try cache.apod(for: testDate, completion: { apod in
+            XCTAssertEqual(apod.date, testDate)
+        }, withImage: true, imageCompletion: { apod in
+            guard let apodImageData = apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        })
+        
+        // Load same APOD should wait for the first load task to finish and then use cached APOD
+        try cache.apod(for: testDate2, completion: { apod in
+            XCTAssertEqual(apod.date, testDate2)
+        }, withImage: true, imageCompletion: { apod in
+            guard let apodImageData = apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        })
+        
+        await waitForExpectations(timeout: 1.0)
+        
+        // Access again, this time directly from cache, no other request running
+        let apod = try await cache.apod(for: testDate, withImage: true)
+        guard let apodImageData = apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod.date, testDate)
+        XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+        
+        let apod2 = try await cache.apod(for: testDate2, withImage: true)
+        guard let apod2ImageData = apod2.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod2.date, testDate2)
+        XCTAssertEqual(apod2ImageData, APODDemoData.sampleImage2Data)
+        
+        // Both requests were started simultaneously, however still only one request to the API should be made. The other access needs to wait for this to finish and then use the cache.
+        XCTAssertEqual(requestCount, 4)
+        XCTAssertEqual(requestCountMeta, 2)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 2)
     }
     
     /// Test accessing a different APOD simultaneously, so that another Task is still running (metadata, thumbnail and image).
     func testAccessDifferentAll() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+        guard let testDate2 = DateUtils.today(adding: -2) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
         
+        let expectation = expectation(description: "Load APOD")
+        var firstFinished = false
+        
+        /// Load APOD by request
+        try cache.apod(for: testDate, completion: { apod in
+            XCTAssertEqual(apod.date, testDate)
+        }, withThumbnail: true, thumbnailCompletion: { apod in
+            guard let apodThumbnailData = apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+        }, withImage: true, imageCompletion: { apod in
+            guard let apodImageData = apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        })
+        
+        // Load same APOD should wait for the first load task to finish and then use cached APOD
+        try cache.apod(for: testDate2, completion: { apod in
+            XCTAssertEqual(apod.date, testDate2)
+        }, withThumbnail: true, thumbnailCompletion: { apod in
+            guard let apodThumbnailData = apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+        }, withImage: true, imageCompletion: { apod in
+            guard let apodImageData = apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+            XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+            
+            if firstFinished {
+                expectation.fulfill()
+            } else {
+                firstFinished = true
+            }
+        })
+        
+        await waitForExpectations(timeout: 1.0)
+        
+        // Access again, this time directly from cache, no other request running
+        let apod = try await cache.apod(for: testDate, withThumbnail: true, withImage: true)
+        guard let apodImageData = apod.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        guard let apodThumbnailData = apod.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod.date, testDate)
+        XCTAssertEqual(apodImageData, APODDemoData.sampleImage2Data)
+        XCTAssertEqual(apodThumbnailData, APODDemoData.sampleImageData)
+        
+        let apod2 = try await cache.apod(for: testDate2, withThumbnail: true, withImage: true)
+        guard let apod2ImageData = apod2.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        guard let apod2ThumbnailData = apod2.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apod2.date, testDate2)
+        XCTAssertEqual(apod2ImageData, APODDemoData.sampleImage2Data)
+        XCTAssertEqual(apod2ThumbnailData, APODDemoData.sampleImageData)
+        
+        // Both requests were started simultaneously, however still only one request to the API should be made. The other access needs to wait for this to finish and then use the cache.
+        XCTAssertEqual(requestCount, 6)
+        XCTAssertEqual(requestCountMeta, 2)
+        XCTAssertEqual(requestCountThumbnail, 2)
+        XCTAssertEqual(requestCountImage, 2)
+
     }
     
     
