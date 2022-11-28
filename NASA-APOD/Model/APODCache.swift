@@ -65,9 +65,9 @@ class APODCache {
     ///     - date: The date for which to load the APOD.
     ///     - completion: This function is called, when loading metadata of APOD is completed.
     ///     - shouldLoadThumbnail: Specifies, if thumbnail should be loaded for APOD.
-    ///     - thumbnailCompletion: This function is called, when loading the thumbnail of APOD is completed.
+    ///     - thumbnailCompletion: This function is called, when loading the thumbnail of APOD is completed. `shouldLoadThumbnail` has to be set to `true` when this completion handler is set.
     ///     - shouldLoadImage: Specifies, if image should be loaded for APOD.
-    ///     - imageCompletion: This function is called when loading the image of APOD is completed.
+    ///     - imageCompletion: This function is called when loading the image of APOD is completed. `shouldLoadImage` has to be set to `true` when this completion handler is set.
     func apod(
         for date: Date,
         completion: @escaping (APOD) -> (),
@@ -200,4 +200,3 @@ class APODCache {
 
 // FIXME: Make APOD an actor because the APOD object is accessed asynchronously by thumbnail AND image task. This makes it vulnerable to race conditions. Therefore create a method which allows us to setThumbnail and setImage for the APOD.
 // FIXME: Should not create a copy and then store it again, this is extremly dangerous. Instead mutate the object, only using setters.
-// TODO: Find a way so that it is not possible to give completion handler for thumbnails or images but not loading any of these. This would reult in the inital loading to wait for ever to complete.
