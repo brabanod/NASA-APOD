@@ -15,9 +15,6 @@ class APODCache {
     
     private var apodAPI: APODAPI
     
-    /// Specifies how many APODs are loaded, when cache is initialized.
-    private(set) var initialLoadAmount: Int
-    
     /// Stores loaded APODs (cache)
     private var apods: [Date: APOD] = [:]
     
@@ -33,21 +30,21 @@ class APODCache {
     ///     - initialLoadAmout: The amount of APODs that should be loaded into cache directly when the cache is initialized.
     ///     - withThumbnails: Specifies, whether the initially loaded APODs should be loaded with thumbnails.
     ///     - withImages: Specifies, whether the initially loaded APODs should be loaded with images.
-    init(
-        api apodAPI: APODAPI,
-        initialLoadAmount: Int = 10,
-        withThumbnails shouldLoadThumbnails: Bool = false,
-        withImages shouldLoadImages: Bool = false)
-    async throws {
+    init(api apodAPI: APODAPI, withThumbnails shouldLoadThumbnails: Bool = false, withImages shouldLoadImages: Bool = false) throws {
         self.apodAPI = apodAPI
-        self.initialLoadAmount = initialLoadAmount
-        
-        try await initialLoad(withThumbnails: shouldLoadThumbnails, withImages: shouldLoadImages)
     }
     
-    func initialLoad(withThumbnails shouldLoadThumbnails: Bool, withImages shouldLoadImages: Bool) async throws {
+    /// Loads a specified amount of APODs into the cache.
+    ///
+    /// - Parameters:
+    ///     - loadAmount: Specifies how many past days should be loaded. I. e. if a value of 10 is given, the last 10 APODs are loaded into the cache.
+    ///     - shouldLoadThumbnails: Specifies, whether thumbnails should also be loaded.
+    ///     - shouldLoadImages: Specifies, whether images should also be loaded.
+    public func load(pastDays loadAmount: Int = 10, withThumbnails shouldLoadThumbnails: Bool, withImages shouldLoadImages: Bool) async throws {
+        assert(loadAmount >= 0)
+    
         // Store retrieved APODs at their individual position in the cache
-        for days in (0..<self.initialLoadAmount) {
+        for days in (0..<loadAmount) {
             // Get date, continue to next if this fails
             guard let date = DateUtils.today(adding: -(days+1))
             else {

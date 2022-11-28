@@ -14,6 +14,8 @@ final class APODCacheTests: XCTestCase {
     var apiKey: String!
     let apiBaseURL = "https://api.nasa.gov/planetary/apod"
     
+    let initialLoadAmount: Int = 10
+    
     override func setUpWithError() throws {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [APODAPIMockURLProtocol.self]
@@ -31,10 +33,11 @@ final class APODCacheTests: XCTestCase {
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
         // Initially load APODs
-        let cache = try await APODCache(api: apodAPI)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: initialLoadAmount, withThumbnails: false, withImages: false)
         
-        XCTAssertEqual(requestCount, cache.initialLoadAmount)
-        XCTAssertEqual(requestCountMeta, cache.initialLoadAmount)
+        XCTAssertEqual(requestCount, initialLoadAmount)
+        XCTAssertEqual(requestCountMeta, initialLoadAmount)
         XCTAssertEqual(requestCountThumbnail, 0)
         XCTAssertEqual(requestCountImage, 0)
         let requestCountAfterInitialLoad = requestCount
@@ -43,7 +46,7 @@ final class APODCacheTests: XCTestCase {
         let requestCountImageAfterInitialLoad = requestCountImage
         
         // Check that all initially loaded APODs are present
-        for days in (1...cache.initialLoadAmount) {
+        for days in (1...initialLoadAmount) {
             guard let date = DateUtils.today(adding: -days) else { fatalError("Could not create date.") }
             
             let apod = try await cache.apod(for: date)
@@ -64,11 +67,12 @@ final class APODCacheTests: XCTestCase {
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
         // Initially load APODs
-        let cache = try await APODCache(api: apodAPI, withThumbnails: true)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: initialLoadAmount, withThumbnails: true, withImages: false)
         
-        XCTAssertEqual(requestCount, cache.initialLoadAmount * 2)
-        XCTAssertEqual(requestCountMeta, cache.initialLoadAmount)
-        XCTAssertEqual(requestCountThumbnail, cache.initialLoadAmount)
+        XCTAssertEqual(requestCount, initialLoadAmount * 2)
+        XCTAssertEqual(requestCountMeta, initialLoadAmount)
+        XCTAssertEqual(requestCountThumbnail, initialLoadAmount)
         XCTAssertEqual(requestCountImage, 0)
         let requestCountAfterInitialLoad = requestCount
         let requestCountMetaAfterInitialLoad = requestCountMeta
@@ -76,7 +80,7 @@ final class APODCacheTests: XCTestCase {
         let requestCountImageAfterInitialLoad = requestCountImage
         
         // Check that all initially loaded APODs are present
-        for days in (1...cache.initialLoadAmount) {
+        for days in (1...initialLoadAmount) {
             guard let date = DateUtils.today(adding: -days) else { fatalError("Could not create date.") }
             
             let apod = try await  cache.apod(for: date)
@@ -98,19 +102,20 @@ final class APODCacheTests: XCTestCase {
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
         // Initially load APODs
-        let cache = try await APODCache(api: apodAPI, withImages: true)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: initialLoadAmount, withThumbnails: false, withImages: true)
         
-        XCTAssertEqual(requestCount, cache.initialLoadAmount * 2)
-        XCTAssertEqual(requestCountMeta, cache.initialLoadAmount)
+        XCTAssertEqual(requestCount, initialLoadAmount * 2)
+        XCTAssertEqual(requestCountMeta, initialLoadAmount)
         XCTAssertEqual(requestCountThumbnail, 0)
-        XCTAssertEqual(requestCountImage, cache.initialLoadAmount)
+        XCTAssertEqual(requestCountImage, initialLoadAmount)
         let requestCountAfterInitialLoad = requestCount
         let requestCountMetaAfterInitialLoad = requestCountMeta
         let requestCountThumbnailAfterInitialLoad = requestCountThumbnail
         let requestCountImageAfterInitialLoad = requestCountImage
         
         // Check that all initially loaded APODs are present
-        for days in (1...cache.initialLoadAmount) {
+        for days in (1...initialLoadAmount) {
             guard let date = DateUtils.today(adding: -days) else { fatalError("Could not create date.") }
             
             let apod = try await cache.apod(for: date)
@@ -132,19 +137,20 @@ final class APODCacheTests: XCTestCase {
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
         // Initially load APODs
-        let cache = try await APODCache(api: apodAPI, withThumbnails: true, withImages: true)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: initialLoadAmount, withThumbnails: true, withImages: true)
         
-        XCTAssertEqual(requestCount, cache.initialLoadAmount * 3)
-        XCTAssertEqual(requestCountMeta, cache.initialLoadAmount)
-        XCTAssertEqual(requestCountThumbnail, cache.initialLoadAmount)
-        XCTAssertEqual(requestCountImage, cache.initialLoadAmount)
+        XCTAssertEqual(requestCount, initialLoadAmount * 3)
+        XCTAssertEqual(requestCountMeta, initialLoadAmount)
+        XCTAssertEqual(requestCountThumbnail, initialLoadAmount)
+        XCTAssertEqual(requestCountImage, initialLoadAmount)
         let requestCountAfterInitialLoad = requestCount
         let requestCountMetaAfterInitialLoad = requestCountMeta
         let requestCountThumbnailAfterInitialLoad = requestCountThumbnail
         let requestCountImageAfterInitialLoad = requestCountImage
         
         // Check that all initially loaded APODs are present
-        for days in (1...cache.initialLoadAmount) {
+        for days in (1...initialLoadAmount) {
             guard let date = DateUtils.today(adding: -days) else { fatalError("Could not create date.") }
             
             let apod = try await cache.apod(for: date)
@@ -172,7 +178,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
         
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         // Test uncached
         let apodUncached = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
@@ -204,7 +210,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
 
         // Test uncached
         let apodUncached = try await cache.apod(for: testDate, withThumbnail: true, withImage: false)
@@ -238,7 +244,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
 
         // Test uncached
         let apodUncached = try await cache.apod(for: testDate, withThumbnail: false, withImage: true)
@@ -272,7 +278,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
 
         // Test uncached
         let apodUncached = try await cache.apod(for: testDate, withThumbnail: true, withImage: true)
@@ -311,7 +317,8 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 1, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: 1, withThumbnails: false, withImages: false)
         
         // Test access APOD from initial load
         let apod = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
@@ -332,7 +339,8 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 1, withThumbnails: true, withImages: false)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: 1, withThumbnails: true, withImages: false)
         
         // Test access APOD from initial load
         let apod = try await cache.apod(for: testDate, withThumbnail: true, withImage: false)
@@ -354,7 +362,8 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 1, withThumbnails: false, withImages: true)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: 1, withThumbnails: false, withImages: true)
         
         // Test access APOD from initial load
         let apod = try await cache.apod(for: testDate, withThumbnail: false, withImage: true)
@@ -376,7 +385,8 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 1, withThumbnails: true, withImages: true)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: 1, withThumbnails: true, withImages: true)
         
         // Test access APOD from initial load
         let apod = try await cache.apod(for: testDate, withThumbnail: true, withImage: true)
@@ -402,7 +412,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -443,7 +453,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -500,7 +510,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -557,7 +567,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -634,7 +644,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -679,7 +689,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -742,7 +752,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -805,7 +815,7 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
         
         let expectFirstAPOD = expectation(description: "Load APOD from API")
         let expectSecondAPOD = expectation(description: "Load APOD from cache")
@@ -892,7 +902,8 @@ final class APODCacheTests: XCTestCase {
         // Setup mock request handler
         APODAPIMockURLProtocol.requestHandler = sequenceMock()
 
-        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 1, withThumbnails: false, withImages: false)
+        let cache = try APODCache(api: apodAPI)
+        try await cache.load(pastDays: 1, withThumbnails: false, withImages: false)
         
         // Test access APOD from initial load
         let apod = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
