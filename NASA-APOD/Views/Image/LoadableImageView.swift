@@ -32,8 +32,18 @@ class LoadableImageView: UIView {
         set {
             // Show/Hide loading view if image is nil/present
             if newValue != nil {
-                // Set newValue directly, if it's not nil and hide loading view thereafter
-                self.imageView.image = newValue
+                // Set newValue and hide, if it's not nil loading view thereafter
+                if self.imageView.image == nil {
+                    // Change value directly, if previous value was nil
+                    self.imageView.image = newValue
+                } else {
+                    // Cross fade to new image, if there was already an image displayed
+                    UIView.transition(with: self.imageView,
+                                      duration: 2.0,
+                                      options: .transitionCrossDissolve,
+                                      animations: { self.imageView.image = newValue },
+                                      completion: nil)
+                }
                 hideLoadingView()
             } else {
                 // If new value is nil, set it first after hiding
