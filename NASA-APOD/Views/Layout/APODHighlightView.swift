@@ -127,12 +127,17 @@ class APODHighlightView: UIView {
     func loadAPODData() {
         Task {
             do {
+                // Incrementally load data for fast display
+                
                 let today = Date()
                 // Load APOD without thumbnail first
                 self.apod = try await apodCache?.apod(for: today)
                 
                 // Load APOD thumbnail
                 self.apod = try await apodCache?.apod(for: today, withThumbnail: true)
+                
+                // Load APOD full size image
+                self.apod = try await apodCache?.apod(for: today, withImage: true)
             } catch {
                 Log.default.log("Failed to load APOD. Error:\n\(error)")
                 // Show alert, that loading APOD failed
@@ -149,6 +154,7 @@ class APODHighlightView: UIView {
     @MainActor func showAPOD(_ apod: APOD) async {
         // Set title label
         let apodTitle = await apod.title
+        // FIXME: Animation does not work
         UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
             self.titleLabel.text = apodTitle
         }
