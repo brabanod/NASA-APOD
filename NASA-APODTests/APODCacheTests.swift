@@ -175,49 +175,142 @@ final class APODCacheTests: XCTestCase {
     }
     
     
-    // MARK: Access uncached APOD
+    // MARK: Access APOD
     
-    /// Test loading an uncached APOD (only metadata).
-    func testAccessAPODUncachedOnlyMeta() async throws {
-        // Test uncached first, then cached (this eliminates the cached tests
+    /// Test loading an uncached APOD (only metadata) first, then call the same one cached.
+    func testAccessAPODOnlyMeta() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+        
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+        
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+        
+        // Test uncached
+        let apodUncached = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
+        
+        XCTAssertEqual(requestCount, 1)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 0)
+        XCTAssertEqual(apodUncached.date, testDate)
+        XCTAssertNil(apodUncached.thumbnail)
+        XCTAssertNil(apodUncached.image)
+        
+        // Test cached
+        let apodCached = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
+        
+        XCTAssertEqual(requestCount, 1)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 0)
+        XCTAssertEqual(apodCached.date, testDate)
+        XCTAssertNil(apodCached.thumbnail)
+        XCTAssertNil(apodCached.image)
     }
     
     /// Test loading an uncached APOD (metadata and thumbnail).
-    func testAccessAPODUncachedMetaAndThumbnail() async throws {
-        
+    func testAccessAPODMetaAndThumbnail() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+
+        // Test uncached
+        let apodUncached = try await cache.apod(for: testDate, withThumbnail: true, withImage: false)
+
+        XCTAssertEqual(requestCount, 2)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 1)
+        XCTAssertEqual(requestCountImage, 0)
+        guard let apodUncachedThumbnailData = apodUncached.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apodUncached.date, testDate)
+        XCTAssertEqual(apodUncachedThumbnailData, APODDemoData.sampleImageData)
+        XCTAssertEqual(apodUncached.image, nil)
+
+        // Test cached
+        let apodCached = try await cache.apod(for: testDate, withThumbnail: true, withImage: false)
+
+        XCTAssertEqual(requestCount, 2)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 1)
+        XCTAssertEqual(requestCountImage, 0)
+        guard let apodCachedThumbnailData = apodCached.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apodCached.date, testDate)
+        XCTAssertEqual(apodCachedThumbnailData, APODDemoData.sampleImageData)
+        XCTAssertEqual(apodCached.image, nil)
     }
     
     /// Test loading an uncached APOD (metadata and image).
-    func testAccessAPODUncachedMetaAndImage() async throws {
-        
+    func testAccessAPODMetaAndImage() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+
+        // Test uncached
+        let apodUncached = try await cache.apod(for: testDate, withThumbnail: false, withImage: true)
+
+        XCTAssertEqual(requestCount, 2)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 1)
+        guard let apodUncachedImageData = apodUncached.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apodUncached.date, testDate)
+        XCTAssertEqual(apodUncached.thumbnail, nil)
+        XCTAssertEqual(apodUncachedImageData, APODDemoData.sampleImage2Data)
+
+        // Test cached
+        let apodCached = try await cache.apod(for: testDate, withThumbnail: false, withImage: true)
+
+        XCTAssertEqual(requestCount, 2)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 1)
+        guard let apodCachedImageData = apodCached.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apodCached.date, testDate)
+        XCTAssertEqual(apodUncached.thumbnail, nil)
+        XCTAssertEqual(apodCachedImageData, APODDemoData.sampleImage2Data)
     }
     
     /// Test loading an uncached APOD (metadata, thumbnail and image).
-    func testAccessAPODUncachedAll() async throws {
-        
-    }
-    
-    
-    // MARK: Access cached APOD
-    
-    /// Test loading a cached APOD (only metadata).
-    func testAccessAPODCachedOnlyMeta() async throws {
-        
-    }
-    
-    /// Test loading a cached APOD (metadata and thumbnail).
-    func testAccessAPODCachedMetaAndThumbnail() async throws {
-        
-    }
-    
-    /// Test loading a cached APOD (metadata and image).
-    func testAccessAPODCachedMetaAndImage() async throws {
-        
-    }
-    
-    /// Test loading a cached APOD (metadata, thumbnail and image).
-    func testAccessAPODCachedAll() async throws {
-        
+    func testAccessAPODAll() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+
+        let cache = try await APODCache(api: apodAPI, initialLoadAmount: 0, withThumbnails: false, withImages: false)
+
+        // Test uncached
+        let apodUncached = try await cache.apod(for: testDate, withThumbnail: true, withImage: true)
+
+        XCTAssertEqual(requestCount, 3)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 1)
+        XCTAssertEqual(requestCountImage, 1)
+        guard let apodUncachedThumbnailData = apodUncached.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        guard let apodUncachedImageData = apodUncached.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apodUncached.date, testDate)
+        XCTAssertEqual(apodUncachedThumbnailData, APODDemoData.sampleImageData)
+        XCTAssertEqual(apodUncachedImageData, APODDemoData.sampleImage2Data)
+
+        // Test cached
+        let apodCached = try await cache.apod(for: testDate, withThumbnail: true, withImage: true)
+
+        XCTAssertEqual(requestCount, 3)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 1)
+        XCTAssertEqual(requestCountImage, 1)
+        guard let apodCachedThumbnailData = apodCached.thumbnail?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        guard let apodCachedImageData = apodCached.image?.pngData() else { fatalError("Could not convert response image to Data object.") }
+        XCTAssertEqual(apodCached.date, testDate)
+        XCTAssertEqual(apodCachedThumbnailData, APODDemoData.sampleImageData)
+        XCTAssertEqual(apodCachedImageData, APODDemoData.sampleImage2Data)
     }
     
     
@@ -288,6 +381,11 @@ final class APODCacheTests: XCTestCase {
     func testAccessDifferentAll() async throws {
         
     }
+    
+    
+    // MARK: Test to be named
+    
+    // Erst metadaten laden (gecachet), dann nochmal auf APOD zugreifen und thumbnail laden, dann bild selbst. Also nachladen auf gecachtem APOD (1 Test)
     
     
     // MARK: - Helpers

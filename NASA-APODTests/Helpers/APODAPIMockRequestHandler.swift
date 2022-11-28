@@ -62,7 +62,7 @@ struct APODAPIMockRequestHandler {
     ///
     /// - Returns: A closure which handles the request.
     static func successCount(
-        data responseData: ((String) -> (Data?))?,
+        data responseData: ((String) -> (Data?))? = nil,
         expectedURL: ((String) -> (String))? = nil,
         count: @escaping (String) -> ())
     -> ((URLRequest) throws -> (HTTPURLResponse, Data?)) {
