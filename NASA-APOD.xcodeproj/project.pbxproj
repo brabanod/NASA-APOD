@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C0F9F252934BD47005B3B66 /* AsyncAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F9F242934BD47005B3B66 /* AsyncAssert.swift */; };
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
 		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
 		5C2D918D29323873006AF534 /* APODCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918C29323873006AF534 /* APODCache.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5C0F9F242934BD47005B3B66 /* AsyncAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncAssert.swift; sourceTree = "<group>"; };
 		5C2D9186293108D8006AF534 /* APODCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellView.swift; sourceTree = "<group>"; };
 		5C2D918829321357006AF534 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		5C2D918C29323873006AF534 /* APODCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCache.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		5CE36D44292E0A7700558212 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5C0F9F242934BD47005B3B66 /* AsyncAssert.swift */,
 				5CE36D45292E0AA800558212 /* APODDemoData.swift */,
 				5CE36D40292E0A2000558212 /* APODAPIMockURLProtocol.swift */,
 				5C2D91902932901F006AF534 /* APODAPIMockRequestHandler.swift */,
@@ -385,6 +388,7 @@
 			files = (
 				5CE36D46292E0AA800558212 /* APODDemoData.swift in Sources */,
 				5C2D918F29328503006AF534 /* APODCacheTests.swift in Sources */,
+				5C0F9F252934BD47005B3B66 /* AsyncAssert.swift in Sources */,
 				5CE36D3F292D699100558212 /* APODAPITests.swift in Sources */,
 				5CE36D41292E0A2000558212 /* APODAPIMockURLProtocol.swift in Sources */,
 				5CE36D21292D210F00558212 /* APODTests.swift in Sources */,

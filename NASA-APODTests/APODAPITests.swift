@@ -39,12 +39,12 @@ final class APODAPITests: XCTestCase {
         let singleAPOD = try await apodAPI.apodByDate(testDate)
         
         // Test that demo data was returned correclty from API
-        XCTAssertEqual(singleAPOD.date, testDate)
-        XCTAssertEqual(singleAPOD.copyright, "Tommy Lease")
-        XCTAssertEqual(singleAPOD.explanation, "Few star clusters this close to each other ...")
-        XCTAssertEqual(singleAPOD.title, "A Double Star Cluster in Perseus")
-        XCTAssertEqual(singleAPOD.imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
-        XCTAssertEqual(singleAPOD.thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
+        await AsyncAssertEqual(await singleAPOD.date, testDate)
+        await AsyncAssertEqual(await singleAPOD.copyright, "Tommy Lease")
+        await AsyncAssertEqual(await singleAPOD.explanation, "Few star clusters this close to each other ...")
+        await AsyncAssertEqual(await singleAPOD.title, "A Double Star Cluster in Perseus")
+        await AsyncAssertEqual(await singleAPOD.imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
+        await AsyncAssertEqual(await singleAPOD.thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
     
     func testAPODByDateThrowsBadResponse() async throws {
@@ -106,20 +106,20 @@ final class APODAPITests: XCTestCase {
         XCTAssertEqual(multipleAPOD.count, 4)
         
         let expectedDate2 = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 21))!
-        XCTAssertEqual(multipleAPOD[2].date, expectedDate2)
-        XCTAssertNil(multipleAPOD[2].copyright)
-        XCTAssertEqual(multipleAPOD[2].explanation, "Stars can make beautiful patterns ...")
-        XCTAssertEqual(multipleAPOD[2].title, "The Butterfly Nebula from Hubble")
-        XCTAssertEqual(multipleAPOD[2].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_3656.jpg"))
-        XCTAssertEqual(multipleAPOD[2].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_960.jpg"))
+        await AsyncAssertEqual(await multipleAPOD[2].date, expectedDate2)
+        await AsyncAssertEqual(await multipleAPOD[2].copyright, nil)
+        await AsyncAssertEqual(await multipleAPOD[2].explanation, "Stars can make beautiful patterns ...")
+        await AsyncAssertEqual(await multipleAPOD[2].title, "The Butterfly Nebula from Hubble")
+        await AsyncAssertEqual(await multipleAPOD[2].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_3656.jpg"))
+        await AsyncAssertEqual(await multipleAPOD[2].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/Butterfly_HubbleOstling_960.jpg"))
         
         let expectedDate3 = testEndDate
-        XCTAssertEqual(multipleAPOD[3].date, expectedDate3)
-        XCTAssertEqual(multipleAPOD[3].copyright, "Tommy Lease")
-        XCTAssertEqual(multipleAPOD[3].explanation, "Few star clusters are this close to each other ...")
-        XCTAssertEqual(multipleAPOD[3].title, "A Double Star Cluster in Perseus")
-        XCTAssertEqual(multipleAPOD[3].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
-        XCTAssertEqual(multipleAPOD[3].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
+        await AsyncAssertEqual(await multipleAPOD[3].date, expectedDate3)
+        await AsyncAssertEqual(await multipleAPOD[3].copyright, "Tommy Lease")
+        await AsyncAssertEqual(await multipleAPOD[3].explanation, "Few star clusters are this close to each other ...")
+        await AsyncAssertEqual(await multipleAPOD[3].title, "A Double Star Cluster in Perseus")
+        await AsyncAssertEqual(await multipleAPOD[3].imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
+        await AsyncAssertEqual(await multipleAPOD[3].thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
     }
     
     func testAPODsByDateRangeThrowsBadResponse() async throws {
@@ -167,32 +167,32 @@ final class APODAPITests: XCTestCase {
     // MARK: APOD thumbnail Tests
     
     func testThumbnailSuccess() async throws {
-        guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
             data: APODDemoData.sampleImageData,
-            expectedURL: sampleAPOD.thumbnailURL.absoluteString)
+            expectedURL: await sampleAPOD.thumbnailURL.absoluteString)
         
         // Call API
         let thumbnail = try await apodAPI.thumbnail(of: sampleAPOD)
-        sampleAPOD.thumbnail = thumbnail
+        await sampleAPOD.setThumbnail(thumbnail)
         
         // Test that demo image was returned correctly from API
         guard let thumbnailData = thumbnail.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(thumbnailData == APODDemoData.sampleImageData)
         
         // Test that image was also set in sampleAPOD
-        guard let sampleAPODImageData = sampleAPOD.thumbnail?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        guard let sampleAPODImageData = await sampleAPOD.thumbnail?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
         XCTAssertTrue(sampleAPODImageData == APODDemoData.sampleImageData)
         
         // Test that cached result is returned, when present
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
             data: APODDemoData.sampleImage2Data,
-            expectedURL: sampleAPOD.thumbnailURL.absoluteString)
+            expectedURL: await sampleAPOD.thumbnailURL.absoluteString)
         
         // Call API
         let image2 = try await apodAPI.thumbnail(of: sampleAPOD)
-        sampleAPOD.thumbnail = image2
+        await sampleAPOD.setThumbnail(image2)
         
         // Test that image was not overriden
         guard let image2Data = image2.pngData() else { fatalError("Could not convert response image to Data object.") }
@@ -201,14 +201,14 @@ final class APODAPITests: XCTestCase {
         
         // Test that cached result is overriden with force reload
         let image3 = try await apodAPI.thumbnail(of: sampleAPOD, forceReload: true)
-        sampleAPOD.thumbnail = image3
+        await sampleAPOD.setThumbnail(image3)
         
         guard let image3Data = image3.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(image3Data == APODDemoData.sampleImage2Data)
         XCTAssertTrue(image3Data != APODDemoData.sampleImageData)
         
         // Test that image was set in sampleAPOD
-        guard let sampleAPODImageData = sampleAPOD.thumbnail?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        guard let sampleAPODImageData = await sampleAPOD.thumbnail?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
         XCTAssertTrue(sampleAPODImageData == APODDemoData.sampleImage2Data)
     }
     
@@ -235,7 +235,7 @@ final class APODAPITests: XCTestCase {
         
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
             data: corruptImageData,
-            expectedURL: sampleAPOD.thumbnailURL.absoluteString)
+            expectedURL: await sampleAPOD.thumbnailURL.absoluteString)
         
         do {
             // Call API
@@ -252,32 +252,32 @@ final class APODAPITests: XCTestCase {
     // MARK: APOD image Tests
     
     func testImageSuccess() async throws {
-        guard var sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
+        guard let sampleAPOD = APODDemoData.sampleAPOD else { fatalError("Could not load sample APOD.") }
         
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
             data: APODDemoData.sampleImageData,
-            expectedURL: sampleAPOD.imageURL.absoluteString)
+            expectedURL: await sampleAPOD.imageURL.absoluteString)
         
         // Call API
         let image = try await apodAPI.image(of: sampleAPOD)
-        sampleAPOD.image = image
+        await sampleAPOD.setImage(image)
         
         // Test that demo image was returned correctly from API
         guard let imageData = image.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(imageData == APODDemoData.sampleImageData)
         
         // Test that image was also set in sampleAPOD
-        guard let sampleAPODImageData = sampleAPOD.image?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        guard let sampleAPODImageData = await sampleAPOD.image?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
         XCTAssertTrue(sampleAPODImageData == APODDemoData.sampleImageData)
         
         // Test that cached result is returned, when present
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
             data: APODDemoData.sampleImage2Data,
-            expectedURL: sampleAPOD.imageURL.absoluteString)
+            expectedURL: await sampleAPOD.imageURL.absoluteString)
         
         // Call API
         let image2 = try await apodAPI.image(of: sampleAPOD)
-        sampleAPOD.image = image2
+        await sampleAPOD.setImage(image2)
         
         // Test that image was not overriden
         guard let image2Data = image2.pngData() else { fatalError("Could not convert response image to Data object.") }
@@ -286,14 +286,14 @@ final class APODAPITests: XCTestCase {
         
         // Test that cached result is overriden with force reload
         let image3 = try await apodAPI.image(of: sampleAPOD, forceReload: true)
-        sampleAPOD.image = image3
+        await sampleAPOD.setImage(image3)
         
         guard let image3Data = image3.pngData() else { fatalError("Could not convert response image to Data object.") }
         XCTAssertTrue(image3Data == APODDemoData.sampleImage2Data)
         XCTAssertTrue(image3Data != APODDemoData.sampleImageData)
         
         // Test that image was also set in sampleAPOD
-        guard let sampleAPODImageData = sampleAPOD.image?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
+        guard let sampleAPODImageData = await sampleAPOD.image?.pngData() else { fatalError("Could not convert image in APOD to Data object.") }
         XCTAssertTrue(sampleAPODImageData == APODDemoData.sampleImage2Data)
     }
     
@@ -320,7 +320,7 @@ final class APODAPITests: XCTestCase {
         
         APODAPIMockURLProtocol.requestHandler = APODAPIMockRequestHandler.success(
             data: corruptImageData,
-            expectedURL: sampleAPOD.imageURL.absoluteString)
+            expectedURL: await sampleAPOD.imageURL.absoluteString)
         
         do {
             // Call API

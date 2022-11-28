@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 /// This struct represents one element of an 'Astronomic Picture of the day'.
-struct APOD: Decodable {
+actor APOD: Decodable {
     var copyright: String?
     var date: Date
     var title: String
@@ -22,6 +22,14 @@ struct APOD: Decodable {
     
     private enum CodingKeys : String, CodingKey {
         case copyright, date, description, explanation, title, thumbnailURL = "url", imageURL = "hdurl"
+    }
+    
+    func setThumbnail(_ thumbnail: UIImage?) {
+        self.thumbnail = thumbnail
+    }
+    
+    func setImage(_ image: UIImage?) {
+        self.image = image
     }
     
     init(from decoder: Decoder) throws {

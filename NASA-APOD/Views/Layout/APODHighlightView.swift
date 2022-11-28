@@ -28,13 +28,7 @@ class APODHighlightView: UIView {
     }
     
     /// The currently displayed APOD.
-    private(set) var apod: APOD? {
-        didSet {
-            if self.apod != nil {
-                showAPOD(self.apod!)
-            }
-        }
-    }
+    private(set) var apod: APOD?
     
     
     // MARK: -
@@ -125,15 +119,17 @@ class APODHighlightView: UIView {
             do {
                 // Load APOD
                 if let apod = try await apodAPI?.apodByDate(Date())  {
+                    // TODO: Use APODCache
                     // Update labels before image is loaded, because image loading takes more time
                     self.apod = apod
+                    await showAPOD(self.apod!)
                     
                     // Load full size image for APOD (can't pass self.apod directly, because it is actor-isolated)
-                    let image = try await apodAPI?.image(of: apod)
+                    let image = try await apodAPI?.image(of: self.apod!)
                     
-                    // Update image
-                    // TODO: If APOD is changed to actor, this won't trigger the didSet and therefore not update the UI
-                    self.apod?.image = image
+                    // Update image and trigger showing APOD again
+                    await self.apod!.setImage(image)
+                    await showAPOD(self.apod!)
                 }
             } catch {
                 Log.default.log("Failed to load APOD. Error:\n\(error)")
@@ -148,18 +144,22 @@ class APODHighlightView: UIView {
     }
     
     /// Reloads the UI to display the given APOD.
-    @MainActor func showAPOD(_ apod: APOD) {
+    @MainActor func showAPOD(_ apod: APOD) async {
         // Set title label
+        let apodTitle = await apod.title
         UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
-            self.titleLabel.text = apod.title
+            self.titleLabel.text = apodTitle
         }
         
         // Set copyright label
+        let apodCopyright = await apod.copyright
         UIView.transition(with: copyrightLabel, duration: 0.8, options: .transitionCrossDissolve) {
-            self.copyrightLabel.text = "\(String(localized: "Today", comment: "APOD: Description of the today date.")) | © \(apod.copyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright."))"
+            self.copyrightLabel.text = "\(String(localized: "Today", comment: "APOD: Description of the today date.")) | © \(apodCopyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright."))"
         }
         
         // Set image. Try image first and then thumbnail.
-        imageView.image = apod.image != nil ? apod.image : apod.thumbnail
+        let apodThumbnail = await apod.thumbnail
+        let apodImage = await apod.image
+        imageView.image = apodImage != nil ? apodImage : apodThumbnail
     }
 }

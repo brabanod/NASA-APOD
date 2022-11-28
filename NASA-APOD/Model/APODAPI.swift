@@ -61,7 +61,7 @@ class APODAPI {
     /// - Returns: The thumbnail image of the given `APOD`.
     func thumbnail(of apod: APOD, forceReload: Bool = false) async throws -> UIImage {
         // Load thumbnail image if needed or requested
-        var thumbnail = apod.thumbnail
+        var thumbnail = await apod.thumbnail
         if thumbnail == nil || forceReload {
             thumbnail = try await queryImage(url: apod.thumbnailURL)
         }
@@ -76,7 +76,7 @@ class APODAPI {
     /// - Returns: The full size image of the given `APOD`.
     func image(of apod: APOD, forceReload: Bool = false) async throws -> UIImage {
         // Load image if needed or requested
-        var image = apod.image
+        var image = await apod.image
         if image == nil || forceReload {
             image = try await queryImage(url: apod.imageURL)
         }

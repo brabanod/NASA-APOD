@@ -110,9 +110,8 @@ class APODCache {
                 if thumbnailTasks[date] == nil {
                     thumbnailTasks[date] = Task { [apod] in
                         let thumbnail = try await apodAPI.thumbnail(of: apod!)
-                        var apodUpdate = apod!
-                        apodUpdate.thumbnail = thumbnail
-                        return apodUpdate
+                        await apod!.setThumbnail(thumbnail)
+                        return apod!
                     }
                 }
                 // Wait for the load task to finish and remove it thereafter
@@ -132,9 +131,8 @@ class APODCache {
                 if imageTasks[date] == nil {
                     imageTasks[date] = Task { [apod] in
                         let image = try await apodAPI.image(of: apod!)
-                        var apodUpdate = apod!
-                        apodUpdate.image = image
-                        return apodUpdate
+                        await apod!.setImage(image)
+                        return apod!
                     }
                 }
                 // Wait for the load task to finish and remove it thereafter
@@ -197,6 +195,3 @@ class APODCache {
         }
     }
 }
-
-// FIXME: Make APOD an actor because the APOD object is accessed asynchronously by thumbnail AND image task. This makes it vulnerable to race conditions. Therefore create a method which allows us to setThumbnail and setImage for the APOD.
-// FIXME: Should not create a copy and then store it again, this is extremly dangerous. Instead mutate the object, only using setters.
