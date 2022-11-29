@@ -35,6 +35,8 @@ class APODListView: UIView {
         }
     }
     
+    private(set) var numberOfItemsDisplayed: Int = Configuration.initialCacheLoadAmount
+    
     
     // MARK: -
     
@@ -89,8 +91,7 @@ extension APODListView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // TODO: Read the initial value from initialAPODLoadAmount (SceneDelegate)
-        return 2
+        return numberOfItemsDisplayed
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

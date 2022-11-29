@@ -10,9 +10,6 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    
-    private let initialCacheLoadAmount: Int = 10
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -30,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 // Start loading a few APODs in the background
                 Task{
-                    try await apodCache.load(pastDays: initialCacheLoadAmount, withThumbnails: true, withImages: false)
+                    try await apodCache.load(pastDays: Configuration.initialCacheLoadAmount, withThumbnails: true, withImages: false)
                 }
             } catch {
                 // This should never happen, when NASAAPIKey is set.
