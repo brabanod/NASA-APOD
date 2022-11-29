@@ -23,7 +23,7 @@ class APODListView: UIView {
     }
     
     /// Specifies how many cells should be displayed in one row.
-    private let itemsPerRow: CGFloat = 2
+    private let itemsPerRow: Int = 2
     
     /// Reuse identifier for the cell in the `UICollectionView`.
     private let cellId = "APODCell"
@@ -110,12 +110,12 @@ extension APODListView: UICollectionViewDataSource {
         Task {
             // Load APOD metadata
             var apod = try await apodCache?.apod(for: requestDate)
-            await cell.setTitle(await apod?.title)
-            await cell.setAccessoryText(await apod?.date.formatted(date: .numeric, time: .omitted))
+            cell.setTitle(await apod?.title)
+            cell.setAccessoryText(await apod?.date.formatted(date: .numeric, time: .omitted))
             
             // Load APOD thumbnail
             apod = try await apodCache?.apod(for: requestDate, withThumbnail: true)
-            await cell.setImage(await apod?.thumbnail)
+            cell.setImage(await apod?.thumbnail)
         }
         
         
@@ -129,9 +129,9 @@ extension APODListView: UICollectionViewDataSource {
 extension APODListView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let paddingSpace = horizontalCellPadding * (itemsPerRow + 1)
+        let paddingSpace = horizontalCellPadding * CGFloat(itemsPerRow + 1)
         let availableWidth = self.frame.width - paddingSpace
-        let widthPerItem = availableWidth / itemsPerRow
+        let widthPerItem = availableWidth / CGFloat(itemsPerRow)
 
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
@@ -150,5 +150,35 @@ extension APODListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select!: \(indexPath)")
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard Configuration.infiniteScroll else { return }
+        // Find the lowest row displayed
+        let visibleCells = collectionView.visibleCells
+        guard let maxIndexPath = visibleCells
+            .map({ cell in
+                collectionView.indexPath(for: cell)?.row ?? 0
+                
+            })
+            .max(by: { $0 < $1 })
+        else {
+            return
+        }
+        
+        // Calculate which is the last row that is displayed
+        let maxRow = (maxIndexPath + 1) / Int(itemsPerRow)
+        
+        print("Current row \(maxRow), last row \(numberOfItemsDisplayed / 2) (\(numberOfItemsDisplayed))")
+        
+        
+        // 3 rows before end, show load 5 more rows
+        if maxRow > (numberOfItemsDisplayed / 2) - 3 {
+            numberOfItemsDisplayed = min(
+                numberOfItemsDisplayed + 5 * itemsPerRow,
+                Configuration.maximumAPODAmount)
+            collectionView.reloadData()
+            print("Load 5 more cells")
+        }
     }
 }

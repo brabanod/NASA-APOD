@@ -8,5 +8,12 @@
 import Foundation
 
 struct Configuration {
-    static let initialCacheLoadAmount: Int = 10
+    /// The amount of APODs to be loaded and cached on app start.
+    static let initialCacheLoadAmount: Int = 16
+    
+    /// Specifies, wheter infinite scrolling is enabled
+    static let infiniteScroll: Bool = true
+    
+    /// The maximum number of APODs to load.
+    static let maximumAPODAmount: Int = .max
 }

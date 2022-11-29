@@ -96,7 +96,7 @@ class APODCellView: UICollectionViewCell {
         labelProtectionView.layer.addSublayer(gradient)
     }
     
-    @MainActor func setTitle(_ title: String?) async {
+    @MainActor func setTitle(_ title: String?) {
         if titleLabel.text == nil || titleLabel.text == "" {
             titleLabel.alpha = 0
             titleLabel.text = title
@@ -108,13 +108,13 @@ class APODCellView: UICollectionViewCell {
         }
     }
     
-    @MainActor func setImage(_ image: UIImage?) async {
+    @MainActor func setImage(_ image: UIImage?) {
         UIView.transition(with: titleLabel, duration: 0.9, options: .transitionCrossDissolve) {
             self.imageView.image = image
         }
     }
     
-    @MainActor func setAccessoryText(_ text: String?) async {
+    @MainActor func setAccessoryText(_ text: String?) {
         if accessoryLabel.text == nil || accessoryLabel.text == "" {
             accessoryLabel.alpha = 0
             accessoryLabel.text = text
