@@ -27,7 +27,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 // Start loading a few APODs in the background
                 Task{
-                    try await apodCache.load(pastDays: Configuration.initialCacheLoadAmount, withThumbnails: true, withImages: false)
+                    // Exclude today from caching
+                    guard let yesterday = DateUtils.today(adding: -1) else { return }
+                    try await apodCache.load(startDate: yesterday, previousDays: Configuration.initialCacheLoadAmount, withThumbnails: true, withImages: false)
                 }
             } catch {
                 // This should never happen, when NASAAPIKey is set.

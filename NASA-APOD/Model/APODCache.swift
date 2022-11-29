@@ -33,20 +33,24 @@ class APODCache {
     init(api apodAPI: APODAPI, withThumbnails shouldLoadThumbnails: Bool = false, withImages shouldLoadImages: Bool = false) throws {
         self.apodAPI = apodAPI
     }
-    
-    /// Loads a specified amount of APODs into the cache (excluding the first day)
+
+    /// Loads a specified amount of APODs into the cache (excluding the first day).
     ///
     /// - Parameters:
+    ///     - startDate: The date from which to start loading previous days.
     ///     - loadAmount: Specifies how many past days should be loaded. I. e. if a value of 10 is given, the last 10 APODs are loaded into the cache.
     ///     - shouldLoadThumbnails: Specifies, whether thumbnails should also be loaded.
     ///     - shouldLoadImages: Specifies, whether images should also be loaded.
-    public func load(pastDays loadAmount: Int = 10, withThumbnails shouldLoadThumbnails: Bool, withImages shouldLoadImages: Bool) async throws {
+    public func load(startDate: Date? = nil, previousDays loadAmount: Int = 10, withThumbnails shouldLoadThumbnails: Bool, withImages shouldLoadImages: Bool) async throws {
         assert(loadAmount >= 0)
+        
+        // Get start date
+        guard let start = startDate ?? DateUtils.today() else { return }
     
         // Store retrieved APODs at their individual position in the cache
         for days in (0..<loadAmount) {
             // Get date, continue to next if this fails
-            guard let date = DateUtils.today(adding: -(days+1))
+            guard let date = DateUtils.date(start, adding: -days)
             else {
                 // Try next APOD
                 continue
