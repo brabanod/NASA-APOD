@@ -47,7 +47,7 @@ class APODCellView: UICollectionViewCell {
         self.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
         
         // Add label protection view
-        labelProtectionView = UIView(frame: .zero)
+        labelProtectionView = GradientView(configuration: .blackClearUp)
         self.addSubview(labelProtectionView)
         labelProtectionView.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: labelProtectionView.leftAnchor).isActive = true
@@ -82,18 +82,6 @@ class APODCellView: UICollectionViewCell {
         
         accessoryLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         accessoryLabel.textColor = .systemGray5
-    }
-    
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        
-        // Setup gradient for label protection view
-        let gradient = CAGradientLayer()
-        gradient.frame = labelProtectionView.bounds
-        gradient.colors = [UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
-        gradient.startPoint = CGPoint(x: 0, y: 0.9)
-        gradient.endPoint = CGPoint(x: 0, y: 0.0)
-        labelProtectionView.layer.addSublayer(gradient)
     }
     
     @MainActor func setTitle(_ title: String?) {

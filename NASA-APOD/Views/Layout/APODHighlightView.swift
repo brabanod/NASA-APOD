@@ -70,7 +70,7 @@ class APODHighlightView: UIView {
         self.bottomAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
         
         // Add label protection view
-        labelProtectionView = UIView(frame: .zero)
+        labelProtectionView = GradientView(configuration: .blackClearDown)
         self.addSubview(labelProtectionView)
         labelProtectionView.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: labelProtectionView.leftAnchor).isActive = true
@@ -107,18 +107,6 @@ class APODHighlightView: UIView {
         
         // Load APOD for today
         loadAPODData()
-    }
-    
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        
-        // Setup gradient for label protection view
-        let gradient = CAGradientLayer()
-        gradient.frame = labelProtectionView.bounds
-        gradient.colors = [UIColor.black.withAlphaComponent(0.8).cgColor, UIColor.clear.cgColor]
-        gradient.startPoint = CGPoint(x: 0, y: 0.1)
-        gradient.endPoint = CGPoint(x: 0, y: 1.0)
-        labelProtectionView.layer.addSublayer(gradient)
     }
     
     /// Loads the APOD for today.

@@ -36,6 +36,7 @@
 		5C2C85EE2936072100E84EA7 /* APODAPIMockDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */; };
 		5C2C85F0293622B000E84EA7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85EF293622B000E84EA7 /* Configuration.swift */; };
 		5C2C85F22936338600E84EA7 /* DateUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */; };
+		5C2C85F42936517500E84EA7 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85F32936517500E84EA7 /* GradientView.swift */; };
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
 		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
 		5C2D918D29323873006AF534 /* APODCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918C29323873006AF534 /* APODCache.swift */; };
@@ -97,6 +98,7 @@
 		5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPIMockDefault.swift; sourceTree = "<group>"; };
 		5C2C85EF293622B000E84EA7 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtilsTests.swift; sourceTree = "<group>"; };
+		5C2C85F32936517500E84EA7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		5C2D9186293108D8006AF534 /* APODCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellView.swift; sourceTree = "<group>"; };
 		5C2D918829321357006AF534 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		5C2D918C29323873006AF534 /* APODCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCache.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				5C744BE8292E897700F210FF /* LoadableImageView.swift */,
+				5C2C85F32936517500E84EA7 /* GradientView.swift */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 			files = (
 				5C2D918929321357006AF534 /* DateUtils.swift in Sources */,
 				5CE36D0E292D210D00558212 /* HomeViewController.swift in Sources */,
+				5C2C85F42936517500E84EA7 /* GradientView.swift in Sources */,
 				5C2C85F0293622B000E84EA7 /* Configuration.swift in Sources */,
 				5C2C85EE2936072100E84EA7 /* APODAPIMockDefault.swift in Sources */,
 				5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */,
