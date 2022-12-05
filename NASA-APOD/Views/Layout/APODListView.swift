@@ -31,7 +31,7 @@ class APODListView: UIView {
     /// APOD cache which will be used to load data. Will load data and refresh UI if it is set.
     var apodCache: APODCache? = nil {
         didSet {
-            // TODO: Reload data
+            collectionView.reloadData()
         }
     }
     
