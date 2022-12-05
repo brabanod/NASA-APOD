@@ -28,6 +28,9 @@ class APODListView: UIView {
     /// Reuse identifier for the cell in the `UICollectionView`.
     private let cellReuseId = "APODCell"
     
+    /// Reuse identifier for the highlight (header) view.
+    private let headerReuseId = "APODHighlightView"
+    
     /// APOD cache which will be used to load data. Will load data and refresh UI if it is set.
     var apodCache: APODCache? = nil {
         didSet {
@@ -80,6 +83,9 @@ class APODListView: UIView {
         rightAnchor.constraint(equalTo: collectionView.rightAnchor).isActive = true
         topAnchor.constraint(equalTo: collectionView.topAnchor).isActive = true
         bottomAnchor.constraint(equalTo: collectionView.bottomAnchor).isActive = true
+        
+        // Create highlight view
+        collectionView.register(APODHighlightViewReusableWrapper.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: headerReuseId)
     }
 }
 
@@ -147,6 +153,20 @@ extension APODListView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return verticalCellPadding
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
+        
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerReuseId, for: indexPath)
+        
+        guard let typedHeaderView = headerView as? APODHighlightViewReusableWrapper else { return headerView }
+        typedHeaderView.apodCache = self.apodCache
+        return typedHeaderView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height * 0.75)
     }
 }
 
