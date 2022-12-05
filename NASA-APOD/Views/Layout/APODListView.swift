@@ -135,7 +135,13 @@ extension APODListView: UICollectionViewDataSource {
         return cell
     }
     
-    
+    @objc func didTapHighlightView(_ sender: AnyObject) {
+        guard let today = DateUtils.today() else {
+            // TODO: handle this
+            fatalError("Cell was not registered")
+        }
+        delegate?.showAPODDetail(for: today, sender: sender)
+    }
 }
 
 
@@ -160,10 +166,16 @@ extension APODListView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader else { return UICollectionReusableView() }
         
+        // Initialize APODHighlightView as the only header
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerReuseId, for: indexPath)
         
         guard let typedHeaderView = headerView as? APODHighlightViewReusableWrapper else { return headerView }
         typedHeaderView.apodCache = self.apodCache
+        
+        // Setup tap gesture for header
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapHighlightView(_:)))
+        headerView.addGestureRecognizer(tapGesture)
+        
         return typedHeaderView
     }
     

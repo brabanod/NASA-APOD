@@ -237,7 +237,7 @@ class APODDetailView: UIView {
         explanationLabel.topAnchor.constraint(equalTo: detailsContainer.bottomAnchor, constant: 40).isActive = true
         contentView.leftAnchor.constraint(equalTo: explanationLabel.leftAnchor, constant: -20).isActive = true
         contentView.rightAnchor.constraint(equalTo: explanationLabel.rightAnchor, constant: 20).isActive = true
-        contentView.bottomAnchor.constraint(equalTo: explanationLabel.bottomAnchor, constant: 20).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: explanationLabel.bottomAnchor, constant: 40).isActive = true
         
         // Setup top bar
         topBar = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
