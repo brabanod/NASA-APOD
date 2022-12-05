@@ -11,8 +11,9 @@ class HomeViewController: UIViewController {
     
     // MARK: Views
     
-//    var apodHighlightView: APODHighlightView!
+    var apodHighlightView: APODHighlightView!
     var apodListView: APODListView!
+    var apodDetailView: APODDetailView!
     
     
     // MARK: Model
@@ -42,13 +43,24 @@ class HomeViewController: UIViewController {
 //        self.view.bottomAnchor.constraint(equalTo: apodHighlightView.bottomAnchor).isActive = true
         
         // Add a list view
-        apodListView = APODListView(cache: apodCache)
-        self.view.addSubview(apodListView)
-        apodListView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.leftAnchor.constraint(equalTo: apodListView.leftAnchor).isActive = true
-        self.view.rightAnchor.constraint(equalTo: apodListView.rightAnchor).isActive = true
-        self.view.topAnchor.constraint(equalTo: apodListView.topAnchor).isActive = true
-        self.view.bottomAnchor.constraint(equalTo: apodListView.bottomAnchor).isActive = true
+//        apodListView = APODListView(cache: apodCache)
+//        self.view.addSubview(apodListView)
+//        apodListView.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.leftAnchor.constraint(equalTo: apodListView.leftAnchor).isActive = true
+//        self.view.rightAnchor.constraint(equalTo: apodListView.rightAnchor).isActive = true
+//        self.view.topAnchor.constraint(equalTo: apodListView.topAnchor).isActive = true
+//        self.view.bottomAnchor.constraint(equalTo: apodListView.bottomAnchor).isActive = true
+        
+        // Add detail view
+        apodDetailView = APODDetailView(cache: apodCache)
+        self.view.addSubview(apodDetailView)
+        apodDetailView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.leftAnchor.constraint(equalTo: apodDetailView.leftAnchor).isActive = true
+        self.view.rightAnchor.constraint(equalTo: apodDetailView.rightAnchor).isActive = true
+        self.view.topAnchor.constraint(equalTo: apodDetailView.topAnchor).isActive = true
+        self.view.bottomAnchor.constraint(equalTo: apodDetailView.bottomAnchor).isActive = true
+        
+        apodDetailView.showAPOD(for: DateUtils.today()!)
     }
     
     override func viewDidAppear(_ animated: Bool) {
