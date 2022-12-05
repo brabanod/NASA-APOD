@@ -40,6 +40,8 @@ class APODListView: UIView {
     
     private(set) var numberOfItemsDisplayed: Int = Configuration.initialCacheLoadAmount
     
+    var delegate: APODListViewDelegate?
+    
     
     // MARK: -
     
@@ -175,6 +177,11 @@ extension APODListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select!: \(indexPath)")
+        guard let requestDate = DateUtils.today(adding: -indexPath.row-1) else {
+            // TODO: handle this
+            fatalError("Cell was not registered")
+        }
+        delegate?.showAPODDetail(for: requestDate, sender: self)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -206,4 +213,8 @@ extension APODListView: UICollectionViewDelegate {
             print("Load 5 more cells")
         }
     }
+}
+
+protocol APODListViewDelegate {
+    func showAPODDetail(for date: Date, sender: AnyObject)
 }

@@ -26,12 +26,15 @@ class HomeViewController: UIViewController {
         return .lightContent
     }
     
+    /// Temporarily stores the date for the APOD to be displayed in the detail view.
+    private var dateForAPOD: Date? = nil
+    
     
     // MARK: -
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(white: 0.07, alpha: 1.0)
+        self.view.backgroundColor = Configuration.backgroundColor
         
         // Add a highlight view
 //        apodHighlightView = APODHighlightView(cache: apodCache)
@@ -43,24 +46,25 @@ class HomeViewController: UIViewController {
 //        self.view.bottomAnchor.constraint(equalTo: apodHighlightView.bottomAnchor).isActive = true
         
         // Add a list view
-//        apodListView = APODListView(cache: apodCache)
-//        self.view.addSubview(apodListView)
-//        apodListView.translatesAutoresizingMaskIntoConstraints = false
-//        self.view.leftAnchor.constraint(equalTo: apodListView.leftAnchor).isActive = true
-//        self.view.rightAnchor.constraint(equalTo: apodListView.rightAnchor).isActive = true
-//        self.view.topAnchor.constraint(equalTo: apodListView.topAnchor).isActive = true
-//        self.view.bottomAnchor.constraint(equalTo: apodListView.bottomAnchor).isActive = true
+        apodListView = APODListView(cache: apodCache)
+        apodListView.delegate = self
+        self.view.addSubview(apodListView)
+        apodListView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.leftAnchor.constraint(equalTo: apodListView.leftAnchor).isActive = true
+        self.view.rightAnchor.constraint(equalTo: apodListView.rightAnchor).isActive = true
+        self.view.topAnchor.constraint(equalTo: apodListView.topAnchor).isActive = true
+        self.view.bottomAnchor.constraint(equalTo: apodListView.bottomAnchor).isActive = true
         
         // Add detail view
-        apodDetailView = APODDetailView(cache: apodCache)
-        self.view.addSubview(apodDetailView)
-        apodDetailView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.leftAnchor.constraint(equalTo: apodDetailView.leftAnchor).isActive = true
-        self.view.rightAnchor.constraint(equalTo: apodDetailView.rightAnchor).isActive = true
-        self.view.topAnchor.constraint(equalTo: apodDetailView.topAnchor).isActive = true
-        self.view.bottomAnchor.constraint(equalTo: apodDetailView.bottomAnchor).isActive = true
-        
-        apodDetailView.showAPOD(for: DateUtils.today()!)
+//        apodDetailView = APODDetailView(cache: apodCache)
+//        self.view.addSubview(apodDetailView)
+//        apodDetailView.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.leftAnchor.constraint(equalTo: apodDetailView.leftAnchor).isActive = true
+//        self.view.rightAnchor.constraint(equalTo: apodDetailView.rightAnchor).isActive = true
+//        self.view.topAnchor.constraint(equalTo: apodDetailView.topAnchor).isActive = true
+//        self.view.bottomAnchor.constraint(equalTo: apodDetailView.bottomAnchor).isActive = true
+//
+//        apodDetailView.showAPOD(for: DateUtils.today()!)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -73,7 +77,25 @@ class HomeViewController: UIViewController {
             self.present(alert, animated: true)
         }
     }
+    
+    
+    // MARK: Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailVC = segue.destination as? DetailViewController else { return }
+        detailVC.apodCache = apodCache
+        detailVC.date = dateForAPOD
+    }
 
-
+    @IBAction func unwind(for unwindSegue: UIStoryboardSegue) {
+        dateForAPOD = nil
+    }
 }
 
+
+extension HomeViewController: APODListViewDelegate {
+    func showAPODDetail(for date: Date, sender: AnyObject) {
+        dateForAPOD = date
+        performSegue(withIdentifier: "ShowDetailSegueIdentifier", sender: sender)
+    }
+}

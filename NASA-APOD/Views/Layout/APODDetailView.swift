@@ -13,7 +13,9 @@ class APODDetailView: UIView {
     var scrollView: UIScrollView!
     var contentView: UIView!
     
-    var protectionView: GradientView!
+    var topBar: UIVisualEffectView!
+    var topBarSeparator: UIView!
+    var dismissButton: UIButton!
     
     var imageView: LoadableImageView!
 
@@ -54,6 +56,10 @@ class APODDetailView: UIView {
             }
         }
     }
+    
+    var delegate: APODDetailViewDelegate?
+    
+    var isAnimatingHideTopBar = false
     
     
     // MARK: -
@@ -233,19 +239,35 @@ class APODDetailView: UIView {
         contentView.rightAnchor.constraint(equalTo: explanationLabel.rightAnchor, constant: 20).isActive = true
         contentView.bottomAnchor.constraint(equalTo: explanationLabel.bottomAnchor, constant: 20).isActive = true
         
-        // Setup content protection view
-        protectionView = GradientView(configuration: GradientView.GradientConfiguration(
-            startColor: UIColor.black.cgColor,
-            endColor: UIColor.clear.cgColor,
-            startPosition: CGPoint(x: 0, y: 0.2),
-            endPosition: CGPoint(x: 0, y: 1.0)))
-        self.addSubview(protectionView)
-        protectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.leftAnchor.constraint(equalTo: protectionView.leftAnchor).isActive = true
-        self.rightAnchor.constraint(equalTo: protectionView.rightAnchor).isActive = true
-        self.topAnchor.constraint(equalTo: protectionView.topAnchor).isActive = true
-        protectionView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2).isActive = true
-        protectionView.layer.opacity = 0.0
+        // Setup top bar
+        topBar = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        self.addSubview(topBar)
+        topBar.isHidden = true
+        topBar.translatesAutoresizingMaskIntoConstraints = false
+        self.leftAnchor.constraint(equalTo: topBar.leftAnchor).isActive = true
+        self.rightAnchor.constraint(equalTo: topBar.rightAnchor).isActive = true
+        self.topAnchor.constraint(equalTo: topBar.topAnchor).isActive = true
+        topBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
+
+        // Add top bar separator
+        topBarSeparator = UIView(frame: .zero)
+        topBarSeparator.backgroundColor = UIColor.white.withAlphaComponent(0.15)
+        topBar.contentView.addSubview(topBarSeparator)
+        topBarSeparator.translatesAutoresizingMaskIntoConstraints = false
+        topBar.leftAnchor.constraint(equalTo: topBarSeparator.leftAnchor, constant: 0).isActive = true
+        topBar.rightAnchor.constraint(equalTo: topBarSeparator.rightAnchor, constant: 0).isActive = true
+        topBar.bottomAnchor.constraint(equalTo: topBarSeparator.bottomAnchor, constant: 0).isActive = true
+        topBarSeparator.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        
+        // Add dismiss button
+        dismissButton = UIButton(type: .close)
+        dismissButton.overrideUserInterfaceStyle = .dark
+        topBar.contentView.addSubview(dismissButton)
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        topBar.centerYAnchor.constraint(equalTo: dismissButton.centerYAnchor).isActive = true
+        topBar.rightAnchor.constraint(equalTo: dismissButton.rightAnchor, constant: 20).isActive = true
+        
+        dismissButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
     }
     
     func showAPOD(for date: Date) {
@@ -278,14 +300,40 @@ class APODDetailView: UIView {
             imageView.image = await apod.image
         }
     }
+    
+    @objc func dismiss() {
+        delegate?.dismiss(self)
+    }
 }
 
+
 extension APODDetailView: UIScrollViewDelegate {
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Slowly fade in protection view, over the distance of the image view.
-        // When image view is fully scrolled away, then protection view should be fully visible.
-        let currentPosition = scrollView.contentOffset.y
-        let imageViewHeight = imageView.bounds.height
-        protectionView.layer.opacity = max(min(Float(currentPosition / imageViewHeight), 1), 0)
+        // Only show top bar if scrolled past 5 pixels
+        if scrollView.contentOffset.y >= 5 {
+            // Show top bar
+            guard topBar.isHidden else { return }
+            topBar.isHidden = false
+            topBar.alpha = 0.0
+            UIView.animate(withDuration: 0.2) {
+                self.topBar.alpha = 1.0
+            }
+        } else {
+            // Hide top bar
+            guard !topBar.isHidden, !isAnimatingHideTopBar else { return }
+            isAnimatingHideTopBar = true
+            UIView.animate(withDuration: 0.2) {
+                self.topBar.alpha = 0.0
+            } completion: { success in
+                self.topBar.isHidden = success
+                self.isAnimatingHideTopBar = false
+            }
+        }
     }
+}
+
+
+protocol APODDetailViewDelegate {
+    func dismiss(_ sender: AnyObject)
 }

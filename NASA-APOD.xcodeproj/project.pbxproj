@@ -40,6 +40,7 @@
 		5C2C8616293DF8B900E84EA7 /* APODHighlightViewReusableWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8615293DF8B900E84EA7 /* APODHighlightViewReusableWrapper.swift */; };
 		5C2C8618293E0F9B00E84EA7 /* APODDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8617293E0F9B00E84EA7 /* APODDetailView.swift */; };
 		5C2C861B293E57F000E84EA7 /* APODDemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D45292E0AA800558212 /* APODDemoData.swift */; };
+		5C2C861D293E650900E84EA7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C861C293E650900E84EA7 /* DetailViewController.swift */; };
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
 		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
 		5C2D918D29323873006AF534 /* APODCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918C29323873006AF534 /* APODCache.swift */; };
@@ -104,6 +105,7 @@
 		5C2C85F32936517500E84EA7 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		5C2C8615293DF8B900E84EA7 /* APODHighlightViewReusableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODHighlightViewReusableWrapper.swift; sourceTree = "<group>"; };
 		5C2C8617293E0F9B00E84EA7 /* APODDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODDetailView.swift; sourceTree = "<group>"; };
+		5C2C861C293E650900E84EA7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5C2D9186293108D8006AF534 /* APODCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellView.swift; sourceTree = "<group>"; };
 		5C2D918829321357006AF534 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		5C2D918C29323873006AF534 /* APODCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCache.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				5CE36D09292D210D00558212 /* AppDelegate.swift */,
 				5CE36D0B292D210D00558212 /* SceneDelegate.swift */,
 				5CE36D0D292D210D00558212 /* HomeViewController.swift */,
+				5C2C861C293E650900E84EA7 /* DetailViewController.swift */,
 				5C744BE7292E88DF00F210FF /* Views */,
 				5CE36D3B292D334400558212 /* Model */,
 				5C744BF0292F493400F210FF /* Helpers */,
@@ -493,6 +496,7 @@
 				5CE36D3A292D213000558212 /* APOD.swift in Sources */,
 				5CE36D0A292D210D00558212 /* AppDelegate.swift in Sources */,
 				5C8D17B5293010CD000D88BF /* APODListView.swift in Sources */,
+				5C2C861D293E650900E84EA7 /* DetailViewController.swift in Sources */,
 				5C2D918D29323873006AF534 /* APODCache.swift in Sources */,
 				5C744BE9292E897700F210FF /* LoadableImageView.swift in Sources */,
 				5CE36D0C292D210D00558212 /* SceneDelegate.swift in Sources */,
