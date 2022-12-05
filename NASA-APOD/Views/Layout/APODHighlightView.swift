@@ -141,14 +141,14 @@ class APODHighlightView: UIView {
     /// Reloads the UI to display the given APOD.
     @MainActor func showAPOD(_ apod: APOD) async {
         // Set title label
-        let apodTitle = await apod.title
+        let apodTitle = apod.title
         // FIXME: Animation does not work
         UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
             self.titleLabel.text = apodTitle
         }
         
         // Set copyright label
-        let apodCopyright = await apod.copyright
+        let apodCopyright = apod.copyright
         UIView.transition(with: copyrightLabel, duration: 0.8, options: .transitionCrossDissolve) {
             self.copyrightLabel.text = "\(String(localized: "Today", comment: "APOD: Description of the today date.")) | © \(apodCopyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright."))"
         }
