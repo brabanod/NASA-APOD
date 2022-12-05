@@ -9,16 +9,29 @@ import Foundation
 import UIKit
 
 /// This struct represents one element of an 'Astronomic Picture of the day'.
-actor APOD: Decodable {
-    var copyright: String?
-    var date: Date
-    var title: String
-    var explanation: String
+actor APOD: Decodable, Hashable, Identifiable {
     
-    var thumbnailURL: URL
+    nonisolated func hash(into hasher: inout Hasher) {
+      hasher.combine(date)
+    }
+    
+    static func == (lhs: APOD, rhs: APOD) -> Bool {
+        return lhs.date == rhs.date
+    }
+    
+    let copyright: String?
+    let date: Date
+    let title: String
+    let explanation: String
+    
+    let thumbnailURL: URL
     var thumbnail: UIImage?
-    var imageURL: URL
+    let imageURL: URL
     var image: UIImage?
+    
+    nonisolated var id: Date {
+        return date
+    }
     
     private enum CodingKeys : String, CodingKey {
         case copyright, date, description, explanation, title, thumbnailURL = "url", imageURL = "hdurl"
