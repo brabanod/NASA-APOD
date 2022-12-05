@@ -26,7 +26,7 @@ class APODListView: UIView {
     private let itemsPerRow: Int = 2
     
     /// Reuse identifier for the cell in the `UICollectionView`.
-    private let cellId = "APODCell"
+    private let cellReuseId = "APODCell"
     
     /// APOD cache which will be used to load data. Will load data and refresh UI if it is set.
     var apodCache: APODCache? = nil {
@@ -69,7 +69,7 @@ class APODListView: UIView {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(APODCellView.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(APODCellView.self, forCellWithReuseIdentifier: cellReuseId)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
@@ -97,25 +97,30 @@ extension APODListView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(
-          withReuseIdentifier: cellId,
+          withReuseIdentifier: cellReuseId,
           for: indexPath
         ) as? APODCellView else { fatalError("Cell was not registered") }
         
-        
-        guard let requestDate = DateUtils.today(adding: -indexPath.row) else {
+        guard let requestDate = DateUtils.today(adding: -indexPath.row-1) else {
             // TODO: handle this
             fatalError("Cell was not registered")
         }
         
+        cell.id = requestDate
+        
         Task {
             // Load APOD metadata
             var apod = try await apodCache?.apod(for: requestDate)
-            cell.setTitle(await apod?.title)
-            cell.setAccessoryText(await apod?.date.formatted(date: .numeric, time: .omitted))
+            if cell.id == requestDate {
+                cell.setTitle(apod?.title)
+                cell.setAccessoryText(apod?.date.formatted(date: .numeric, time: .omitted))
+            }
             
             // Load APOD thumbnail
             apod = try await apodCache?.apod(for: requestDate, withThumbnail: true)
-            cell.setImage(await apod?.thumbnail)
+            if cell.id == requestDate {
+                cell.setImage(await apod?.thumbnail)
+            }
         }
         
         

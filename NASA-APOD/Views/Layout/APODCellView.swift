@@ -19,6 +19,8 @@ class APODCellView: UICollectionViewCell {
     
     // MARK: Model
     
+    var id: APOD.ID? = nil
+    
     
     // MARK: -
     
