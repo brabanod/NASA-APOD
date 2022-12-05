@@ -11,6 +11,11 @@ import UIKit
 /// This struct represents one element of an 'Astronomic Picture of the day'.
 actor APOD: Decodable, Hashable, Identifiable {
     
+    enum MediaType: String, Decodable {
+        case image = "image"
+        case video = "video"
+    }
+    
     nonisolated func hash(into hasher: inout Hasher) {
       hasher.combine(date)
     }
@@ -23,10 +28,11 @@ actor APOD: Decodable, Hashable, Identifiable {
     let date: Date
     let title: String
     let explanation: String
+    let mediaType: MediaType
     
     let thumbnailURL: URL
     var thumbnail: UIImage?
-    let imageURL: URL
+    let imageURL: URL?
     var image: UIImage?
     
     nonisolated var id: Date {
@@ -34,7 +40,7 @@ actor APOD: Decodable, Hashable, Identifiable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case copyright, date, description, explanation, title, thumbnailURL = "url", imageURL = "hdurl"
+        case copyright, date, description, explanation, mediaType = "media_type", title, thumbnailURL = "url", imageURL = "hdurl"
     }
     
     func setThumbnail(_ thumbnail: UIImage?) {
@@ -50,6 +56,7 @@ actor APOD: Decodable, Hashable, Identifiable {
         copyright = try values.decodeIfPresent(String.self, forKey: .copyright)
         explanation = try values.decode(String.self, forKey: .explanation)
         title = try values.decode(String.self, forKey: .title)
+        mediaType = MediaType(rawValue: try values.decode(String.self, forKey: .mediaType)) ?? .image
         
         // Parse the date string
         let dateString = try values.decode(String.self, forKey: .date)
@@ -58,6 +65,6 @@ actor APOD: Decodable, Hashable, Identifiable {
         
         // Convert URL strings to URLs
         thumbnailURL = try values.decode(URL.self, forKey: .thumbnailURL)
-        imageURL = try values.decode(URL.self, forKey: .imageURL)
+        imageURL = try values.decodeIfPresent(URL.self, forKey: .imageURL)
     }
 }

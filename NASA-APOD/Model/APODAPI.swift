@@ -55,6 +55,8 @@ class APODAPI {
     
     /// Returns the thumbnail image of an APOD and sets it as the thumbnail image of the given APOD. If the given APOD already has a thumbnail image loaded, the API query is skipped and the 'cached' thumbnail image is returned directly.
     ///
+    /// Only loads image if media type is `.image`.
+    ///
     /// - Parameters:
     ///     - apod: An `APOD` object, for which to retrieve the image.
     ///     - forceReload: If set to true, thumbnail image is loaded from API, even if it is already present in given APOD object.
@@ -63,12 +65,19 @@ class APODAPI {
         // Load thumbnail image if needed or requested
         var thumbnail = await apod.thumbnail
         if thumbnail == nil || forceReload {
-            thumbnail = try await queryImage(url: apod.thumbnailURL)
+            // Only load if media type is image
+            if apod.mediaType == .image {
+                thumbnail = try await queryImage(url: apod.thumbnailURL)
+            } else {
+                thumbnail = UIImage(named: "APOD-Logo")!
+            }
         }
         return thumbnail!
     }
     
     /// Returns the full size image of an APOD and sets it as the image of the given APOD. If the given APOD already has an image loaded, the API query is skipped and the 'cached' image is returned directly.
+    ///
+    /// Only loads image if media type is `.image`.
     ///
     /// - Parameters:
     ///     - apod: An `APOD` object, for which to retrieve the image.
@@ -78,8 +87,13 @@ class APODAPI {
         // Load image if needed or requested
         var image = await apod.image
         if image == nil || forceReload {
-            image = try await queryImage(url: apod.imageURL)
-        }
+           if apod.mediaType == .image,
+              let imageURL = apod.imageURL {
+               image = try await queryImage(url: imageURL)
+           } else {
+               image = UIImage(named: "APOD-Logo")!
+           }
+       }
         return image!
     }
     

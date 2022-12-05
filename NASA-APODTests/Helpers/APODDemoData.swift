@@ -27,6 +27,18 @@ class APODDemoData {
         }
         """
     
+    static let singleAPODVideoJSON = """
+        {
+            "copyright":"Tommy Lease",
+            "date":"2022-11-22",
+            "explanation":"Few star clusters this close to each other ...",
+            "media_type":"video",
+            "service_version":"v1",
+            "title":"A Double Star Cluster in Perseus",
+            "url":"https://youtube.com/something"
+        }
+        """
+    
     static let multipleAPODJSON = """
         [
            {
@@ -89,6 +101,11 @@ class APODDemoData {
         return try? JSONDecoder().decode(APOD.self, from: data)
     }
     
+    static var sampleAPODVideo: APOD? {
+        guard let data = Self.singleAPODVideoJSON.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(APOD.self, from: data)
+    }
+    
     static var sampleImage: UIImage {
         guard let path = Bundle(for: Self.self).path(forResource: "SampleImage", ofType: ".png") else { fatalError("Failed to get image path.") }
         guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to load image from file.") }
@@ -108,6 +125,15 @@ class APODDemoData {
     
     static var sampleImage2Data: Data {
         guard let data = APODDemoData.sampleImage2.pngData() else { fatalError("Could not convert image to Data object.") }
+        return data
+    }
+    
+    static var apodLogoImage: UIImage {
+        return UIImage(named: "APOD-Logo")!
+    }
+    
+    static var apodLogoImageData: Data {
+        guard let data = APODDemoData.apodLogoImage.pngData() else { fatalError("Could not convert image to Data object.") }
         return data
     }
     

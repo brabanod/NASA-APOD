@@ -17,8 +17,21 @@ final class APODTests: XCTestCase {
         await AsyncAssertEqual(await singleAPOD.copyright, "Tommy Lease")
         await AsyncAssertEqual(await singleAPOD.explanation, "Few star clusters this close to each other ...")
         await AsyncAssertEqual(await singleAPOD.title, "A Double Star Cluster in Perseus")
+        await AsyncAssertEqual(await singleAPOD.mediaType, .image)
         await AsyncAssertEqual(await singleAPOD.imageURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_3756.jpg"))
         await AsyncAssertEqual(await singleAPOD.thumbnailURL, URL(string: "https://apod.nasa.gov/apod/image/2211/DoubleCluster_Lease_960.jpg"))
+    }
+    
+    func testSingleAPODVideo() async throws {
+        let singleAPODVideo = try JSONDecoder().decode(APOD.self, from: APODDemoData.singleAPODVideoJSON.data(using: .utf8)!)
+        let expectedDate = Calendar.current.date(from: DateComponents(year: 2022, month: 11, day: 22))!
+        await AsyncAssertEqual(await singleAPODVideo.date, expectedDate)
+        await AsyncAssertEqual(await singleAPODVideo.copyright, "Tommy Lease")
+        await AsyncAssertEqual(await singleAPODVideo.explanation, "Few star clusters this close to each other ...")
+        await AsyncAssertEqual(await singleAPODVideo.title, "A Double Star Cluster in Perseus")
+        await AsyncAssertEqual(await singleAPODVideo.mediaType, .video)
+        await AsyncAssertEqual(await singleAPODVideo.imageURL, nil)
+        await AsyncAssertEqual(await singleAPODVideo.thumbnailURL, URL(string: "https://youtube.com/something"))
     }
     
     func testMultipleAPOD() async throws {
