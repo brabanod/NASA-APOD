@@ -90,6 +90,8 @@ class LoadableImageView: UIView {
         rightAnchor.constraint(equalTo: loadingView.rightAnchor).isActive = true
         topAnchor.constraint(equalTo: loadingView.topAnchor).isActive = true
         bottomAnchor.constraint(equalTo: loadingView.bottomAnchor).isActive = true
+        
+        self.clipsToBounds = true
     }
     
     /// Shows the loading screen.
