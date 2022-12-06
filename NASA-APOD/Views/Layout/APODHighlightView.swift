@@ -38,6 +38,12 @@ class APODHighlightView: UIView {
         }
     }
     
+    /// Indicates, whether the animation of the title label is running.
+    private var isTitleAnimationRunning: Bool = false
+    
+    /// Indicates, whether the animation of the copyright label is running.
+    private var isCopyrightAnimationRunning: Bool = false
+    
     
     // MARK: -
     
@@ -142,15 +148,26 @@ class APODHighlightView: UIView {
     @MainActor func showAPOD(_ apod: APOD) async {
         // Set title label
         let apodTitle = apod.title
-        // FIXME: Animation does not work
-        UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
-            self.titleLabel.text = apodTitle
+        // Animate title label, only if not already animating
+        if !isTitleAnimationRunning {
+            isTitleAnimationRunning = true
+            UIView.transition(with: titleLabel, duration: 0.8, options: .transitionCrossDissolve) {
+                self.titleLabel.text = apodTitle
+            } completion: { _ in
+                self.isTitleAnimationRunning = false
+            }
         }
         
         // Set copyright label
         let apodCopyright = apod.copyright
-        UIView.transition(with: copyrightLabel, duration: 0.8, options: .transitionCrossDissolve) {
-            self.copyrightLabel.text = "\(String(localized: "Today", comment: "APOD: Description of the today date.")) | © \(apodCopyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright."))"
+        if !isCopyrightAnimationRunning {
+            // Animate copyright label, only if not already animating
+            isCopyrightAnimationRunning = true
+            UIView.transition(with: copyrightLabel, duration: 0.8, options: .transitionCrossDissolve) {
+                self.copyrightLabel.text = "\(String(localized: "Today", comment: "APOD: Description of the today date.")) | © \(apodCopyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright."))"
+            } completion: { _ in
+                self.isCopyrightAnimationRunning = false
+            }
         }
         
         // Set image. Try image first and then thumbnail.
