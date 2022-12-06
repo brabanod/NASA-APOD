@@ -309,7 +309,7 @@ class APODDetailView: UIView {
     @MainActor private func showAPOD(_ apod: APOD) async {
         // Set labels
         titleValueLabel.text = apod.title
-        copyrightValueLabel.text = apod.copyright
+        copyrightValueLabel.text = apod.copyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright.")
         dateValueLabel.text = apod.date.formatted(date: .numeric, time: .omitted)
         explanationLabel.text = apod.explanation
         
