@@ -12,6 +12,6 @@ struct Log {
     static let `default` = Logger(OSLog(subsystem: Bundle.main.bundleIdentifier ?? "de.pascalbraband.NASA-APOD", category: "default"))
     
     static func withCategory(_ category: String) -> Logger {
-        return Logger(OSLog(subsystem: Bundle.main.bundleIdentifier ?? "de.pascalbraband.NASA-APOD", category: "default"))
+        return Logger(OSLog(subsystem: Bundle.main.bundleIdentifier ?? "de.pascalbraband.NASA-APOD", category: category))
     }
 }
