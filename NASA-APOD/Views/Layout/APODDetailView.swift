@@ -119,6 +119,7 @@ class APODDetailView: UIView {
         
         // Setup image view
         imageView = LoadableImageView(frame: .zero)
+        imageView.fadeEnabled = false
         contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.leftAnchor.constraint(equalTo: imageView.leftAnchor).isActive = true
@@ -293,12 +294,21 @@ class APODDetailView: UIView {
         dateValueLabel.text = apod.date.formatted(date: .numeric, time: .omitted)
         explanationLabel.text = apod.explanation
 
+        // FIXME: Why is thumbnail and image nil?
+        
         // Set image. If the image is still nil, then try to first set the thumbnail.
+        print("APOD Image: \(await apod.image)")
+        print("APOD Thumb: \(await apod.thumbnail)")
         if await apod.image == nil {
             imageView.image = await apod.thumbnail
-        } else {
+        }
+        print("IMAGE view: \(imageView.image)")
+        
+        // If image is still nil (i.e. thumbnail was nil), directly set image
+        if imageView.image == nil {
             imageView.image = await apod.image
         }
+        print("IMAGE view 2: \(imageView.image)")
     }
     
     @objc func dismiss() {
