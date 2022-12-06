@@ -299,6 +299,12 @@ class APODDetailView: UIView {
         dismissButton.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
     }
     
+    
+    // MARK: Display APOD
+    
+    /// This function is intended to be called from the outside of this view. Call it with a date, to display the corresponding APOD. The APOD for the date will be loaded from the cache.
+    /// - Parameters:
+    ///     - date: The date for which to show the APOD.
     func showAPOD(for date: Date) {
         Task {
             do {
@@ -315,6 +321,10 @@ class APODDetailView: UIView {
         }
     }
     
+    /// Updated the UI with the data of the given APOD.
+    ///
+    /// - Parameters:
+    ///     - apod: The APOD to be displayed in the UI.
     @MainActor private func showAPOD(_ apod: APOD) async {
         // Set labels
         titleValueLabel.text = apod.title
@@ -340,6 +350,9 @@ class APODDetailView: UIView {
         }
     }
     
+    
+    // MARK: Video
+    
     @objc func watchVideo() {
         guard let url = apod?.thumbnailURL else {
             // TODO: Handle error
@@ -348,16 +361,22 @@ class APODDetailView: UIView {
         UIApplication.shared.open(url)
     }
     
+    /// Hides the video attributes, i. e. the label and button to indicate watching a video.
     func hideVideoAttribute() {
         videoKeyLabel.isHidden = true
         videoWatchButton.isHidden = true
     }
     
+    /// Shows the video attributes, i. e. the label and button to indicate watching a video.
     func showVideoAttribute() {
         videoKeyLabel.isHidden = false
         videoWatchButton.isHidden = false
     }
     
+    
+    // MARK: Other
+    
+    /// Call this function, when the detail view wants itself to be dismissed.
     @objc func dismiss() {
         delegate?.dismiss(self)
     }
