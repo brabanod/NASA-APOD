@@ -354,6 +354,7 @@ class APODDetailView: UIView {
     // MARK: Video
     
     @objc func watchVideo() {
+        // When apod type is video, the video URL is stored in thumbnailURL
         guard let url = apod?.thumbnailURL else {
             // TODO: Handle error
             return

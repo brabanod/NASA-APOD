@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 /// This struct represents one element of an 'Astronomic Picture of the day'.
+///
+/// When `mediaType` is `.video`, the referenced video is stored in `thumbnailURL`.
 actor APOD: Decodable, Hashable, Identifiable {
     
     enum MediaType: String, Decodable {
