@@ -134,12 +134,7 @@ class APODHighlightView: UIView {
                 self.apod = try await apodCache?.apod(for: today, withImage: true)
             } catch {
                 Log.default.log("Failed to load APOD. Error:\n\(error)")
-                // Show alert, that loading APOD failed
-                let alert = UIAlertController(
-                    title: String(localized: "Stars are not aligned", table: "Error", comment: "Alert: Title for default error messages."),
-                    message: String(localized: "Could not load the Astronomy Picture of the day from NASA.", table: "Error", comment: "Alert: Message for network errors."), preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert: Close alert button title."), style: .default, handler: nil))
-                self.window?.rootViewController?.present(alert, animated: true)
+                AlertComposer.showErrorAlert(type: .errorNetwork, in: self.window?.presentedViewController)
             }
         }
     }

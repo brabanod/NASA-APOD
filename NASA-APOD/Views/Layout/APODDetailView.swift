@@ -314,9 +314,8 @@ class APODDetailView: UIView {
                 // Load APOD full size image
                 self.apod = try await apodCache?.apod(for: date, withImage: true)
             } catch {
-                // TODO: Show alert
-                print("Failed to load APOD.")
-                return
+                Log.default.log("Failed to load APOD. Error:\n\(error)")
+                AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
             }
         }
     }
@@ -356,7 +355,8 @@ class APODDetailView: UIView {
     @objc func watchVideo() {
         // When apod type is video, the video URL is stored in thumbnailURL
         guard let url = apod?.thumbnailURL else {
-            // TODO: Handle error
+            Log.default.log("Failed to open video. URL was nil.")
+            AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
             return
         }
         UIApplication.shared.open(url)

@@ -43,6 +43,7 @@
 		5C2C861D293E650900E84EA7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C861C293E650900E84EA7 /* DetailViewController.swift */; };
 		5C2C861E293FA07500E84EA7 /* APODAPIMockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D40292E0A2000558212 /* APODAPIMockURLProtocol.swift */; };
 		5C2C8621293FA77700E84EA7 /* AlertComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8620293FA77700E84EA7 /* AlertComposer.swift */; };
+		5C2C8623293FB5A800E84EA7 /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8622293FB5A800E84EA7 /* UIWindow+Extension.swift */; };
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
 		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
 		5C2D918D29323873006AF534 /* APODCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918C29323873006AF534 /* APODCache.swift */; };
@@ -109,6 +110,7 @@
 		5C2C8617293E0F9B00E84EA7 /* APODDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODDetailView.swift; sourceTree = "<group>"; };
 		5C2C861C293E650900E84EA7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5C2C8620293FA77700E84EA7 /* AlertComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertComposer.swift; sourceTree = "<group>"; };
+		5C2C8622293FB5A800E84EA7 /* UIWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
 		5C2D9186293108D8006AF534 /* APODCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellView.swift; sourceTree = "<group>"; };
 		5C2D918829321357006AF534 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		5C2D918C29323873006AF534 /* APODCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCache.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				5C744BF1292F494800F210FF /* Logger.swift */,
+				5C2C8622293FB5A800E84EA7 /* UIWindow+Extension.swift */,
 				5C2C85EF293622B000E84EA7 /* Configuration.swift */,
 				5C2D918829321357006AF534 /* DateUtils.swift */,
 			);
@@ -513,6 +516,7 @@
 				5C2C861D293E650900E84EA7 /* DetailViewController.swift in Sources */,
 				5C2D918D29323873006AF534 /* APODCache.swift in Sources */,
 				5C744BE9292E897700F210FF /* LoadableImageView.swift in Sources */,
+				5C2C8623293FB5A800E84EA7 /* UIWindow+Extension.swift in Sources */,
 				5CE36D0C292D210D00558212 /* SceneDelegate.swift in Sources */,
 				5C2C8616293DF8B900E84EA7 /* APODHighlightViewReusableWrapper.swift in Sources */,
 				5C744BED292E95CF00F210FF /* APODHighlightView.swift in Sources */,

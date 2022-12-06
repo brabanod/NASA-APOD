@@ -104,15 +104,20 @@ extension APODListView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellUntyped = collectionView.dequeueReusableCell(
+            withReuseIdentifier: cellReuseId,
+            for: indexPath)
         
-        guard let cell = collectionView.dequeueReusableCell(
-          withReuseIdentifier: cellReuseId,
-          for: indexPath
-        ) as? APODCellView else { fatalError("Cell was not registered") }
+        guard let cell = cellUntyped as? APODCellView else {
+            Log.default.log("Failed to dequeue reusable cell with id '\(self.cellReuseId)'.")
+            AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
+            return cellUntyped
+        }
         
         guard let requestDate = DateUtils.today(adding: -indexPath.row-1) else {
-            // TODO: handle this
-            fatalError("Cell was not registered")
+            Log.default.log("Failed to create date from today by adding \(-indexPath.row-1) days.")
+            AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
+            return cellUntyped
         }
         
         cell.id = requestDate
@@ -138,8 +143,9 @@ extension APODListView: UICollectionViewDataSource {
     
     @objc func didTapHighlightView(_ sender: AnyObject) {
         guard let today = DateUtils.today() else {
-            // TODO: handle this
-            fatalError("Cell was not registered")
+            Log.default.log("Failed to create today date.")
+            AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
+            return
         }
         delegate?.showAPODDetail(for: today, sender: sender)
     }
@@ -190,8 +196,9 @@ extension APODListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let requestDate = DateUtils.today(adding: -indexPath.row-1) else {
-            // TODO: handle this
-            fatalError("Cell was not registered")
+            Log.default.log("Failed to create date from today by adding \(-indexPath.row-1) days.")
+            AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
+            return
         }
         delegate?.showAPODDetail(for: requestDate, sender: self)
     }

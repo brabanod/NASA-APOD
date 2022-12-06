@@ -68,10 +68,8 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         // Show alert if API could not be created
         if apodCache == nil {
-            AlertComposer.showErrorAlert(
-                title: String(localized: "Stars are not aligned", table: "Error", comment: "Alert: Title for default error messages."),
-                message: String(localized: "Could not load the Astronomy Picture of the day from NASA.", table: "Error", comment: "Alert: Message for network errors."),
-                in: self)
+            Log.default.log("HomeViewController has no APODCache.")
+            AlertComposer.showErrorAlert(type: .errorNetwork, in: self)
         }
     }
     
