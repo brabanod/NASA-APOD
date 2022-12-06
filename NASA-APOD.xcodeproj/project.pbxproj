@@ -42,6 +42,7 @@
 		5C2C861B293E57F000E84EA7 /* APODDemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D45292E0AA800558212 /* APODDemoData.swift */; };
 		5C2C861D293E650900E84EA7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C861C293E650900E84EA7 /* DetailViewController.swift */; };
 		5C2C861E293FA07500E84EA7 /* APODAPIMockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D40292E0A2000558212 /* APODAPIMockURLProtocol.swift */; };
+		5C2C8621293FA77700E84EA7 /* AlertComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8620293FA77700E84EA7 /* AlertComposer.swift */; };
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
 		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
 		5C2D918D29323873006AF534 /* APODCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918C29323873006AF534 /* APODCache.swift */; };
@@ -107,6 +108,7 @@
 		5C2C8615293DF8B900E84EA7 /* APODHighlightViewReusableWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODHighlightViewReusableWrapper.swift; sourceTree = "<group>"; };
 		5C2C8617293E0F9B00E84EA7 /* APODDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODDetailView.swift; sourceTree = "<group>"; };
 		5C2C861C293E650900E84EA7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		5C2C8620293FA77700E84EA7 /* AlertComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertComposer.swift; sourceTree = "<group>"; };
 		5C2D9186293108D8006AF534 /* APODCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellView.swift; sourceTree = "<group>"; };
 		5C2D918829321357006AF534 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		5C2D918C29323873006AF534 /* APODCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCache.swift; sourceTree = "<group>"; };
@@ -198,11 +200,20 @@
 			path = Meta;
 			sourceTree = "<group>";
 		};
+		5C2C861F293FA75E00E84EA7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5C2C8620293FA77700E84EA7 /* AlertComposer.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		5C744BE7292E88DF00F210FF /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				5C744BEB292E95A300F210FF /* Layout */,
 				5C744BEA292E959A00F210FF /* Image */,
+				5C2C861F293FA75E00E84EA7 /* Helpers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -493,6 +504,7 @@
 				5C2C85F42936517500E84EA7 /* GradientView.swift in Sources */,
 				5C2C861E293FA07500E84EA7 /* APODAPIMockURLProtocol.swift in Sources */,
 				5C2C85F0293622B000E84EA7 /* Configuration.swift in Sources */,
+				5C2C8621293FA77700E84EA7 /* AlertComposer.swift in Sources */,
 				5C2C85EE2936072100E84EA7 /* APODAPIMockDefault.swift in Sources */,
 				5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */,
 				5CE36D3A292D213000558212 /* APOD.swift in Sources */,

@@ -70,9 +70,8 @@ class HomeViewController: UIViewController {
         if apodCache == nil {
             AlertComposer.showErrorAlert(
                 title: String(localized: "Stars are not aligned", table: "Error", comment: "Alert: Title for default error messages."),
-                message: String(localized: "Could not load the Astronomy Picture of the day from NASA.", table: "Error", comment: "Alert: Message for network errors."), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert: Close alert button title."), style: .default, handler: nil))
-            self.present(alert, animated: true)
+                message: String(localized: "Could not load the Astronomy Picture of the day from NASA.", table: "Error", comment: "Alert: Message for network errors."),
+                in: self)
         }
     }
     
