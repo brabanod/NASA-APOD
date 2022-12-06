@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let homeVC = scene.windows.first?.rootViewController as? HomeViewController {
             do {
                 let apodAPI = try APODAPI()
-                homeVC.apodAPI = apodAPI
                 let apodCache = try APODCache(api: apodAPI)
                 homeVC.apodCache = apodCache
                 

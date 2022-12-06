@@ -18,8 +18,6 @@ class HomeViewController: UIViewController {
     
     // MARK: Model
     
-    var apodAPI: APODAPI?
-    
     var apodCache: APODCache?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -69,8 +67,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         // Show alert if API could not be created
-        if apodAPI == nil {
-            let alert = UIAlertController(
+        if apodCache == nil {
+            AlertComposer.showErrorAlert(
                 title: String(localized: "Stars are not aligned", table: "Error", comment: "Alert: Title for default error messages."),
                 message: String(localized: "Could not load the Astronomy Picture of the day from NASA.", table: "Error", comment: "Alert: Message for network errors."), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Alert: Close alert button title."), style: .default, handler: nil))
