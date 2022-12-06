@@ -199,6 +199,7 @@ final class APODCacheTests: XCTestCase {
         // Test cached
         let apodCached = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
         
+        XCTAssertTrue(apodUncached === apodCached, "Expected retrieved APOD to be the reference to the same object.")
         XCTAssertEqual(requestCount, 1)
         XCTAssertEqual(requestCountMeta, 1)
         XCTAssertEqual(requestCountThumbnail, 0)
@@ -339,7 +340,7 @@ final class APODCacheTests: XCTestCase {
         // Test cached with same date but different time, should yield same result.
         let apodCached = try await cache.apod(for: testDateDifferentTime, withThumbnail: false, withImage: false)
         
-        XCTAssertTrue(apodUncached === apodCached)
+        XCTAssertTrue(apodUncached === apodCached, "Expected retrieved APOD to be the reference to the same object.")
         XCTAssertEqual(requestCount, 1)
         XCTAssertEqual(requestCountMeta, 1)
         XCTAssertEqual(requestCountThumbnail, 0)
