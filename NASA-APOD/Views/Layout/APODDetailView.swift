@@ -29,6 +29,8 @@ class APODDetailView: UIView {
     var copyrightValueLabel: UILabel!
     var dateKeyLabel: UILabel!
     var dateValueLabel: UILabel!
+    var videoKeyLabel: UILabel!
+    var videoWatchButton: UIButton!
     
     var separatorView: UIView!
     
@@ -90,6 +92,8 @@ class APODDetailView: UIView {
         // Setup scroll view
         scrollView = UIScrollView(frame: .zero)
         scrollView.delegate = self
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
         self.addSubview(scrollView)
         scrollView.isScrollEnabled = true
         scrollView.contentInsetAdjustmentBehavior = .never
@@ -134,12 +138,13 @@ class APODDetailView: UIView {
         imageView.bottomAnchor.constraint(equalTo: detailsContainer.topAnchor, constant: -30).isActive = true
         contentView.leftAnchor.constraint(equalTo: detailsContainer.leftAnchor).isActive = true
         contentView.rightAnchor.constraint(equalTo: detailsContainer.rightAnchor).isActive = true
-        detailsContainer.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
         // Setup detail keys container (left stack view)
         detailsKeysContainer = UIStackView(frame: .zero)
         detailsKeysContainer.axis = .vertical
         detailsKeysContainer.distribution = .equalCentering
+        detailsKeysContainer.alignment = .leading
+        detailsKeysContainer.spacing = 10
         
         detailsContainer.addSubview(detailsKeysContainer)
         detailsKeysContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -152,6 +157,8 @@ class APODDetailView: UIView {
         detailsValuesContainer = UIStackView(frame: .zero)
         detailsValuesContainer.axis = .vertical
         detailsValuesContainer.distribution = .equalCentering
+        detailsValuesContainer.alignment = .leading
+        detailsValuesContainer.spacing = 10
         
         detailsContainer.addSubview(detailsValuesContainer)
         detailsValuesContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -173,7 +180,6 @@ class APODDetailView: UIView {
         titleKeyLabel.text = String(localized: "Title", table: "Detail", comment: "List: Description for the APODs title attribute.")
         detailsKeysContainer.addArrangedSubview(titleKeyLabel)
         titleKeyLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleKeyLabel.widthAnchor.constraint(equalTo: detailsKeysContainer.widthAnchor).isActive = true
 
         copyrightKeyLabel = UILabel(frame: .zero)
         copyrightKeyLabel.textColor = .white
@@ -182,7 +188,6 @@ class APODDetailView: UIView {
         copyrightKeyLabel.text = String(localized: "Source", table: "Detail", comment: "List: Description for the APODs copyright attribute.")
         detailsKeysContainer.addArrangedSubview(copyrightKeyLabel)
         copyrightKeyLabel.translatesAutoresizingMaskIntoConstraints = false
-        copyrightKeyLabel.widthAnchor.constraint(equalTo: detailsKeysContainer.widthAnchor).isActive = true
 
         dateKeyLabel = UILabel(frame: .zero)
         dateKeyLabel.textColor = .white
@@ -191,7 +196,14 @@ class APODDetailView: UIView {
         dateKeyLabel.text = String(localized: "Date", table: "Detail", comment: "List: Description for the APODs date attribute.")
         detailsKeysContainer.addArrangedSubview(dateKeyLabel)
         dateKeyLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateKeyLabel.widthAnchor.constraint(equalTo: detailsKeysContainer.widthAnchor).isActive = true
+        
+        videoKeyLabel = UILabel(frame: .zero)
+        videoKeyLabel.textColor = .white
+        videoKeyLabel.numberOfLines = 0
+        videoKeyLabel.font = keysFont
+        videoKeyLabel.text = String(localized: "Video", table: "Detail", comment: "List: Description for the APODs video attribute.")
+        detailsKeysContainer.addArrangedSubview(videoKeyLabel)
+        videoKeyLabel.translatesAutoresizingMaskIntoConstraints = false
 
         // Fill values stack
         titleValueLabel = UILabel(frame: .zero)
@@ -199,7 +211,6 @@ class APODDetailView: UIView {
         titleValueLabel.numberOfLines = 0
         detailsValuesContainer.addArrangedSubview(titleValueLabel)
         titleValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleValueLabel.widthAnchor.constraint(equalTo: detailsValuesContainer.widthAnchor).isActive = true
         titleValueLabel.heightAnchor.constraint(equalTo: titleKeyLabel.heightAnchor).isActive = true
 
         copyrightValueLabel = UILabel(frame: .zero)
@@ -207,7 +218,6 @@ class APODDetailView: UIView {
         copyrightValueLabel.numberOfLines = 0
         detailsValuesContainer.addArrangedSubview(copyrightValueLabel)
         copyrightValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        copyrightValueLabel.widthAnchor.constraint(equalTo: detailsValuesContainer.widthAnchor).isActive = true
         copyrightValueLabel.heightAnchor.constraint(equalTo: copyrightKeyLabel.heightAnchor).isActive = true
 
         dateValueLabel = UILabel(frame: .zero)
@@ -215,8 +225,17 @@ class APODDetailView: UIView {
         dateValueLabel.numberOfLines = 0
         detailsValuesContainer.addArrangedSubview(dateValueLabel)
         dateValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateValueLabel.widthAnchor.constraint(equalTo: detailsValuesContainer.widthAnchor).isActive = true
         dateValueLabel.heightAnchor.constraint(equalTo: dateKeyLabel.heightAnchor).isActive = true
+        
+        videoWatchButton = UIButton(type: .system)
+        videoWatchButton.setTitle(String(localized: "Watch", table: "Detail", comment: "List: Title for the watch APOD's video button."), for: .normal)
+        videoWatchButton.addTarget(self, action: #selector(watchVideo), for: .touchUpInside)
+        detailsValuesContainer.addArrangedSubview(videoWatchButton)
+        videoWatchButton.translatesAutoresizingMaskIntoConstraints = false
+        videoWatchButton.heightAnchor.constraint(equalTo: videoKeyLabel.heightAnchor).isActive = true
+        
+        // Hide video key and button for now
+        hideVideoAttribute()
         
         // Add separator
         separatorView = UIView(frame: .zero)
@@ -294,6 +313,13 @@ class APODDetailView: UIView {
         dateValueLabel.text = apod.date.formatted(date: .numeric, time: .omitted)
         explanationLabel.text = apod.explanation
         
+        // Display video attribute if media type is video
+        if apod.mediaType == .video {
+            showVideoAttribute()
+        } else {
+            hideVideoAttribute()
+        }
+        
         // Set image. If the image is still nil, then try to first set the thumbnail.
         if await apod.image == nil {
             imageView.image = await apod.thumbnail
@@ -303,6 +329,24 @@ class APODDetailView: UIView {
         if imageView.image == nil {
             imageView.image = await apod.image
         }
+    }
+    
+    @objc func watchVideo() {
+        guard let url = apod?.thumbnailURL else {
+            // TODO: Handle error
+            return
+        }
+        UIApplication.shared.open(url)
+    }
+    
+    func hideVideoAttribute() {
+        videoKeyLabel.isHidden = true
+        videoWatchButton.isHidden = true
+    }
+    
+    func showVideoAttribute() {
+        videoKeyLabel.isHidden = false
+        videoWatchButton.isHidden = false
     }
     
     @objc func dismiss() {
