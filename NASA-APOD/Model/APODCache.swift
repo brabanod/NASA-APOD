@@ -5,7 +5,7 @@
 //  Created by Braband, Pascal on 26.11.22.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 // FIXME: Should this be an actor?
@@ -19,8 +19,8 @@ class APODCache {
     private var apods: [Date: APOD] = [:]
     
     private var apodTasks: [Date: Task<APOD, Error>] = [:]
-    private var thumbnailTasks: [Date: Task<APOD, Error>] = [:]
-    private var imageTasks: [Date: Task<APOD, Error>] = [:]
+    private var thumbnailTasks: [Date: Task<UIImage, Error>] = [:]
+    private var imageTasks: [Date: Task<UIImage, Error>] = [:]
     
     
     // MARK: -
@@ -110,17 +110,15 @@ class APODCache {
             // This will call the APOD API and return the already loaded thumbnail from there, so no additional waiting time
             if thumbnailTasks[date] == nil {
                 thumbnailTasks[date] = Task { [apod] in
-                    let thumbnail = try await apodAPI.thumbnail(of: apod!)
-                    await apod!.setThumbnail(thumbnail)
-                    return apod!
+                    return try await apodAPI.thumbnail(of: apod!)
                 }
             }
             // Wait for the load task to finish and remove it thereafter
-            apod = try await thumbnailTasks[date]?.value
+            let thumbnail = try await thumbnailTasks[date]?.value
             thumbnailTasks[date] = nil
             
-            // Store in cache and call thumbnail completion handler
-            apods[date] = apod
+            // Store thumbnail in APOD in cache
+            await apods[date]?.setThumbnail(thumbnail)
         }
         
         // 3. Get APOD image
@@ -130,17 +128,15 @@ class APODCache {
             // This will call the APOD API and return the already loaded image from there, so no additional waiting time
             if imageTasks[date] == nil {
                 imageTasks[date] = Task { [apod] in
-                    let image = try await apodAPI.image(of: apod!)
-                    await apod!.setImage(image)
-                    return apod!
+                    return try await apodAPI.image(of: apod!)
                 }
             }
             // Wait for the load task to finish and remove it thereafter
-            apod = try await imageTasks[date]?.value
+            let image = try await imageTasks[date]?.value
             imageTasks[date] = nil
             
-            // Store in cache and call thumbnail completion handler
-            apods[date] = apod
+            // Store image in APOD in cache
+            await apods[date]?.setImage(image)
         }
         
         return apod

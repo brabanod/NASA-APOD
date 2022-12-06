@@ -232,6 +232,7 @@ final class APODCacheTests: XCTestCase {
         // Test cached
         let apodCached = try await cache.apod(for: testDate, withThumbnail: true, withImage: false)
 
+        XCTAssertTrue(apodUncached === apodCached, "Expected retrieved APOD to be the reference to the same object.")
         XCTAssertEqual(requestCount, 2)
         XCTAssertEqual(requestCountMeta, 1)
         XCTAssertEqual(requestCountThumbnail, 1)
@@ -266,6 +267,7 @@ final class APODCacheTests: XCTestCase {
         // Test cached
         let apodCached = try await cache.apod(for: testDate, withThumbnail: false, withImage: true)
 
+        XCTAssertTrue(apodUncached === apodCached, "Expected retrieved APOD to be the reference to the same object.")
         XCTAssertEqual(requestCount, 2)
         XCTAssertEqual(requestCountMeta, 1)
         XCTAssertEqual(requestCountThumbnail, 0)
@@ -301,6 +303,7 @@ final class APODCacheTests: XCTestCase {
         // Test cached
         let apodCached = try await cache.apod(for: testDate, withThumbnail: true, withImage: true)
 
+        XCTAssertTrue(apodUncached === apodCached, "Expected retrieved APOD to be the reference to the same object.")
         XCTAssertEqual(requestCount, 3)
         XCTAssertEqual(requestCountMeta, 1)
         XCTAssertEqual(requestCountThumbnail, 1)
