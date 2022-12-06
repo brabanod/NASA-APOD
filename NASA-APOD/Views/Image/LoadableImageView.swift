@@ -59,6 +59,12 @@ class LoadableImageView: UIView {
         }
     }
     
+    /// Indicates, whether the hide animation of the loading view is running.
+    private var isHideAnimationRunning: Bool = false
+    
+    /// Indicates, whether the show animation of the loading view is running.
+    private var isShowAnimationRunning: Bool = false
+    
     
     // MARK: -
 
@@ -109,10 +115,15 @@ class LoadableImageView: UIView {
         
         // Animate only if flag is set
         if animated {
+            // Only start if animation is not already running
+            guard !isShowAnimationRunning else { return }
+            isShowAnimationRunning = true
+            
             self.loadingView.isHidden = false
             UIView.animate(withDuration: duration ?? showLoadingViewAnimationDuration, animations: {
                 self.loadingView.alpha = 1
             }) { (finished) in
+                self.isShowAnimationRunning = false
                 completion?(finished)
             }
         } else {
@@ -133,10 +144,15 @@ class LoadableImageView: UIView {
         
         // Animate only if flag is set
         if animated {
+            // Only start if animation is not already running
+            guard !isHideAnimationRunning else { return }
+            isHideAnimationRunning = true
+            
             UIView.animate(withDuration: duration ?? hideLoadingViewAnimationDuration, animations: {
                 self.loadingView.alpha = 0
             }) { (finished) in
                 self.loadingView.isHidden = finished
+                self.isHideAnimationRunning = false
                 completion?(finished)
             }
         } else {
