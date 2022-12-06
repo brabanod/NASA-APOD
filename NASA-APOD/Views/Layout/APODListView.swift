@@ -188,7 +188,6 @@ extension APODListView: UICollectionViewDelegateFlowLayout {
 extension APODListView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Select!: \(indexPath)")
         guard let requestDate = DateUtils.today(adding: -indexPath.row-1) else {
             // TODO: handle this
             fatalError("Cell was not registered")
@@ -213,8 +212,6 @@ extension APODListView: UICollectionViewDelegate {
         // Calculate which is the last row that is displayed
         let maxRow = (maxIndexPath + 1) / Int(itemsPerRow)
         
-        print("Current row \(maxRow), last row \(numberOfItemsDisplayed / 2) (\(numberOfItemsDisplayed))")
-        
         
         // 3 rows before end, show load 5 more rows
         if maxRow > (numberOfItemsDisplayed / 2) - 3 {
@@ -222,7 +219,6 @@ extension APODListView: UICollectionViewDelegate {
                 numberOfItemsDisplayed + 5 * itemsPerRow,
                 Configuration.maximumAPODAmount)
             collectionView.reloadData()
-            print("Load 5 more cells")
         }
     }
 }
