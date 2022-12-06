@@ -79,6 +79,9 @@ class APODCache {
         withThumbnail shouldLoadThumbnail: Bool = false,
         withImage shouldLoadImage: Bool = false)
     async throws -> APOD {
+        // Strip time from date to have a unified key for caching
+        guard let date = DateUtils.strip(date) else { throw APODAPIError.queryCompositionFailure("Failed to create request date for given date.") }
+        
         // 1. Get APOD
         var apod: APOD!
         

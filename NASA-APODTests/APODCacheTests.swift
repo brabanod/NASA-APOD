@@ -315,6 +315,40 @@ final class APODCacheTests: XCTestCase {
         XCTAssertEqual(apodCachedImageData, APODDemoData.sampleImage2Data)
     }
     
+    /// Test that the time for the given date (passed to APODCache) is irrelevant.
+    func testAccessAPODOnlyMetaDifferentTime() async throws {
+        guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
+        guard let testDateDifferentTime = Calendar.current.date(byAdding: .hour, value: 1, to: testDate) else  { fatalError("Could not create date.") }
+        
+        // Setup mock request handler
+        APODAPIMockURLProtocol.requestHandler = sequenceMock()
+        
+        let cache = try APODCache(api: apodAPI)
+        
+        // Test uncached
+        let apodUncached = try await cache.apod(for: testDate, withThumbnail: false, withImage: false)
+        
+        XCTAssertEqual(requestCount, 1)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 0)
+        await AsyncAssertEqual(await apodUncached.date, testDate)
+        await AsyncAssertEqual(await apodUncached.thumbnail, nil)
+        await AsyncAssertEqual(await apodUncached.image, nil)
+        
+        // Test cached with same date but different time, should yield same result.
+        let apodCached = try await cache.apod(for: testDateDifferentTime, withThumbnail: false, withImage: false)
+        
+        XCTAssertTrue(apodUncached === apodCached)
+        XCTAssertEqual(requestCount, 1)
+        XCTAssertEqual(requestCountMeta, 1)
+        XCTAssertEqual(requestCountThumbnail, 0)
+        XCTAssertEqual(requestCountImage, 0)
+        await AsyncAssertEqual(await apodCached.date, testDate)
+        await AsyncAssertEqual(await apodCached.thumbnail, nil)
+        await AsyncAssertEqual(await apodCached.image, nil)
+    }
+    
     
     // MARK: Access during Initial load
     
@@ -414,7 +448,7 @@ final class APODCacheTests: XCTestCase {
     // MARK: Access same simultaneously
     
     /// Test accessing the same unchached APOD simultaneously, so that the load Task is still running (only metadata).
-    func testAccessUncachedSameMeta() async throws {
+    func testAccessSameUncachedMeta() async throws {
         guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
 
         // Setup mock request handler
@@ -563,7 +597,7 @@ final class APODCacheTests: XCTestCase {
     }
     
     /// Test accessing the same uncached APOD simultaneously, so that another Task is still running (metadata, thumbnail and image).
-    func testAccessUncachedSameAll() async throws {
+    func testAccessSameUncachedAll() async throws {
         guard let testDate = DateUtils.today(adding: -1) else { fatalError("Could not create date.") }
 
         // Setup mock request handler

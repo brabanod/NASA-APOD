@@ -122,8 +122,8 @@ class APODHighlightView: UIView {
         Task {
             do {
                 // Incrementally load data for fast display
-                
                 let today = Date()
+                
                 // Load APOD without thumbnail first
                 self.apod = try await apodCache?.apod(for: today)
                 

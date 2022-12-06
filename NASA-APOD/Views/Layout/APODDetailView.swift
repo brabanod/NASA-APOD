@@ -293,22 +293,16 @@ class APODDetailView: UIView {
         copyrightValueLabel.text = apod.copyright
         dateValueLabel.text = apod.date.formatted(date: .numeric, time: .omitted)
         explanationLabel.text = apod.explanation
-
-        // FIXME: Why is thumbnail and image nil?
         
         // Set image. If the image is still nil, then try to first set the thumbnail.
-        print("APOD Image: \(await apod.image)")
-        print("APOD Thumb: \(await apod.thumbnail)")
         if await apod.image == nil {
             imageView.image = await apod.thumbnail
         }
-        print("IMAGE view: \(imageView.image)")
         
-        // If image is still nil (i.e. thumbnail was nil), directly set image
+        // If thumbnail is also nil (i.e. imageView.image is nil), directly set image
         if imageView.image == nil {
             imageView.image = await apod.image
         }
-        print("IMAGE view 2: \(imageView.image)")
     }
     
     @objc func dismiss() {
