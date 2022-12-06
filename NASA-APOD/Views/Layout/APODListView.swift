@@ -77,6 +77,7 @@ class APODListView: UIView {
         collectionView.register(APODCellView.self, forCellWithReuseIdentifier: cellReuseId)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
+        collectionView.contentInsetAdjustmentBehavior = .never
         
         // Add UICollectionView to subviews
         self.addSubview(collectionView)
