@@ -13,7 +13,8 @@ class APODDetailView: UIView {
     var scrollView: UIScrollView!
     var contentView: UIView!
     
-    var topBar: UIVisualEffectView!
+    var topBar: UIView!
+    var topBarBlur: UIVisualEffectView!
     var topBarSeparator: UIView!
     var dismissButton: UIButton!
     
@@ -260,29 +261,37 @@ class APODDetailView: UIView {
         contentView.bottomAnchor.constraint(equalTo: explanationLabel.bottomAnchor, constant: 40).isActive = true
         
         // Setup top bar
-        topBar = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        topBar = UIView(frame: .zero)
         self.addSubview(topBar)
-        topBar.isHidden = true
         topBar.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: topBar.leftAnchor).isActive = true
         self.rightAnchor.constraint(equalTo: topBar.rightAnchor).isActive = true
         self.topAnchor.constraint(equalTo: topBar.topAnchor).isActive = true
         topBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        topBarBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        topBar.addSubview(topBarBlur)
+        topBarBlur.isHidden = true
+        topBarBlur.translatesAutoresizingMaskIntoConstraints = false
+        topBar.leftAnchor.constraint(equalTo: topBarBlur.leftAnchor).isActive = true
+        topBar.rightAnchor.constraint(equalTo: topBarBlur.rightAnchor).isActive = true
+        topBar.topAnchor.constraint(equalTo: topBarBlur.topAnchor).isActive = true
+        topBar.bottomAnchor.constraint(equalTo: topBarBlur.bottomAnchor).isActive = true
 
         // Add top bar separator
         topBarSeparator = UIView(frame: .zero)
         topBarSeparator.backgroundColor = UIColor.white.withAlphaComponent(0.15)
-        topBar.contentView.addSubview(topBarSeparator)
+        topBarBlur.contentView.addSubview(topBarSeparator)
         topBarSeparator.translatesAutoresizingMaskIntoConstraints = false
-        topBar.leftAnchor.constraint(equalTo: topBarSeparator.leftAnchor, constant: 0).isActive = true
-        topBar.rightAnchor.constraint(equalTo: topBarSeparator.rightAnchor, constant: 0).isActive = true
-        topBar.bottomAnchor.constraint(equalTo: topBarSeparator.bottomAnchor, constant: 0).isActive = true
+        topBarBlur.leftAnchor.constraint(equalTo: topBarSeparator.leftAnchor, constant: 0).isActive = true
+        topBarBlur.rightAnchor.constraint(equalTo: topBarSeparator.rightAnchor, constant: 0).isActive = true
+        topBarBlur.bottomAnchor.constraint(equalTo: topBarSeparator.bottomAnchor, constant: 0).isActive = true
         topBarSeparator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         // Add dismiss button
         dismissButton = UIButton(type: .close)
         dismissButton.overrideUserInterfaceStyle = .dark
-        topBar.contentView.addSubview(dismissButton)
+        topBar.addSubview(dismissButton)
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
         topBar.centerYAnchor.constraint(equalTo: dismissButton.centerYAnchor).isActive = true
         topBar.rightAnchor.constraint(equalTo: dismissButton.rightAnchor, constant: 20).isActive = true
@@ -361,20 +370,20 @@ extension APODDetailView: UIScrollViewDelegate {
         // Only show top bar if scrolled past 5 pixels
         if scrollView.contentOffset.y >= 5 {
             // Show top bar
-            guard topBar.isHidden else { return }
-            topBar.isHidden = false
-            topBar.alpha = 0.0
+            guard topBarBlur.isHidden else { return }
+            topBarBlur.isHidden = false
+            topBarBlur.alpha = 0.0
             UIView.animate(withDuration: 0.2) {
-                self.topBar.alpha = 1.0
+                self.topBarBlur.alpha = 1.0
             }
         } else {
             // Hide top bar
-            guard !topBar.isHidden, !isAnimatingHideTopBar else { return }
+            guard !topBarBlur.isHidden, !isAnimatingHideTopBar else { return }
             isAnimatingHideTopBar = true
             UIView.animate(withDuration: 0.2) {
-                self.topBar.alpha = 0.0
+                self.topBarBlur.alpha = 0.0
             } completion: { success in
-                self.topBar.isHidden = success
+                self.topBarBlur.isHidden = success
                 self.isAnimatingHideTopBar = false
             }
         }
