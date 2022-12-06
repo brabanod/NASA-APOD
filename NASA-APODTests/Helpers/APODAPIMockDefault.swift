@@ -28,12 +28,21 @@ class APODAPIMockDefault: URLProtocol {
                 
                 // Get date string query parameter from request
                 var responseData: Data?
+                
                 if let dateString = urlComponents?.queryItems?.first(where: { $0.name == "date" })?.value {
+                    let parseStrategy = Date.ParseStrategy(format: "\(year: .defaultDigits)-\(month: .twoDigits)-\(day: .twoDigits)", timeZone: TimeZone.current)
+                    
+                    // Calculate index for metadata file using the difference from today to the request date
+                    guard let today = DateUtils.today() else { fatalError("Could not process request.") }
+                    let date = try Date(dateString, strategy: parseStrategy)
+                    let dateDifference = abs(Calendar.current.dateComponents([.day], from: today, to: date).day ?? 0)
+                    let index = dateDifference % 11
+                    
                     // Load metadata
                     // Get file path for json file using the request date string as filename and load data
                     guard let jsonPath =
-                            Bundle(for: Self.self).path(forResource: dateString, ofType: ".json") ??
-                            Bundle(for: Self.self).path(forResource: "2022-11-19", ofType: ".json") else { fatalError("Failed to load data.") }
+                            Bundle(for: Self.self).path(forResource: "SampleAPOD\(index)", ofType: ".json") ??
+                            Bundle(for: Self.self).path(forResource: "SampleAPOD1", ofType: ".json") else { fatalError("Failed to load data.") }
                     let jsonURL = URL(fileURLWithPath: jsonPath)
                     
                     let data = try Data(contentsOf: jsonURL)
@@ -42,7 +51,7 @@ class APODAPIMockDefault: URLProtocol {
                     try await Task.sleep(for: .milliseconds(500))
                 } else {
                     // Load image
-                    guard let imagePath = Bundle(for: Self.self).path(forResource: "2022-11-21", ofType: ".jpg") else { fatalError("Failed to load data.") }
+                    guard let imagePath = Bundle(for: Self.self).path(forResource: "SampleImage1", ofType: ".jpg") else { fatalError("Failed to load data.") }
                     let imageURL = URL(fileURLWithPath: imagePath)
                     
                     let data = try Data(contentsOf: imageURL)

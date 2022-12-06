@@ -8,31 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		5C0F9F252934BD47005B3B66 /* AsyncAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F9F242934BD47005B3B66 /* AsyncAssert.swift */; };
-		5C2C85D42936021700E84EA7 /* 2022-11-21.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* 2022-11-21.jpg */; };
-		5C2C85D52936021700E84EA7 /* 2022-11-28.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* 2022-11-28.json */; };
-		5C2C85D62936021700E84EA7 /* 2022-11-24.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* 2022-11-24.json */; };
-		5C2C85D72936021700E84EA7 /* 2022-11-25.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* 2022-11-25.json */; };
-		5C2C85D82936021700E84EA7 /* 2022-11-29.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* 2022-11-29.json */; };
-		5C2C85D92936021700E84EA7 /* 2022-11-22.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* 2022-11-22.json */; };
-		5C2C85DA2936021700E84EA7 /* 2022-11-19.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* 2022-11-19.json */; };
-		5C2C85DB2936021700E84EA7 /* 2022-11-23.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* 2022-11-23.json */; };
-		5C2C85DC2936021700E84EA7 /* 2022-11-20.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* 2022-11-20.json */; };
-		5C2C85DD2936021700E84EA7 /* 2022-11-21.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* 2022-11-21.json */; };
-		5C2C85DE2936021700E84EA7 /* 2022-11-26.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* 2022-11-26.json */; };
-		5C2C85DF2936021700E84EA7 /* 2022-11-27.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* 2022-11-27.json */; };
+		5C2C85D42936021700E84EA7 /* SampleImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* SampleImage1.jpg */; };
+		5C2C85D52936021700E84EA7 /* SampleAPOD10.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* SampleAPOD10.json */; };
+		5C2C85D62936021700E84EA7 /* SampleAPOD6.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */; };
+		5C2C85D72936021700E84EA7 /* SampleAPOD7.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */; };
+		5C2C85D82936021700E84EA7 /* SampleAPOD11.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */; };
+		5C2C85D92936021700E84EA7 /* SampleAPOD4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */; };
+		5C2C85DA2936021700E84EA7 /* SampleAPOD1.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */; };
+		5C2C85DB2936021700E84EA7 /* SampleAPOD5.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */; };
+		5C2C85DC2936021700E84EA7 /* SampleAPOD2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* SampleAPOD2.json */; };
+		5C2C85DD2936021700E84EA7 /* SampleAPOD3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* SampleAPOD3.json */; };
+		5C2C85DE2936021700E84EA7 /* SampleAPOD8.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* SampleAPOD8.json */; };
+		5C2C85DF2936021700E84EA7 /* SampleAPOD9.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* SampleAPOD9.json */; };
 		5C2C85E12936023B00E84EA7 /* APODAPIMockDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */; };
-		5C2C85E22936071600E84EA7 /* 2022-11-21.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* 2022-11-21.jpg */; };
-		5C2C85E32936071B00E84EA7 /* 2022-11-23.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* 2022-11-23.json */; };
-		5C2C85E42936071B00E84EA7 /* 2022-11-27.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* 2022-11-27.json */; };
-		5C2C85E52936071B00E84EA7 /* 2022-11-28.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* 2022-11-28.json */; };
-		5C2C85E62936071B00E84EA7 /* 2022-11-25.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* 2022-11-25.json */; };
-		5C2C85E72936071B00E84EA7 /* 2022-11-29.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* 2022-11-29.json */; };
-		5C2C85E82936071B00E84EA7 /* 2022-11-24.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* 2022-11-24.json */; };
-		5C2C85E92936071B00E84EA7 /* 2022-11-22.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* 2022-11-22.json */; };
-		5C2C85EA2936071B00E84EA7 /* 2022-11-19.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* 2022-11-19.json */; };
-		5C2C85EB2936071B00E84EA7 /* 2022-11-20.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* 2022-11-20.json */; };
-		5C2C85EC2936071B00E84EA7 /* 2022-11-21.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* 2022-11-21.json */; };
-		5C2C85ED2936071B00E84EA7 /* 2022-11-26.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* 2022-11-26.json */; };
+		5C2C85E22936071600E84EA7 /* SampleImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* SampleImage1.jpg */; };
+		5C2C85E32936071B00E84EA7 /* SampleAPOD5.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */; };
+		5C2C85E42936071B00E84EA7 /* SampleAPOD9.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* SampleAPOD9.json */; };
+		5C2C85E52936071B00E84EA7 /* SampleAPOD10.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* SampleAPOD10.json */; };
+		5C2C85E62936071B00E84EA7 /* SampleAPOD7.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */; };
+		5C2C85E72936071B00E84EA7 /* SampleAPOD11.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */; };
+		5C2C85E82936071B00E84EA7 /* SampleAPOD6.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */; };
+		5C2C85E92936071B00E84EA7 /* SampleAPOD4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */; };
+		5C2C85EA2936071B00E84EA7 /* SampleAPOD1.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */; };
+		5C2C85EB2936071B00E84EA7 /* SampleAPOD2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* SampleAPOD2.json */; };
+		5C2C85EC2936071B00E84EA7 /* SampleAPOD3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* SampleAPOD3.json */; };
+		5C2C85ED2936071B00E84EA7 /* SampleAPOD8.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* SampleAPOD8.json */; };
 		5C2C85EE2936072100E84EA7 /* APODAPIMockDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */; };
 		5C2C85F0293622B000E84EA7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85EF293622B000E84EA7 /* Configuration.swift */; };
 		5C2C85F22936338600E84EA7 /* DateUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */; };
@@ -41,6 +41,7 @@
 		5C2C8618293E0F9B00E84EA7 /* APODDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8617293E0F9B00E84EA7 /* APODDetailView.swift */; };
 		5C2C861B293E57F000E84EA7 /* APODDemoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D45292E0AA800558212 /* APODDemoData.swift */; };
 		5C2C861D293E650900E84EA7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C861C293E650900E84EA7 /* DetailViewController.swift */; };
+		5C2C861E293FA07500E84EA7 /* APODAPIMockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D40292E0A2000558212 /* APODAPIMockURLProtocol.swift */; };
 		5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D9186293108D8006AF534 /* APODCellView.swift */; };
 		5C2D918929321357006AF534 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918829321357006AF534 /* DateUtils.swift */; };
 		5C2D918D29323873006AF534 /* APODCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D918C29323873006AF534 /* APODCache.swift */; };
@@ -87,18 +88,18 @@
 
 /* Begin PBXFileReference section */
 		5C0F9F242934BD47005B3B66 /* AsyncAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncAssert.swift; sourceTree = "<group>"; };
-		5C2C85C72936021700E84EA7 /* 2022-11-21.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "2022-11-21.jpg"; sourceTree = "<group>"; };
-		5C2C85C92936021700E84EA7 /* 2022-11-28.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-28.json"; sourceTree = "<group>"; };
-		5C2C85CA2936021700E84EA7 /* 2022-11-24.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-24.json"; sourceTree = "<group>"; };
-		5C2C85CB2936021700E84EA7 /* 2022-11-25.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-25.json"; sourceTree = "<group>"; };
-		5C2C85CC2936021700E84EA7 /* 2022-11-29.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-29.json"; sourceTree = "<group>"; };
-		5C2C85CD2936021700E84EA7 /* 2022-11-22.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-22.json"; sourceTree = "<group>"; };
-		5C2C85CE2936021700E84EA7 /* 2022-11-19.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-19.json"; sourceTree = "<group>"; };
-		5C2C85CF2936021700E84EA7 /* 2022-11-23.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-23.json"; sourceTree = "<group>"; };
-		5C2C85D02936021700E84EA7 /* 2022-11-20.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-20.json"; sourceTree = "<group>"; };
-		5C2C85D12936021700E84EA7 /* 2022-11-21.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-21.json"; sourceTree = "<group>"; };
-		5C2C85D22936021700E84EA7 /* 2022-11-26.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-26.json"; sourceTree = "<group>"; };
-		5C2C85D32936021700E84EA7 /* 2022-11-27.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2022-11-27.json"; sourceTree = "<group>"; };
+		5C2C85C72936021700E84EA7 /* SampleImage1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = SampleImage1.jpg; sourceTree = "<group>"; };
+		5C2C85C92936021700E84EA7 /* SampleAPOD10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD10.json; sourceTree = "<group>"; };
+		5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD6.json; sourceTree = "<group>"; };
+		5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD7.json; sourceTree = "<group>"; };
+		5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD11.json; sourceTree = "<group>"; };
+		5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD4.json; sourceTree = "<group>"; };
+		5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD1.json; sourceTree = "<group>"; };
+		5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD5.json; sourceTree = "<group>"; };
+		5C2C85D02936021700E84EA7 /* SampleAPOD2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD2.json; sourceTree = "<group>"; };
+		5C2C85D12936021700E84EA7 /* SampleAPOD3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD3.json; sourceTree = "<group>"; };
+		5C2C85D22936021700E84EA7 /* SampleAPOD8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD8.json; sourceTree = "<group>"; };
+		5C2C85D32936021700E84EA7 /* SampleAPOD9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD9.json; sourceTree = "<group>"; };
 		5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPIMockDefault.swift; sourceTree = "<group>"; };
 		5C2C85EF293622B000E84EA7 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtilsTests.swift; sourceTree = "<group>"; };
@@ -174,7 +175,7 @@
 		5C2C85C62936021700E84EA7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				5C2C85C72936021700E84EA7 /* 2022-11-21.jpg */,
+				5C2C85C72936021700E84EA7 /* SampleImage1.jpg */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -182,17 +183,17 @@
 		5C2C85C82936021700E84EA7 /* Meta */ = {
 			isa = PBXGroup;
 			children = (
-				5C2C85CE2936021700E84EA7 /* 2022-11-19.json */,
-				5C2C85D02936021700E84EA7 /* 2022-11-20.json */,
-				5C2C85D12936021700E84EA7 /* 2022-11-21.json */,
-				5C2C85CD2936021700E84EA7 /* 2022-11-22.json */,
-				5C2C85CF2936021700E84EA7 /* 2022-11-23.json */,
-				5C2C85CA2936021700E84EA7 /* 2022-11-24.json */,
-				5C2C85CB2936021700E84EA7 /* 2022-11-25.json */,
-				5C2C85D22936021700E84EA7 /* 2022-11-26.json */,
-				5C2C85D32936021700E84EA7 /* 2022-11-27.json */,
-				5C2C85C92936021700E84EA7 /* 2022-11-28.json */,
-				5C2C85CC2936021700E84EA7 /* 2022-11-29.json */,
+				5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */,
+				5C2C85D02936021700E84EA7 /* SampleAPOD2.json */,
+				5C2C85D12936021700E84EA7 /* SampleAPOD3.json */,
+				5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */,
+				5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */,
+				5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */,
+				5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */,
+				5C2C85D22936021700E84EA7 /* SampleAPOD8.json */,
+				5C2C85D32936021700E84EA7 /* SampleAPOD9.json */,
+				5C2C85C92936021700E84EA7 /* SampleAPOD10.json */,
+				5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */,
 			);
 			path = Meta;
 			sourceTree = "<group>";
@@ -433,20 +434,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C2C85E62936071B00E84EA7 /* 2022-11-25.json in Resources */,
-				5C2C85E32936071B00E84EA7 /* 2022-11-23.json in Resources */,
-				5C2C85EC2936071B00E84EA7 /* 2022-11-21.json in Resources */,
-				5C2C85EB2936071B00E84EA7 /* 2022-11-20.json in Resources */,
-				5C2C85ED2936071B00E84EA7 /* 2022-11-26.json in Resources */,
+				5C2C85E62936071B00E84EA7 /* SampleAPOD7.json in Resources */,
+				5C2C85E32936071B00E84EA7 /* SampleAPOD5.json in Resources */,
+				5C2C85EC2936071B00E84EA7 /* SampleAPOD3.json in Resources */,
+				5C2C85EB2936071B00E84EA7 /* SampleAPOD2.json in Resources */,
+				5C2C85ED2936071B00E84EA7 /* SampleAPOD8.json in Resources */,
 				5CE36D16292D210F00558212 /* LaunchScreen.storyboard in Resources */,
-				5C2C85E82936071B00E84EA7 /* 2022-11-24.json in Resources */,
-				5C2C85E52936071B00E84EA7 /* 2022-11-28.json in Resources */,
-				5C2C85E92936071B00E84EA7 /* 2022-11-22.json in Resources */,
-				5C2C85E72936071B00E84EA7 /* 2022-11-29.json in Resources */,
-				5C2C85EA2936071B00E84EA7 /* 2022-11-19.json in Resources */,
+				5C2C85E82936071B00E84EA7 /* SampleAPOD6.json in Resources */,
+				5C2C85E52936071B00E84EA7 /* SampleAPOD10.json in Resources */,
+				5C2C85E92936071B00E84EA7 /* SampleAPOD4.json in Resources */,
+				5C2C85E72936071B00E84EA7 /* SampleAPOD11.json in Resources */,
+				5C2C85EA2936071B00E84EA7 /* SampleAPOD1.json in Resources */,
 				5CE36D13292D210F00558212 /* Assets.xcassets in Resources */,
-				5C2C85E22936071600E84EA7 /* 2022-11-21.jpg in Resources */,
-				5C2C85E42936071B00E84EA7 /* 2022-11-27.json in Resources */,
+				5C2C85E22936071600E84EA7 /* SampleImage1.jpg in Resources */,
+				5C2C85E42936071B00E84EA7 /* SampleAPOD9.json in Resources */,
 				5CE36D11292D210D00558212 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,20 +456,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C2C85DB2936021700E84EA7 /* 2022-11-23.json in Resources */,
+				5C2C85DB2936021700E84EA7 /* SampleAPOD5.json in Resources */,
 				5C744BEF292EC1B700F210FF /* SampleImage2.png in Resources */,
-				5C2C85D82936021700E84EA7 /* 2022-11-29.json in Resources */,
-				5C2C85D42936021700E84EA7 /* 2022-11-21.jpg in Resources */,
-				5C2C85DD2936021700E84EA7 /* 2022-11-21.json in Resources */,
+				5C2C85D82936021700E84EA7 /* SampleAPOD11.json in Resources */,
+				5C2C85D42936021700E84EA7 /* SampleImage1.jpg in Resources */,
+				5C2C85DD2936021700E84EA7 /* SampleAPOD3.json in Resources */,
 				5CF2C393292E48A000DFB53B /* SampleImage.png in Resources */,
-				5C2C85DC2936021700E84EA7 /* 2022-11-20.json in Resources */,
-				5C2C85DA2936021700E84EA7 /* 2022-11-19.json in Resources */,
-				5C2C85D62936021700E84EA7 /* 2022-11-24.json in Resources */,
-				5C2C85D92936021700E84EA7 /* 2022-11-22.json in Resources */,
-				5C2C85DF2936021700E84EA7 /* 2022-11-27.json in Resources */,
-				5C2C85DE2936021700E84EA7 /* 2022-11-26.json in Resources */,
-				5C2C85D72936021700E84EA7 /* 2022-11-25.json in Resources */,
-				5C2C85D52936021700E84EA7 /* 2022-11-28.json in Resources */,
+				5C2C85DC2936021700E84EA7 /* SampleAPOD2.json in Resources */,
+				5C2C85DA2936021700E84EA7 /* SampleAPOD1.json in Resources */,
+				5C2C85D62936021700E84EA7 /* SampleAPOD6.json in Resources */,
+				5C2C85D92936021700E84EA7 /* SampleAPOD4.json in Resources */,
+				5C2C85DF2936021700E84EA7 /* SampleAPOD9.json in Resources */,
+				5C2C85DE2936021700E84EA7 /* SampleAPOD8.json in Resources */,
+				5C2C85D72936021700E84EA7 /* SampleAPOD7.json in Resources */,
+				5C2C85D52936021700E84EA7 /* SampleAPOD10.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +491,7 @@
 				5CE36D0E292D210D00558212 /* HomeViewController.swift in Sources */,
 				5C2C861B293E57F000E84EA7 /* APODDemoData.swift in Sources */,
 				5C2C85F42936517500E84EA7 /* GradientView.swift in Sources */,
+				5C2C861E293FA07500E84EA7 /* APODAPIMockURLProtocol.swift in Sources */,
 				5C2C85F0293622B000E84EA7 /* Configuration.swift in Sources */,
 				5C2C85EE2936072100E84EA7 /* APODAPIMockDefault.swift in Sources */,
 				5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */,
