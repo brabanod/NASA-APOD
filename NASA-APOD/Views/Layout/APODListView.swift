@@ -114,6 +114,10 @@ extension APODListView: UICollectionViewDataSource {
             return cellUntyped
         }
         
+        // Explicitly call to layout cell. This is needed in order to correctly draw the gradient view.
+        cell.setNeedsLayout()
+        cell.layoutIfNeeded()
+        
         guard let requestDate = DateUtils.today(adding: -indexPath.row-1) else {
             Log.default.log("Failed to create date from today by adding \(-indexPath.row-1) days.")
             AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)

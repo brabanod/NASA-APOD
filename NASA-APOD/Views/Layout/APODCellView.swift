@@ -12,7 +12,7 @@ class APODCellView: UICollectionViewCell {
     // MARK: Views
     
     private var imageView: LoadableImageView!
-    private var labelProtectionView: UIView!
+    private var labelProtectionView: GradientView!
     private var titleLabel: UILabel!
     private var accessoryLabel: UILabel!
     
