@@ -90,6 +90,15 @@ class APODListView: UIView {
         // Create highlight view
         collectionView.register(APODHighlightViewReusableWrapper.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: headerReuseId)
     }
+    
+    @objc func didTapHighlightView(_ sender: AnyObject) {
+        guard let today = DateUtils.today() else {
+            Log.default.log("Failed to create today date.")
+            AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
+            return
+        }
+        delegate?.showAPODDetail(for: today, sender: sender)
+    }
 }
 
 
@@ -143,15 +152,6 @@ extension APODListView: UICollectionViewDataSource {
         
         
         return cell
-    }
-    
-    @objc func didTapHighlightView(_ sender: AnyObject) {
-        guard let today = DateUtils.today() else {
-            Log.default.log("Failed to create today date.")
-            AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
-            return
-        }
-        delegate?.showAPODDetail(for: today, sender: sender)
     }
 }
 

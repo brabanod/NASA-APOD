@@ -43,7 +43,7 @@ class LoadableImageView: UIView {
                     // Cross fade to new image, if there was already an image displayed
                     UIView.transition(with: self.imageView,
                                       duration: 2.0,
-                                      options: .transitionCrossDissolve,
+                                      options: [.transitionCrossDissolve, .allowUserInteraction],
                                       animations: { self.imageView.image = newValue },
                                       completion: nil)
                 }
@@ -120,7 +120,11 @@ class LoadableImageView: UIView {
             isShowAnimationRunning = true
             
             self.loadingView.isHidden = false
-            UIView.animate(withDuration: duration ?? showLoadingViewAnimationDuration, animations: {
+            UIView.animate(
+                withDuration: duration ?? showLoadingViewAnimationDuration,
+                delay: 0,
+                options: [.allowUserInteraction],
+                animations: {
                 self.loadingView.alpha = 1
             }) { (finished) in
                 self.isShowAnimationRunning = false
@@ -148,7 +152,11 @@ class LoadableImageView: UIView {
             guard !isHideAnimationRunning else { return }
             isHideAnimationRunning = true
             
-            UIView.animate(withDuration: duration ?? hideLoadingViewAnimationDuration, animations: {
+            UIView.animate(
+                withDuration: duration ?? hideLoadingViewAnimationDuration,
+                delay: 0,
+                options: [.allowUserInteraction],
+                animations: {
                 self.loadingView.alpha = 0
             }) { (finished) in
                 self.loadingView.isHidden = finished
