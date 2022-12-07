@@ -1,0 +1,15 @@
+/* List: Description for the APODs date attribute. */
+"Date" = "Datum";
+
+/* List: Description for the APODs copyright attribute. */
+"Source" = "Quelle";
+
+/* List: Description for the APODs title attribute. */
+"Title" = "Titel";
+
+/* List: Description for the APODs video attribute. */
+"Video" = "Video";
+
+/* List: Title for the watch APOD's video button. */
+"Watch" = "Ansehen";
+

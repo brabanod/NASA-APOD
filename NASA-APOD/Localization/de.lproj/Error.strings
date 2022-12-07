@@ -1,0 +1,9 @@
+/* Alert: Message for network errors. */
+"Could not load the Astronomy Picture of the day from NASA." = "Konnte das Astronomie Bild des Tages nicht von der NASA laden.";
+
+/* Alert: Message for general errors. */
+"Something went wrong. Please try again or contact support if the problem persists." = "Etwas ist schilfgelaufen. Bitte probiere es erneut oder kontaktiere den Support, sollte das Problem weiter bestehen.";
+
+/* Alert: Title for default error messages. */
+"Stars are not aligned" = "Die Sterne standen nicht günstig";
+
