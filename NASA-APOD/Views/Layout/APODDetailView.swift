@@ -328,7 +328,7 @@ class APODDetailView: UIView {
         // Set labels
         titleValueLabel.text = apod.title
         copyrightValueLabel.text = apod.copyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright.")
-        dateValueLabel.text = apod.date.formatted(date: .numeric, time: .omitted)
+        dateValueLabel.text = apod.date.formatted(.dateTime.year(.extended()).month(.twoDigits).day(.twoDigits))
         explanationLabel.text = apod.explanation
         
         // Display video attribute if media type is video

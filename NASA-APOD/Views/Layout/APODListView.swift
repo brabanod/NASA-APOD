@@ -140,7 +140,7 @@ extension APODListView: UICollectionViewDataSource {
             var apod = try await apodCache?.apod(for: requestDate)
             if cell.id == requestDate {
                 cell.setTitle(apod?.title)
-                cell.setAccessoryText(apod?.date.formatted(date: .numeric, time: .omitted))
+                cell.setAccessoryText(apod?.date.formatted(.dateTime.year(.extended()).month(.twoDigits).day(.twoDigits)))
             }
             
             // Load APOD thumbnail
