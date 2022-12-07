@@ -57,6 +57,7 @@
 		5C7D60372940DF540065A9FF /* Error.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C7D60352940DF540065A9FF /* Error.strings */; };
 		5C7D603A2940DF540065A9FF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C7D60382940DF540065A9FF /* InfoPlist.strings */; };
 		5C7D603D2940DF540065A9FF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5C7D603B2940DF540065A9FF /* Localizable.strings */; };
+		5C7D60412940E20C0065A9FF /* BlurBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D60402940E20C0065A9FF /* BlurBar.swift */; };
 		5C8D17B5293010CD000D88BF /* APODListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8D17B4293010CD000D88BF /* APODListView.swift */; };
 		5CE36D0A292D210D00558212 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D09292D210D00558212 /* AppDelegate.swift */; };
 		5CE36D0C292D210D00558212 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D0B292D210D00558212 /* SceneDelegate.swift */; };
@@ -131,6 +132,7 @@
 		5C7D60392940DF540065A9FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5C7D603C2940DF540065A9FF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5C7D603E2940DF610065A9FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5C7D60402940E20C0065A9FF /* BlurBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBar.swift; sourceTree = "<group>"; };
 		5C8D17B4293010CD000D88BF /* APODListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODListView.swift; sourceTree = "<group>"; };
 		5CE36D06292D210D00558212 /* NASA-APOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NASA-APOD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CE36D09292D210D00558212 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				5C2C8620293FA77700E84EA7 /* AlertComposer.swift */,
+				5C7D60402940E20C0065A9FF /* BlurBar.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				5C2C8623293FB5A800E84EA7 /* UIWindow+Extension.swift in Sources */,
 				5CE36D0C292D210D00558212 /* SceneDelegate.swift in Sources */,
 				5C2C8616293DF8B900E84EA7 /* APODHighlightViewReusableWrapper.swift in Sources */,
+				5C7D60412940E20C0065A9FF /* BlurBar.swift in Sources */,
 				5C744BED292E95CF00F210FF /* APODHighlightView.swift in Sources */,
 				5C2D9187293108D8006AF534 /* APODCellView.swift in Sources */,
 				5C744BF2292F494800F210FF /* Logger.swift in Sources */,

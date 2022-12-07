@@ -13,6 +13,8 @@ class APODListView: UIView {
     
     private var collectionView: UICollectionView!
     
+    private var topBar: BlurBar!
+    
     
     // MARK: Model
     
@@ -89,6 +91,15 @@ class APODListView: UIView {
         
         // Create highlight view
         collectionView.register(APODHighlightViewReusableWrapper.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: headerReuseId)
+        
+        // Add top bar
+        topBar = BlurBar(frame: .zero)
+        self.addSubview(topBar)
+        topBar.translatesAutoresizingMaskIntoConstraints = false
+        self.leftAnchor.constraint(equalTo: topBar.leftAnchor).isActive = true
+        self.rightAnchor.constraint(equalTo: topBar.rightAnchor).isActive = true
+        self.topAnchor.constraint(equalTo: topBar.topAnchor).isActive = true
+        self.safeAreaLayoutGuide.topAnchor.constraint(equalTo: topBar.bottomAnchor).isActive = true
     }
     
     @objc func didTapHighlightView(_ sender: AnyObject) {
@@ -98,6 +109,43 @@ class APODListView: UIView {
             return
         }
         delegate?.showAPODDetail(for: today, sender: sender)
+    }
+    
+    /// Based on the visible cells, this method decides whether to load more items in the collection view.
+    func loadMoreItemsIfNeeded() {
+        guard Configuration.infiniteScroll else { return }
+        // Find the lowest row displayed
+        let visibleCells = collectionView.visibleCells
+        guard let maxIndexPath = visibleCells
+            .map({ cell in
+                collectionView.indexPath(for: cell)?.row ?? 0
+                
+            })
+            .max(by: { $0 < $1 })
+        else {
+            return
+        }
+        
+        // Calculate which is the last row that is displayed
+        let maxRow = (maxIndexPath + 1) / Int(itemsPerRow)
+        
+        
+        // 3 rows before end, show load 5 more rows
+        if maxRow > (numberOfItemsDisplayed / 2) - 3 {
+            numberOfItemsDisplayed = min(
+                numberOfItemsDisplayed + 5 * itemsPerRow,
+                Configuration.maximumAPODAmount)
+            collectionView.reloadData()
+        }
+    }
+    
+    /// Shows or hides top bar, based on the given scroll position.
+    func toggleTopBar(scrollPosition: CGPoint) {
+        if scrollPosition.y >= 10 {
+            topBar.showBlur()
+        } else {
+            topBar.hideBlur()
+        }
     }
 }
 
@@ -208,30 +256,8 @@ extension APODListView: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard Configuration.infiniteScroll else { return }
-        // Find the lowest row displayed
-        let visibleCells = collectionView.visibleCells
-        guard let maxIndexPath = visibleCells
-            .map({ cell in
-                collectionView.indexPath(for: cell)?.row ?? 0
-                
-            })
-            .max(by: { $0 < $1 })
-        else {
-            return
-        }
-        
-        // Calculate which is the last row that is displayed
-        let maxRow = (maxIndexPath + 1) / Int(itemsPerRow)
-        
-        
-        // 3 rows before end, show load 5 more rows
-        if maxRow > (numberOfItemsDisplayed / 2) - 3 {
-            numberOfItemsDisplayed = min(
-                numberOfItemsDisplayed + 5 * itemsPerRow,
-                Configuration.maximumAPODAmount)
-            collectionView.reloadData()
-        }
+        loadMoreItemsIfNeeded()
+        toggleTopBar(scrollPosition: scrollView.contentOffset)
     }
 }
 
