@@ -141,6 +141,7 @@ class APODListView: UIView {
     
     /// Shows or hides top bar, based on the given scroll position.
     func toggleTopBar(scrollPosition: CGPoint) {
+        // Only show top bar if scrolled past 10 pixels
         if scrollPosition.y >= 10 {
             topBar.showBlur()
         } else {

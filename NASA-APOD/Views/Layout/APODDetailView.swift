@@ -13,9 +13,7 @@ class APODDetailView: UIView {
     var scrollView: UIScrollView!
     var contentView: UIView!
     
-    var topBar: UIView!
-    var topBarBlur: UIVisualEffectView!
-    var topBarSeparator: UIView!
+    var topBar: BlurBar!
     var dismissButton: UIButton!
     
     var imageView: LoadableImageView!
@@ -261,32 +259,13 @@ class APODDetailView: UIView {
         contentView.bottomAnchor.constraint(equalTo: explanationLabel.bottomAnchor, constant: 40).isActive = true
         
         // Setup top bar
-        topBar = UIView(frame: .zero)
+        topBar = BlurBar(frame: .zero)
         self.addSubview(topBar)
         topBar.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: topBar.leftAnchor).isActive = true
         self.rightAnchor.constraint(equalTo: topBar.rightAnchor).isActive = true
         self.topAnchor.constraint(equalTo: topBar.topAnchor).isActive = true
         topBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        topBarBlur = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        topBar.addSubview(topBarBlur)
-        topBarBlur.isHidden = true
-        topBarBlur.translatesAutoresizingMaskIntoConstraints = false
-        topBar.leftAnchor.constraint(equalTo: topBarBlur.leftAnchor).isActive = true
-        topBar.rightAnchor.constraint(equalTo: topBarBlur.rightAnchor).isActive = true
-        topBar.topAnchor.constraint(equalTo: topBarBlur.topAnchor).isActive = true
-        topBar.bottomAnchor.constraint(equalTo: topBarBlur.bottomAnchor).isActive = true
-
-        // Add top bar separator
-        topBarSeparator = UIView(frame: .zero)
-        topBarSeparator.backgroundColor = UIColor.white.withAlphaComponent(0.15)
-        topBarBlur.contentView.addSubview(topBarSeparator)
-        topBarSeparator.translatesAutoresizingMaskIntoConstraints = false
-        topBarBlur.leftAnchor.constraint(equalTo: topBarSeparator.leftAnchor, constant: 0).isActive = true
-        topBarBlur.rightAnchor.constraint(equalTo: topBarSeparator.rightAnchor, constant: 0).isActive = true
-        topBarBlur.bottomAnchor.constraint(equalTo: topBarSeparator.bottomAnchor, constant: 0).isActive = true
-        topBarSeparator.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
         // Add dismiss button
         dismissButton = UIButton(type: .close)
@@ -387,25 +366,11 @@ class APODDetailView: UIView {
 extension APODDetailView: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Only show top bar if scrolled past 5 pixels
-        if scrollView.contentOffset.y >= 5 {
-            // Show top bar
-            guard topBarBlur.isHidden else { return }
-            topBarBlur.isHidden = false
-            topBarBlur.alpha = 0.0
-            UIView.animate(withDuration: 0.2) {
-                self.topBarBlur.alpha = 1.0
-            }
+        // Only show top bar if scrolled past 10 pixels
+        if scrollView.contentOffset.y >= 10 {
+            topBar.showBlur()
         } else {
-            // Hide top bar
-            guard !topBarBlur.isHidden, !isAnimatingHideTopBar else { return }
-            isAnimatingHideTopBar = true
-            UIView.animate(withDuration: 0.2) {
-                self.topBarBlur.alpha = 0.0
-            } completion: { success in
-                self.topBarBlur.isHidden = success
-                self.isAnimatingHideTopBar = false
-            }
+            topBar.hideBlur()
         }
     }
 }
