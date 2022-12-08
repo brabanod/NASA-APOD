@@ -20,7 +20,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create APOD API instance and pass it to the HomeViewController
         if let homeVC = scene.windows.first?.rootViewController as? HomeViewController {
             do {
-                let apodAPI = try APODAPI()
+                let apodAPI: APODAPI!
+                if CommandLine.arguments.contains("-UITests") {
+                    // Mock API when argument UITests is given
+                    let configuration = URLSessionConfiguration.default
+                    configuration.protocolClasses = [APODAPIMockDefault.self]
+                    let urlSession = URLSession(configuration: configuration)
+                    apodAPI = try APODAPI(urlSession: urlSession)
+                } else {
+                    // Otherwise create normal API
+                    apodAPI = try APODAPI()
+                }
+                
                 let apodCache = try APODCache(api: apodAPI)
                 homeVC.apodCache = apodCache
                 
