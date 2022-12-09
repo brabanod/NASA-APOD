@@ -33,7 +33,7 @@ class APODAPIMockDefault: URLProtocol {
                     let parseStrategy = Date.ParseStrategy(format: "\(year: .defaultDigits)-\(month: .twoDigits)-\(day: .twoDigits)", timeZone: TimeZone.current)
                     
                     // Calculate index for metadata file using the difference from today to the request date
-                    guard let today = DateUtils.today() else { fatalError("Could not process request.") }
+                    let today = Date()
                     let date = try Date(dateString, strategy: parseStrategy)
                     let dateDifference = abs(Calendar.current.dateComponents([.day], from: today, to: date).day ?? 0)
                     let index = dateDifference % 11
