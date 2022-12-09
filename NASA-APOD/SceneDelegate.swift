@@ -27,6 +27,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     configuration.protocolClasses = [APODAPIMockDefault.self]
                     let urlSession = URLSession(configuration: configuration)
                     apodAPI = try APODAPI(urlSession: urlSession)
+                    
+                    if CommandLine.arguments.contains("-SimulateNetworkDelay") {
+                        APODAPIMockDefault.simulateDelay = true
+                    }
                 } else {
                     // Otherwise create normal API
                     apodAPI = try APODAPI()

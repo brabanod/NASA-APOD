@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class APODAPIMockDefault: URLProtocol {
-    static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?))?
+    
+    /// If set to true, data requested from here will be delayed. Otherwise responses will be sent instantly.
+    static var simulateDelay: Bool = false
     
     override class func canInit(with request: URLRequest) -> Bool {
         return true
@@ -47,8 +49,11 @@ class APODAPIMockDefault: URLProtocol {
                     
                     let data = try Data(contentsOf: jsonURL)
                     responseData = data
-                    // Let it load a bit
-                    try await Task.sleep(for: .milliseconds(500))
+                    
+                    // Let it load a bit if requested
+                    if Self.simulateDelay {
+                        try await Task.sleep(for: .milliseconds(500))
+                    }
                 } else {
                     // Load image
                     guard let imagePath = Bundle(for: Self.self).path(forResource: "SampleImage1", ofType: ".jpg") else { fatalError("Failed to load data.") }
@@ -56,8 +61,11 @@ class APODAPIMockDefault: URLProtocol {
                     
                     let data = try Data(contentsOf: imageURL)
                     responseData = data
-                    // Let it load a bit
-                    try await Task.sleep(for: .milliseconds(1100))
+                    
+                    // Let it load a bit if requested
+                    if Self.simulateDelay {
+                        try await Task.sleep(for: .milliseconds(1100))
+                    }
                 }
                 
                 let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
