@@ -38,7 +38,7 @@ class APODAPIMockDefault: URLProtocol {
                     let today = Date()
                     let date = try Date(dateString, strategy: parseStrategy)
                     let dateDifference = abs(Calendar.current.dateComponents([.day], from: today, to: date).day ?? 0)
-                    let index = dateDifference % 11
+                    let index = (dateDifference % 10) + 1
                     
                     // Load metadata
                     // Get file path for json file using the request date string as filename and load data
