@@ -226,6 +226,25 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5C70AA542944CE6100304001 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5CE36D20292D210F00558212 /* APODTests.swift */,
+				5CE36D3E292D699100558212 /* APODAPITests.swift */,
+				5C2D918E29328503006AF534 /* APODCacheTests.swift */,
+				5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5C70AA552944CE6800304001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5C70AA502944BE5500304001 /* LoadableImageViewTests.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5C744BE7292E88DF00F210FF /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,11 +342,8 @@
 			children = (
 				5CF2C391292E488C00DFB53B /* Resources */,
 				5CE36D44292E0A7700558212 /* Helpers */,
-				5CE36D20292D210F00558212 /* APODTests.swift */,
-				5CE36D3E292D699100558212 /* APODAPITests.swift */,
-				5C2D918E29328503006AF534 /* APODCacheTests.swift */,
-				5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */,
-				5C70AA502944BE5500304001 /* LoadableImageViewTests.swift */,
+				5C70AA542944CE6100304001 /* Model */,
+				5C70AA552944CE6800304001 /* Views */,
 			);
 			path = "NASA-APODTests";
 			sourceTree = "<group>";
