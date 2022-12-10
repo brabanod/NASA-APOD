@@ -18,14 +18,13 @@ final class DetailViewControllerUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = ["-UITests"]
         app.launch()
-
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    /// Check that detail view can be opened from cell.
+    /// Test that detail view can be opened from cell.
     func testOpenDetailFromCell() throws {
         // Open first cell
         app.collectionViews["APODList"].cells["Cell0"].tap()
@@ -50,7 +49,7 @@ final class DetailViewControllerUITests: XCTestCase {
         XCTAssertTrue(app.collectionViews["APODList"].exists)
     }
 
-    /// Check that detail view can be opened from highlight view.
+    /// Test that detail view can be opened from highlight view.
     func testOpenDetailFromHighlight() throws {
         // Open highlight detail
         app.collectionViews.otherElements["Highlight"].tap()

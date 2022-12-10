@@ -41,6 +41,7 @@ class APODCellView: UICollectionViewCell {
         
         // Add the loadable image view
         imageView = LoadableImageView(frame: .zero)
+        imageView.accessibilityIdentifier = "Image"
         self.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: imageView.leftAnchor).isActive = true
@@ -60,6 +61,7 @@ class APODCellView: UICollectionViewCell {
         // Add the title label
         titleLabel = UILabel(frame: .zero)
         titleLabel.numberOfLines = 0
+        titleLabel.accessibilityIdentifier = "Title"
         self.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: -15.0).isActive = true
@@ -75,6 +77,7 @@ class APODCellView: UICollectionViewCell {
         // Add the accessory label
         accessoryLabel = UILabel(frame: .zero)
         accessoryLabel.numberOfLines = 0
+        accessoryLabel.accessibilityIdentifier = "Accessory"
         self.addSubview(accessoryLabel)
         accessoryLabel.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: accessoryLabel.leftAnchor, constant: -15.0).isActive = true
