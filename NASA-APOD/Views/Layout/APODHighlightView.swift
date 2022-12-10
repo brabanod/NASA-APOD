@@ -15,7 +15,7 @@ class APODHighlightView: UIView {
     var imageView: LoadableImageView!
     var labelProtectionView: UIView!
     var titleLabel: UILabel!
-    var copyrightLabel: UILabel!
+    var accessoryLabel: UILabel!
     
     
     // MARK: Model
@@ -41,8 +41,8 @@ class APODHighlightView: UIView {
     /// Indicates, whether the animation of the title label is running.
     private var isTitleAnimationRunning: Bool = false
     
-    /// Indicates, whether the animation of the copyright label is running.
-    private var isCopyrightAnimationRunning: Bool = false
+    /// Indicates, whether the animation of the accessory label is running.
+    private var isAccessoryAnimationRunning: Bool = false
     
     
     // MARK: -
@@ -68,6 +68,7 @@ class APODHighlightView: UIView {
     private func setup() {
         // Add the loadable image view
         imageView = LoadableImageView(frame: .zero)
+        imageView.accessibilityIdentifier = "Image"
         self.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         self.leftAnchor.constraint(equalTo: imageView.leftAnchor).isActive = true
@@ -87,6 +88,7 @@ class APODHighlightView: UIView {
         // Add the title label
         titleLabel = UILabel(frame: .zero)
         titleLabel.numberOfLines = 0
+        titleLabel.accessibilityIdentifier = "Title"
         self.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: -20.0).isActive = true
@@ -99,17 +101,18 @@ class APODHighlightView: UIView {
             size: title1Font.pointSize)
         titleLabel.textColor = .white
         
-        // Add the copyright label
-        copyrightLabel = UILabel(frame: .zero)
-        copyrightLabel.numberOfLines = 0
-        self.addSubview(copyrightLabel)
-        copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: copyrightLabel.leftAnchor, constant: -20.0).isActive = true
-        self.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: copyrightLabel.rightAnchor, constant: 20.0).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: copyrightLabel.topAnchor, constant: -10.0).isActive = true
+        // Add the accessory label
+        accessoryLabel = UILabel(frame: .zero)
+        accessoryLabel.numberOfLines = 0
+        accessoryLabel.accessibilityIdentifier = "Accessory"
+        self.addSubview(accessoryLabel)
+        accessoryLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.safeAreaLayoutGuide.leftAnchor.constraint(equalTo: accessoryLabel.leftAnchor, constant: -20.0).isActive = true
+        self.safeAreaLayoutGuide.rightAnchor.constraint(equalTo: accessoryLabel.rightAnchor, constant: 20.0).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: accessoryLabel.topAnchor, constant: -10.0).isActive = true
         
-        copyrightLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        copyrightLabel.textColor = .white
+        accessoryLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
+        accessoryLabel.textColor = .white
         
         // Load APOD for today
         loadAPODData()
@@ -153,15 +156,15 @@ class APODHighlightView: UIView {
             }
         }
         
-        // Set copyright label
+        // Set accessory label
         let apodCopyright = apod.copyright
-        if !isCopyrightAnimationRunning {
-            // Animate copyright label, only if not already animating
-            isCopyrightAnimationRunning = true
-            UIView.transition(with: copyrightLabel, duration: 0.8, options: .transitionCrossDissolve) {
-                self.copyrightLabel.text = "\(String(localized: "Today", comment: "APOD: Description of the today date.")) | © \(apodCopyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright."))"
+        if !isAccessoryAnimationRunning {
+            // Animate accessory label, only if not already animating
+            isAccessoryAnimationRunning = true
+            UIView.transition(with: accessoryLabel, duration: 0.8, options: .transitionCrossDissolve) {
+                self.accessoryLabel.text = "\(String(localized: "Today", comment: "APOD: Description of the today date.")) | © \(apodCopyright ?? String(localized: "Public Domain", comment: "APOD: Public domain description for copyright."))"
             } completion: { _ in
-                self.isCopyrightAnimationRunning = false
+                self.isAccessoryAnimationRunning = false
             }
         }
         
