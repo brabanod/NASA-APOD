@@ -12,8 +12,8 @@ class LoadableImageView: UIView {
     
     // MARK: Views
     
-    private var imageView: UIImageView!
-    private var loadingView: UIView!
+    private(set) var imageView: UIImageView!
+    private(set) var loadingView: UIView!
     
     
     // MARK: Model
@@ -22,10 +22,10 @@ class LoadableImageView: UIView {
     var fadeEnabled: Bool = true
     
     /// Specifies the duration of the loading view's show animation.
-    var showLoadingViewAnimationDuration: TimeInterval = 0.5
+    let defaultShowLoadingViewAnimationDuration: TimeInterval = 0.5
     
     /// Specifies the duration of the loading view's hide animation.
-    var hideLoadingViewAnimationDuration: TimeInterval = 2.0
+    let defaultHideLoadingViewAnimationDuration: TimeInterval = 2.0
     
     /// Image which is presented in the image view. Setting/unsetting the image will hide/show the loading view.
     var image: UIImage? {
@@ -121,7 +121,7 @@ class LoadableImageView: UIView {
             
             self.loadingView.isHidden = false
             UIView.animate(
-                withDuration: duration ?? showLoadingViewAnimationDuration,
+                withDuration: duration ?? defaultShowLoadingViewAnimationDuration,
                 delay: 0,
                 options: [.allowUserInteraction],
                 animations: {
@@ -131,6 +131,7 @@ class LoadableImageView: UIView {
                 completion?(finished)
             }
         } else {
+            self.loadingView.isHidden = false
             self.loadingView.alpha = 1
             completion?(true)
         }
@@ -153,7 +154,7 @@ class LoadableImageView: UIView {
             isHideAnimationRunning = true
             
             UIView.animate(
-                withDuration: duration ?? hideLoadingViewAnimationDuration,
+                withDuration: duration ?? defaultHideLoadingViewAnimationDuration,
                 delay: 0,
                 options: [.allowUserInteraction],
                 animations: {
@@ -164,6 +165,7 @@ class LoadableImageView: UIView {
                 completion?(finished)
             }
         } else {
+            self.loadingView.isHidden = true
             self.loadingView.alpha = 0
             completion?(true)
         }
