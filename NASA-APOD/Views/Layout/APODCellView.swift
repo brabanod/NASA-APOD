@@ -19,6 +19,16 @@ class APODCellView: UICollectionViewCell {
     
     // MARK: Model
     
+    var image: UIImage? {
+        return imageView.imageView.image
+    }
+    var title: String? {
+        return titleLabel.text
+    }
+    var accessoryText: String? {
+        return accessoryLabel.text
+    }
+    
     var id: APOD.ID? = nil
     
     

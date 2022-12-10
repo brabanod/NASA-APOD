@@ -51,6 +51,7 @@
 		5C2D91912932901F006AF534 /* APODAPIMockRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2D91902932901F006AF534 /* APODAPIMockRequestHandler.swift */; };
 		5C70AA4F2944A39000304001 /* HomeViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C70AA4E2944A39000304001 /* HomeViewControllerUITests.swift */; };
 		5C70AA512944BE5500304001 /* LoadableImageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C70AA502944BE5500304001 /* LoadableImageViewTests.swift */; };
+		5C70AA572944CE9F00304001 /* APODCellViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C70AA562944CE9F00304001 /* APODCellViewTests.swift */; };
 		5C744BE9292E897700F210FF /* LoadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C744BE8292E897700F210FF /* LoadableImageView.swift */; };
 		5C744BED292E95CF00F210FF /* APODHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C744BEC292E95CF00F210FF /* APODHighlightView.swift */; };
 		5C744BEF292EC1B700F210FF /* SampleImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C744BEE292EC1B700F210FF /* SampleImage2.png */; };
@@ -124,6 +125,7 @@
 		5C2D91902932901F006AF534 /* APODAPIMockRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPIMockRequestHandler.swift; sourceTree = "<group>"; };
 		5C70AA4E2944A39000304001 /* HomeViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerUITests.swift; sourceTree = "<group>"; };
 		5C70AA502944BE5500304001 /* LoadableImageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableImageViewTests.swift; sourceTree = "<group>"; };
+		5C70AA562944CE9F00304001 /* APODCellViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODCellViewTests.swift; sourceTree = "<group>"; };
 		5C744BE8292E897700F210FF /* LoadableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableImageView.swift; sourceTree = "<group>"; };
 		5C744BEC292E95CF00F210FF /* APODHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODHighlightView.swift; sourceTree = "<group>"; };
 		5C744BEE292EC1B700F210FF /* SampleImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SampleImage2.png; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				5C70AA502944BE5500304001 /* LoadableImageViewTests.swift */,
+				5C70AA562944CE9F00304001 /* APODCellViewTests.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				5CE36D41292E0A2000558212 /* APODAPIMockURLProtocol.swift in Sources */,
 				5CE36D21292D210F00558212 /* APODTests.swift in Sources */,
 				5C2D91912932901F006AF534 /* APODAPIMockRequestHandler.swift in Sources */,
+				5C70AA572944CE9F00304001 /* APODCellViewTests.swift in Sources */,
 				5C2C85F22936338600E84EA7 /* DateUtilsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
