@@ -80,6 +80,7 @@ class APODListView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.accessibilityIdentifier = "APODList"
         
         // Add UICollectionView to subviews
         self.addSubview(collectionView)
@@ -171,6 +172,7 @@ extension APODListView: UICollectionViewDataSource {
             AlertComposer.showErrorAlert(type: .errorGeneral, in: self.window?.presentedViewController)
             return cellUntyped
         }
+        cell.accessibilityIdentifier = "Cell\(indexPath.row)"
         
         // Explicitly call to layout cell. This is needed in order to correctly draw the gradient view.
         cell.setNeedsLayout()
@@ -234,7 +236,9 @@ extension APODListView: UICollectionViewDelegateFlowLayout {
         
         // Setup tap gesture for header
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapHighlightView(_:)))
-        headerView.addGestureRecognizer(tapGesture)
+        typedHeaderView.addGestureRecognizer(tapGesture)
+        
+        typedHeaderView.accessibilityIdentifier = "Highlight"
         
         return typedHeaderView
     }

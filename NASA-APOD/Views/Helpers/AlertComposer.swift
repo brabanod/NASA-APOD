@@ -60,12 +60,12 @@ class AlertComposer {
     ///     - message: The message of the alert.
     ///     - viewController: The view controller, in which the alert should be displayed.
     static func showErrorAlert(title: String, message: String, in viewController: UIViewController?) {
+        let okAction = createAction(title: String(localized: "OK", comment: "Alert: Close alert button title."), style: .default, handler: { _ in isAlertPresented = false})
+        okAction.accessibilityIdentifier = "AlertOkAction"
         showAlert(
             title: title,
             message: message,
-            actions: [
-                createAction(title: String(localized: "OK", comment: "Alert: Close alert button title."), style: .default, handler: { _ in isAlertPresented = false}),
-            ],
+            actions: [okAction],
             in: viewController)
     }
     

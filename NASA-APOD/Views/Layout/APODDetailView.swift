@@ -123,6 +123,7 @@ class APODDetailView: UIView {
         // Setup image view
         imageView = LoadableImageView(frame: .zero)
         imageView.fadeEnabled = false
+        imageView.accessibilityIdentifier = "Image"
         contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.leftAnchor.constraint(equalTo: imageView.leftAnchor).isActive = true
@@ -177,6 +178,7 @@ class APODDetailView: UIView {
         titleKeyLabel.numberOfLines = 0
         titleKeyLabel.font = keysFont
         titleKeyLabel.text = String(localized: "Title", table: "Detail", comment: "List: Description for the APODs title attribute.")
+        titleKeyLabel.accessibilityIdentifier = "Title"
         detailsKeysContainer.addArrangedSubview(titleKeyLabel)
         titleKeyLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -185,6 +187,7 @@ class APODDetailView: UIView {
         copyrightKeyLabel.numberOfLines = 0
         copyrightKeyLabel.font = keysFont
         copyrightKeyLabel.text = String(localized: "Source", table: "Detail", comment: "List: Description for the APODs copyright attribute.")
+        copyrightKeyLabel.accessibilityIdentifier = "Source"
         detailsKeysContainer.addArrangedSubview(copyrightKeyLabel)
         copyrightKeyLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -193,6 +196,7 @@ class APODDetailView: UIView {
         dateKeyLabel.numberOfLines = 0
         dateKeyLabel.font = keysFont
         dateKeyLabel.text = String(localized: "Date", table: "Detail", comment: "List: Description for the APODs date attribute.")
+        dateKeyLabel.accessibilityIdentifier = "Date"
         detailsKeysContainer.addArrangedSubview(dateKeyLabel)
         dateKeyLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -201,6 +205,7 @@ class APODDetailView: UIView {
         videoKeyLabel.numberOfLines = 0
         videoKeyLabel.font = keysFont
         videoKeyLabel.text = String(localized: "Video", table: "Detail", comment: "List: Description for the APODs video attribute.")
+        videoKeyLabel.accessibilityIdentifier = "Video"
         detailsKeysContainer.addArrangedSubview(videoKeyLabel)
         videoKeyLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -208,6 +213,7 @@ class APODDetailView: UIView {
         titleValueLabel = UILabel(frame: .zero)
         titleValueLabel.textColor = .white
         titleValueLabel.numberOfLines = 0
+        titleValueLabel.accessibilityIdentifier = "TitleValue"
         detailsValuesContainer.addArrangedSubview(titleValueLabel)
         titleValueLabel.translatesAutoresizingMaskIntoConstraints = false
         titleValueLabel.heightAnchor.constraint(equalTo: titleKeyLabel.heightAnchor).isActive = true
@@ -215,6 +221,7 @@ class APODDetailView: UIView {
         copyrightValueLabel = UILabel(frame: .zero)
         copyrightValueLabel.textColor = .white
         copyrightValueLabel.numberOfLines = 0
+        copyrightValueLabel.accessibilityIdentifier = "CopyrightValue"
         detailsValuesContainer.addArrangedSubview(copyrightValueLabel)
         copyrightValueLabel.translatesAutoresizingMaskIntoConstraints = false
         copyrightValueLabel.heightAnchor.constraint(equalTo: copyrightKeyLabel.heightAnchor).isActive = true
@@ -222,11 +229,13 @@ class APODDetailView: UIView {
         dateValueLabel = UILabel(frame: .zero)
         dateValueLabel.textColor = .white
         dateValueLabel.numberOfLines = 0
+        dateValueLabel.accessibilityIdentifier = "DateValue"
         detailsValuesContainer.addArrangedSubview(dateValueLabel)
         dateValueLabel.translatesAutoresizingMaskIntoConstraints = false
         dateValueLabel.heightAnchor.constraint(equalTo: dateKeyLabel.heightAnchor).isActive = true
         
         videoWatchButton = UIButton(type: .system)
+        videoWatchButton.accessibilityIdentifier = "Watch"
         videoWatchButton.setTitle(String(localized: "Watch", table: "Detail", comment: "List: Title for the watch APOD's video button."), for: .normal)
         videoWatchButton.addTarget(self, action: #selector(watchVideo), for: .touchUpInside)
         detailsValuesContainer.addArrangedSubview(videoWatchButton)
@@ -250,6 +259,7 @@ class APODDetailView: UIView {
         explanationLabel = UILabel(frame: .zero)
         explanationLabel.numberOfLines = 0
         explanationLabel.textColor = .white
+        explanationLabel.accessibilityIdentifier = "Explanation"
         
         contentView.addSubview(explanationLabel)
         explanationLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -270,6 +280,7 @@ class APODDetailView: UIView {
         // Add dismiss button
         dismissButton = UIButton(type: .close)
         dismissButton.overrideUserInterfaceStyle = .dark
+        dismissButton.accessibilityIdentifier = "Dismiss"
         topBar.addSubview(dismissButton)
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
         topBar.centerYAnchor.constraint(equalTo: dismissButton.centerYAnchor).isActive = true
