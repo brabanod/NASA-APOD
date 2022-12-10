@@ -12,13 +12,23 @@ class APODHighlightView: UIView {
     
     // MARK: Views
     
-    var imageView: LoadableImageView!
-    var labelProtectionView: UIView!
-    var titleLabel: UILabel!
-    var accessoryLabel: UILabel!
+    private var imageView: LoadableImageView!
+    private var labelProtectionView: UIView!
+    private var titleLabel: UILabel!
+    private var accessoryLabel: UILabel!
     
     
     // MARK: Model
+    
+    var image: UIImage? {
+        return imageView.image
+    }
+    var title: String? {
+        return titleLabel.text
+    }
+    var accessoryText: String? {
+        return accessoryLabel.text
+    }
     
     /// APOD cache which will be used to load data. Will load data and refresh UI if it is set.
     var apodCache: APODCache? = nil {
@@ -121,7 +131,7 @@ class APODHighlightView: UIView {
     /// Loads the APOD for today.
     ///
     /// **Warning:** UI is implicitly refreshed by setting the APOD object to the corresponding instance property. This is done to do intermediate update of the UI (first text, then image).
-    func loadAPODData() {
+    private func loadAPODData() {
         Task {
             do {
                 // Incrementally load data for fast display
@@ -143,7 +153,7 @@ class APODHighlightView: UIView {
     }
     
     /// Reloads the UI to display the given APOD.
-    @MainActor func showAPOD(_ apod: APOD) async {
+    @MainActor private func showAPOD(_ apod: APOD) async {
         // Set title label
         let apodTitle = apod.title
         // Animate title label, only if not already animating
