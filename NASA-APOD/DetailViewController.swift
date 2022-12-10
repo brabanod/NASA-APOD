@@ -32,6 +32,7 @@ class DetailViewController: UIViewController {
         // Setup detail view
         detailView = APODDetailView(cache: apodCache)
         detailView.delegate = self
+        detailView.accessibilityIdentifier = "DetailView"
         self.view.addSubview(detailView)
         detailView.translatesAutoresizingMaskIntoConstraints = false
         self.view.leftAnchor.constraint(equalTo: detailView.leftAnchor).isActive = true

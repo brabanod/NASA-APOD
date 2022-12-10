@@ -90,7 +90,8 @@ final class HomeViewControllerUITests: XCTestCase {
         app.launch()
         
         let alert = app.alerts.firstMatch
-        XCTAssertTrue(alert.exists)
+        
+        XCTAssertTrue(alert.waitForExistence(timeout: 1))
         XCTAssertEqual(alert.label, String(localized: "Stars are not aligned", table: "Error"))
         XCTAssertTrue(alert.staticTexts[String(localized: "Could not load the Astronomy Picture of the day from NASA.", table: "Error")].exists)
         XCTAssertTrue(alert.buttons["AlertOkAction"].exists)
