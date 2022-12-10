@@ -67,8 +67,6 @@
 		5CE36D13292D210F00558212 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CE36D12292D210F00558212 /* Assets.xcassets */; };
 		5CE36D16292D210F00558212 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CE36D14292D210F00558212 /* LaunchScreen.storyboard */; };
 		5CE36D21292D210F00558212 /* APODTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D20292D210F00558212 /* APODTests.swift */; };
-		5CE36D2B292D210F00558212 /* NASA_APODUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D2A292D210F00558212 /* NASA_APODUITests.swift */; };
-		5CE36D2D292D210F00558212 /* NASA_APODUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */; };
 		5CE36D3A292D213000558212 /* APOD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D39292D213000558212 /* APOD.swift */; };
 		5CE36D3D292D42F700558212 /* APODAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D3C292D42F700558212 /* APODAPI.swift */; };
 		5CE36D3F292D699100558212 /* APODAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE36D3E292D699100558212 /* APODAPITests.swift */; };
@@ -147,8 +145,6 @@
 		5CE36D1C292D210F00558212 /* NASA-APODTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NASA-APODTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CE36D20292D210F00558212 /* APODTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODTests.swift; sourceTree = "<group>"; };
 		5CE36D26292D210F00558212 /* NASA-APODUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NASA-APODUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CE36D2A292D210F00558212 /* NASA_APODUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODUITests.swift; sourceTree = "<group>"; };
-		5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASA_APODUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5CE36D39292D213000558212 /* APOD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APOD.swift; sourceTree = "<group>"; };
 		5CE36D3C292D42F700558212 /* APODAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPI.swift; sourceTree = "<group>"; };
 		5CE36D3E292D699100558212 /* APODAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPITests.swift; sourceTree = "<group>"; };
@@ -334,9 +330,7 @@
 		5CE36D29292D210F00558212 /* NASA-APODUITests */ = {
 			isa = PBXGroup;
 			children = (
-				5CE36D2A292D210F00558212 /* NASA_APODUITests.swift */,
 				5C7D6089294367410065A9FF /* DetailViewControllerUITests.swift */,
-				5CE36D2C292D210F00558212 /* NASA_APODUITestsLaunchTests.swift */,
 			);
 			path = "NASA-APODUITests";
 			sourceTree = "<group>";
@@ -581,8 +575,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CE36D2B292D210F00558212 /* NASA_APODUITests.swift in Sources */,
-				5CE36D2D292D210F00558212 /* NASA_APODUITestsLaunchTests.swift in Sources */,
 				5C7D608A294367410065A9FF /* DetailViewControllerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
