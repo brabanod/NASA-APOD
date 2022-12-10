@@ -41,7 +41,7 @@ final class DetailViewControllerUITests: XCTestCase {
         
         XCTAssertEqual(detail.staticTexts["TitleValue"].label, "Airglow Ripples over Tibet")
         XCTAssertEqual(detail.staticTexts["CopyrightValue"].label, "Jeff Dai")
-        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/20/2022")
+        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/28/2022")
         XCTAssertFalse(detail.buttons["Watch"].exists)
         XCTAssertTrue(detail.staticTexts["Explanation"].label.starts(with: "Why would the sky look like a giant target? Airglow."))
         
@@ -67,7 +67,7 @@ final class DetailViewControllerUITests: XCTestCase {
         
         XCTAssertEqual(detail.staticTexts["TitleValue"].label, "Artemis 1 Moonshot")
         XCTAssertEqual(detail.staticTexts["CopyrightValue"].label, "John Kraus")
-        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/19/2022")
+        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/29/2022")
         XCTAssertFalse(detail.buttons["Watch"].exists)
         XCTAssertTrue(detail.staticTexts["Explanation"].label.starts(with: "When the Artemis 1 mission's Orion spacecraft makes its"))
         
@@ -93,7 +93,7 @@ final class DetailViewControllerUITests: XCTestCase {
         
         XCTAssertEqual(detail.staticTexts["TitleValue"].label, "Earthset from Orion")
         XCTAssertEqual(detail.staticTexts["CopyrightValue"].label, String(localized: "Public Domain"))
-        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/23/2022")
+        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/25/2022")
         XCTAssertFalse(detail.buttons["Watch"].exists)
         XCTAssertTrue(detail.staticTexts["Explanation"].label.starts(with: "Eight billion people are about to disappear in this snapshot from space."))
         
@@ -119,7 +119,7 @@ final class DetailViewControllerUITests: XCTestCase {
         
         XCTAssertEqual(detail.staticTexts["TitleValue"].label, "The Butterfly Nebula from Hubble")
         XCTAssertEqual(detail.staticTexts["CopyrightValue"].label, String(localized: "Public Domain"))
-        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/21/2022")
+        XCTAssertEqual(detail.staticTexts["DateValue"].label, "11/27/2022")
         XCTAssertTrue(detail.buttons["Watch"].exists)
         XCTAssertTrue(detail.staticTexts["Explanation"].label.starts(with: "Stars can make beautiful patterns as they age"))
         

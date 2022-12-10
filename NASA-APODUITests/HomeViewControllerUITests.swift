@@ -81,7 +81,7 @@ final class HomeViewControllerUITests: XCTestCase {
         let cell = app.collectionViews["APODList"].cells["Cell0"]
         XCTAssertTrue(cell.otherElements["Image"].exists)
         XCTAssertEqual(cell.staticTexts["Title"].label, "Airglow Ripples over Tibet")
-        XCTAssertEqual(cell.staticTexts["Accessory"].label, "11/20/2022")
+        XCTAssertEqual(cell.staticTexts["Accessory"].label, "11/28/2022")
     }
     
     /// Test that alert is displayed when connection fails.
