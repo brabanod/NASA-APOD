@@ -10,6 +10,7 @@ import UIKit
 class APODDetailView: UIView {
 
     // MARK: Views
+    
     var scrollView: UIScrollView!
     var contentView: UIView!
     

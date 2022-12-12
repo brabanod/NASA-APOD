@@ -9,6 +9,8 @@ import UIKit
 
 class GradientView: UIView {
     
+    // MARK: Model
+    
     struct GradientConfiguration {
         var startColor: CGColor
         var endColor: CGColor
@@ -31,6 +33,9 @@ class GradientView: UIView {
     let gradientLayer = CAGradientLayer()
     
     private let configuration: GradientConfiguration
+    
+    
+    // MARK: -
     
     override init(frame: CGRect) {
         self.configuration = GradientConfiguration.default
