@@ -50,8 +50,8 @@ class APODAPIMockDefault: URLProtocol {
                         // Load metadata
                         // Get file path for json file using the request date string as filename and load data
                         guard let jsonPath =
-                                Bundle(for: Self.self).path(forResource: "SampleAPOD\(index)", ofType: ".json") ??
-                                Bundle(for: Self.self).path(forResource: "SampleAPOD1", ofType: ".json") else { fatalError("Failed to load data.") }
+                                Bundle(for: Self.self).path(forResource: "MockAPOD\(index)", ofType: ".json") ??
+                                Bundle(for: Self.self).path(forResource: "MockAPOD1", ofType: ".json") else { fatalError("Failed to load data.") }
                         let jsonURL = URL(fileURLWithPath: jsonPath)
                         
                         let data = try Data(contentsOf: jsonURL)
@@ -63,7 +63,7 @@ class APODAPIMockDefault: URLProtocol {
                         }
                     } else {
                         // Load image
-                        guard let imagePath = Bundle(for: Self.self).path(forResource: "SampleImage1", ofType: ".jpg") else { fatalError("Failed to load data.") }
+                        guard let imagePath = Bundle(for: Self.self).path(forResource: "MockImage1", ofType: ".jpg") else { fatalError("Failed to load data.") }
                         let imageURL = URL(fileURLWithPath: imagePath)
                         
                         let data = try Data(contentsOf: imageURL)

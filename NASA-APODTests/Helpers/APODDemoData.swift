@@ -106,6 +106,15 @@ class APODDemoData {
         return try? JSONDecoder().decode(APOD.self, from: data)
     }
     
+    static var mockAPOD1: APOD? {
+        guard
+            let path = Bundle(for: Self.self).path(forResource: "MockAPOD1", ofType: ".json"),
+            let url = URL(filePath: path) as URL?,
+            let data = try? Data(contentsOf: url)
+        else { fatalError("Failed to get MockAPOD1.json.") }
+        return try? JSONDecoder().decode(APOD.self, from: data)
+    }
+    
     static var sampleImage: UIImage {
         guard let path = Bundle(for: Self.self).path(forResource: "SampleImage", ofType: ".png") else { fatalError("Failed to get image path.") }
         guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to load image from file.") }
@@ -125,6 +134,17 @@ class APODDemoData {
     
     static var sampleImage2Data: Data {
         guard let data = APODDemoData.sampleImage2.pngData() else { fatalError("Could not convert image to Data object.") }
+        return data
+    }
+    
+    static var mockImage1: UIImage {
+        guard let path = Bundle(for: Self.self).path(forResource: "MockImage1", ofType: ".jpg") else { fatalError("Failed to get image path.") }
+        guard let image = UIImage(contentsOfFile: path) else { fatalError("Failed to load image from file.") }
+        return image
+    }
+    
+    static var mockImage1Data: Data {
+        guard let data = APODDemoData.mockImage1.pngData() else { fatalError("Could not convert image to Data object.") }
         return data
     }
     

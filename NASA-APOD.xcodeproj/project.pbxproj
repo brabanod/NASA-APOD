@@ -8,31 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		5C0F9F252934BD47005B3B66 /* AsyncAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0F9F242934BD47005B3B66 /* AsyncAssert.swift */; };
-		5C2C85D42936021700E84EA7 /* SampleImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* SampleImage1.jpg */; };
-		5C2C85D52936021700E84EA7 /* SampleAPOD10.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* SampleAPOD10.json */; };
-		5C2C85D62936021700E84EA7 /* SampleAPOD6.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */; };
-		5C2C85D72936021700E84EA7 /* SampleAPOD7.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */; };
-		5C2C85D82936021700E84EA7 /* SampleAPOD11.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */; };
-		5C2C85D92936021700E84EA7 /* SampleAPOD4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */; };
-		5C2C85DA2936021700E84EA7 /* SampleAPOD1.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */; };
-		5C2C85DB2936021700E84EA7 /* SampleAPOD5.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */; };
-		5C2C85DC2936021700E84EA7 /* SampleAPOD2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* SampleAPOD2.json */; };
-		5C2C85DD2936021700E84EA7 /* SampleAPOD3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* SampleAPOD3.json */; };
-		5C2C85DE2936021700E84EA7 /* SampleAPOD8.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* SampleAPOD8.json */; };
-		5C2C85DF2936021700E84EA7 /* SampleAPOD9.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* SampleAPOD9.json */; };
+		5C2C85D42936021700E84EA7 /* MockImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* MockImage1.jpg */; };
+		5C2C85D52936021700E84EA7 /* MockAPOD10.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* MockAPOD10.json */; };
+		5C2C85D62936021700E84EA7 /* MockAPOD6.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* MockAPOD6.json */; };
+		5C2C85D72936021700E84EA7 /* MockAPOD7.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* MockAPOD7.json */; };
+		5C2C85D82936021700E84EA7 /* MockAPOD11.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* MockAPOD11.json */; };
+		5C2C85D92936021700E84EA7 /* MockAPOD4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* MockAPOD4.json */; };
+		5C2C85DA2936021700E84EA7 /* MockAPOD1.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* MockAPOD1.json */; };
+		5C2C85DB2936021700E84EA7 /* MockAPOD5.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* MockAPOD5.json */; };
+		5C2C85DC2936021700E84EA7 /* MockAPOD2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* MockAPOD2.json */; };
+		5C2C85DD2936021700E84EA7 /* MockAPOD3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* MockAPOD3.json */; };
+		5C2C85DE2936021700E84EA7 /* MockAPOD8.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* MockAPOD8.json */; };
+		5C2C85DF2936021700E84EA7 /* MockAPOD9.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* MockAPOD9.json */; };
 		5C2C85E12936023B00E84EA7 /* APODAPIMockDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */; };
-		5C2C85E22936071600E84EA7 /* SampleImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* SampleImage1.jpg */; };
-		5C2C85E32936071B00E84EA7 /* SampleAPOD5.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */; };
-		5C2C85E42936071B00E84EA7 /* SampleAPOD9.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* SampleAPOD9.json */; };
-		5C2C85E52936071B00E84EA7 /* SampleAPOD10.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* SampleAPOD10.json */; };
-		5C2C85E62936071B00E84EA7 /* SampleAPOD7.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */; };
-		5C2C85E72936071B00E84EA7 /* SampleAPOD11.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */; };
-		5C2C85E82936071B00E84EA7 /* SampleAPOD6.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */; };
-		5C2C85E92936071B00E84EA7 /* SampleAPOD4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */; };
-		5C2C85EA2936071B00E84EA7 /* SampleAPOD1.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */; };
-		5C2C85EB2936071B00E84EA7 /* SampleAPOD2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* SampleAPOD2.json */; };
-		5C2C85EC2936071B00E84EA7 /* SampleAPOD3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* SampleAPOD3.json */; };
-		5C2C85ED2936071B00E84EA7 /* SampleAPOD8.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* SampleAPOD8.json */; };
+		5C2C85E22936071600E84EA7 /* MockImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C72936021700E84EA7 /* MockImage1.jpg */; };
+		5C2C85E32936071B00E84EA7 /* MockAPOD5.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CF2936021700E84EA7 /* MockAPOD5.json */; };
+		5C2C85E42936071B00E84EA7 /* MockAPOD9.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D32936021700E84EA7 /* MockAPOD9.json */; };
+		5C2C85E52936071B00E84EA7 /* MockAPOD10.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85C92936021700E84EA7 /* MockAPOD10.json */; };
+		5C2C85E62936071B00E84EA7 /* MockAPOD7.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CB2936021700E84EA7 /* MockAPOD7.json */; };
+		5C2C85E72936071B00E84EA7 /* MockAPOD11.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CC2936021700E84EA7 /* MockAPOD11.json */; };
+		5C2C85E82936071B00E84EA7 /* MockAPOD6.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CA2936021700E84EA7 /* MockAPOD6.json */; };
+		5C2C85E92936071B00E84EA7 /* MockAPOD4.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CD2936021700E84EA7 /* MockAPOD4.json */; };
+		5C2C85EA2936071B00E84EA7 /* MockAPOD1.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85CE2936021700E84EA7 /* MockAPOD1.json */; };
+		5C2C85EB2936071B00E84EA7 /* MockAPOD2.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D02936021700E84EA7 /* MockAPOD2.json */; };
+		5C2C85EC2936071B00E84EA7 /* MockAPOD3.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D12936021700E84EA7 /* MockAPOD3.json */; };
+		5C2C85ED2936071B00E84EA7 /* MockAPOD8.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C2C85D22936021700E84EA7 /* MockAPOD8.json */; };
 		5C2C85EE2936072100E84EA7 /* APODAPIMockDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */; };
 		5C2C85F0293622B000E84EA7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85EF293622B000E84EA7 /* Configuration.swift */; };
 		5C2C85F22936338600E84EA7 /* DateUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */; };
@@ -98,18 +98,18 @@
 
 /* Begin PBXFileReference section */
 		5C0F9F242934BD47005B3B66 /* AsyncAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncAssert.swift; sourceTree = "<group>"; };
-		5C2C85C72936021700E84EA7 /* SampleImage1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = SampleImage1.jpg; sourceTree = "<group>"; };
-		5C2C85C92936021700E84EA7 /* SampleAPOD10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD10.json; sourceTree = "<group>"; };
-		5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD6.json; sourceTree = "<group>"; };
-		5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD7.json; sourceTree = "<group>"; };
-		5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD11.json; sourceTree = "<group>"; };
-		5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD4.json; sourceTree = "<group>"; };
-		5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD1.json; sourceTree = "<group>"; };
-		5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD5.json; sourceTree = "<group>"; };
-		5C2C85D02936021700E84EA7 /* SampleAPOD2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD2.json; sourceTree = "<group>"; };
-		5C2C85D12936021700E84EA7 /* SampleAPOD3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD3.json; sourceTree = "<group>"; };
-		5C2C85D22936021700E84EA7 /* SampleAPOD8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD8.json; sourceTree = "<group>"; };
-		5C2C85D32936021700E84EA7 /* SampleAPOD9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleAPOD9.json; sourceTree = "<group>"; };
+		5C2C85C72936021700E84EA7 /* MockImage1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MockImage1.jpg; sourceTree = "<group>"; };
+		5C2C85C92936021700E84EA7 /* MockAPOD10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD10.json; sourceTree = "<group>"; };
+		5C2C85CA2936021700E84EA7 /* MockAPOD6.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD6.json; sourceTree = "<group>"; };
+		5C2C85CB2936021700E84EA7 /* MockAPOD7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD7.json; sourceTree = "<group>"; };
+		5C2C85CC2936021700E84EA7 /* MockAPOD11.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD11.json; sourceTree = "<group>"; };
+		5C2C85CD2936021700E84EA7 /* MockAPOD4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD4.json; sourceTree = "<group>"; };
+		5C2C85CE2936021700E84EA7 /* MockAPOD1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD1.json; sourceTree = "<group>"; };
+		5C2C85CF2936021700E84EA7 /* MockAPOD5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD5.json; sourceTree = "<group>"; };
+		5C2C85D02936021700E84EA7 /* MockAPOD2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD2.json; sourceTree = "<group>"; };
+		5C2C85D12936021700E84EA7 /* MockAPOD3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD3.json; sourceTree = "<group>"; };
+		5C2C85D22936021700E84EA7 /* MockAPOD8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD8.json; sourceTree = "<group>"; };
+		5C2C85D32936021700E84EA7 /* MockAPOD9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockAPOD9.json; sourceTree = "<group>"; };
 		5C2C85E02936023B00E84EA7 /* APODAPIMockDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODAPIMockDefault.swift; sourceTree = "<group>"; };
 		5C2C85EF293622B000E84EA7 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5C2C85F12936338600E84EA7 /* DateUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtilsTests.swift; sourceTree = "<group>"; };
@@ -186,19 +186,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5C2C85C52936021700E84EA7 /* SampleData */ = {
+		5C2C85C52936021700E84EA7 /* MockData */ = {
 			isa = PBXGroup;
 			children = (
 				5C2C85C62936021700E84EA7 /* Images */,
 				5C2C85C82936021700E84EA7 /* Meta */,
 			);
-			path = SampleData;
+			path = MockData;
 			sourceTree = "<group>";
 		};
 		5C2C85C62936021700E84EA7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				5C2C85C72936021700E84EA7 /* SampleImage1.jpg */,
+				5C2C85C72936021700E84EA7 /* MockImage1.jpg */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -206,17 +206,17 @@
 		5C2C85C82936021700E84EA7 /* Meta */ = {
 			isa = PBXGroup;
 			children = (
-				5C2C85CE2936021700E84EA7 /* SampleAPOD1.json */,
-				5C2C85D02936021700E84EA7 /* SampleAPOD2.json */,
-				5C2C85D12936021700E84EA7 /* SampleAPOD3.json */,
-				5C2C85CD2936021700E84EA7 /* SampleAPOD4.json */,
-				5C2C85CF2936021700E84EA7 /* SampleAPOD5.json */,
-				5C2C85CA2936021700E84EA7 /* SampleAPOD6.json */,
-				5C2C85CB2936021700E84EA7 /* SampleAPOD7.json */,
-				5C2C85D22936021700E84EA7 /* SampleAPOD8.json */,
-				5C2C85D32936021700E84EA7 /* SampleAPOD9.json */,
-				5C2C85C92936021700E84EA7 /* SampleAPOD10.json */,
-				5C2C85CC2936021700E84EA7 /* SampleAPOD11.json */,
+				5C2C85CE2936021700E84EA7 /* MockAPOD1.json */,
+				5C2C85D02936021700E84EA7 /* MockAPOD2.json */,
+				5C2C85D12936021700E84EA7 /* MockAPOD3.json */,
+				5C2C85CD2936021700E84EA7 /* MockAPOD4.json */,
+				5C2C85CF2936021700E84EA7 /* MockAPOD5.json */,
+				5C2C85CA2936021700E84EA7 /* MockAPOD6.json */,
+				5C2C85CB2936021700E84EA7 /* MockAPOD7.json */,
+				5C2C85D22936021700E84EA7 /* MockAPOD8.json */,
+				5C2C85D32936021700E84EA7 /* MockAPOD9.json */,
+				5C2C85C92936021700E84EA7 /* MockAPOD10.json */,
+				5C2C85CC2936021700E84EA7 /* MockAPOD11.json */,
 			);
 			path = Meta;
 			sourceTree = "<group>";
@@ -390,7 +390,7 @@
 			children = (
 				5CF2C392292E48A000DFB53B /* SampleImage.png */,
 				5C744BEE292EC1B700F210FF /* SampleImage2.png */,
-				5C2C85C52936021700E84EA7 /* SampleData */,
+				5C2C85C52936021700E84EA7 /* MockData */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -500,24 +500,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C2C85E62936071B00E84EA7 /* SampleAPOD7.json in Resources */,
-				5C2C85E32936071B00E84EA7 /* SampleAPOD5.json in Resources */,
-				5C2C85EC2936071B00E84EA7 /* SampleAPOD3.json in Resources */,
-				5C2C85EB2936071B00E84EA7 /* SampleAPOD2.json in Resources */,
-				5C2C85ED2936071B00E84EA7 /* SampleAPOD8.json in Resources */,
+				5C2C85E62936071B00E84EA7 /* MockAPOD7.json in Resources */,
+				5C2C85E32936071B00E84EA7 /* MockAPOD5.json in Resources */,
+				5C2C85EC2936071B00E84EA7 /* MockAPOD3.json in Resources */,
+				5C2C85EB2936071B00E84EA7 /* MockAPOD2.json in Resources */,
+				5C2C85ED2936071B00E84EA7 /* MockAPOD8.json in Resources */,
 				5CE36D16292D210F00558212 /* LaunchScreen.storyboard in Resources */,
-				5C2C85E82936071B00E84EA7 /* SampleAPOD6.json in Resources */,
+				5C2C85E82936071B00E84EA7 /* MockAPOD6.json in Resources */,
 				5C7D603A2940DF540065A9FF /* InfoPlist.strings in Resources */,
-				5C2C85E52936071B00E84EA7 /* SampleAPOD10.json in Resources */,
-				5C2C85E92936071B00E84EA7 /* SampleAPOD4.json in Resources */,
+				5C2C85E52936071B00E84EA7 /* MockAPOD10.json in Resources */,
+				5C2C85E92936071B00E84EA7 /* MockAPOD4.json in Resources */,
 				5C7D60342940DF540065A9FF /* Detail.strings in Resources */,
 				5C7D60372940DF540065A9FF /* Error.strings in Resources */,
-				5C2C85E72936071B00E84EA7 /* SampleAPOD11.json in Resources */,
-				5C2C85EA2936071B00E84EA7 /* SampleAPOD1.json in Resources */,
+				5C2C85E72936071B00E84EA7 /* MockAPOD11.json in Resources */,
+				5C2C85EA2936071B00E84EA7 /* MockAPOD1.json in Resources */,
 				5CE36D13292D210F00558212 /* Assets.xcassets in Resources */,
-				5C2C85E22936071600E84EA7 /* SampleImage1.jpg in Resources */,
+				5C2C85E22936071600E84EA7 /* MockImage1.jpg in Resources */,
 				5C7D603D2940DF540065A9FF /* Localizable.strings in Resources */,
-				5C2C85E42936071B00E84EA7 /* SampleAPOD9.json in Resources */,
+				5C2C85E42936071B00E84EA7 /* MockAPOD9.json in Resources */,
 				5CE36D11292D210D00558212 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,20 +526,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C2C85DB2936021700E84EA7 /* SampleAPOD5.json in Resources */,
+				5C2C85DB2936021700E84EA7 /* MockAPOD5.json in Resources */,
 				5C744BEF292EC1B700F210FF /* SampleImage2.png in Resources */,
-				5C2C85D82936021700E84EA7 /* SampleAPOD11.json in Resources */,
-				5C2C85D42936021700E84EA7 /* SampleImage1.jpg in Resources */,
-				5C2C85DD2936021700E84EA7 /* SampleAPOD3.json in Resources */,
+				5C2C85D82936021700E84EA7 /* MockAPOD11.json in Resources */,
+				5C2C85D42936021700E84EA7 /* MockImage1.jpg in Resources */,
+				5C2C85DD2936021700E84EA7 /* MockAPOD3.json in Resources */,
 				5CF2C393292E48A000DFB53B /* SampleImage.png in Resources */,
-				5C2C85DC2936021700E84EA7 /* SampleAPOD2.json in Resources */,
-				5C2C85DA2936021700E84EA7 /* SampleAPOD1.json in Resources */,
-				5C2C85D62936021700E84EA7 /* SampleAPOD6.json in Resources */,
-				5C2C85D92936021700E84EA7 /* SampleAPOD4.json in Resources */,
-				5C2C85DF2936021700E84EA7 /* SampleAPOD9.json in Resources */,
-				5C2C85DE2936021700E84EA7 /* SampleAPOD8.json in Resources */,
-				5C2C85D72936021700E84EA7 /* SampleAPOD7.json in Resources */,
-				5C2C85D52936021700E84EA7 /* SampleAPOD10.json in Resources */,
+				5C2C85DC2936021700E84EA7 /* MockAPOD2.json in Resources */,
+				5C2C85DA2936021700E84EA7 /* MockAPOD1.json in Resources */,
+				5C2C85D62936021700E84EA7 /* MockAPOD6.json in Resources */,
+				5C2C85D92936021700E84EA7 /* MockAPOD4.json in Resources */,
+				5C2C85DF2936021700E84EA7 /* MockAPOD9.json in Resources */,
+				5C2C85DE2936021700E84EA7 /* MockAPOD8.json in Resources */,
+				5C2C85D72936021700E84EA7 /* MockAPOD7.json in Resources */,
+				5C2C85D52936021700E84EA7 /* MockAPOD10.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
