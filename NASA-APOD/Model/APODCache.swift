@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import Combine
 
-// FIXME: Should this be an actor?
 class APODCache {
     
     // MARK: Model
