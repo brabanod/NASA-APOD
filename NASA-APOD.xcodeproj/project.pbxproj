@@ -304,6 +304,15 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		5CC1E34D294850A100B84A9A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5CE36D0D292D210D00558212 /* HomeViewController.swift */,
+				5C2C861C293E650900E84EA7 /* DetailViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		5CE36CFD292D210D00558212 = {
 			isa = PBXGroup;
 			children = (
@@ -329,8 +338,7 @@
 			children = (
 				5CE36D09292D210D00558212 /* AppDelegate.swift */,
 				5CE36D0B292D210D00558212 /* SceneDelegate.swift */,
-				5CE36D0D292D210D00558212 /* HomeViewController.swift */,
-				5C2C861C293E650900E84EA7 /* DetailViewController.swift */,
+				5CC1E34D294850A100B84A9A /* View Controllers */,
 				5C744BE7292E88DF00F210FF /* Views */,
 				5CE36D3B292D334400558212 /* Model */,
 				5C744BF0292F493400F210FF /* Helpers */,
