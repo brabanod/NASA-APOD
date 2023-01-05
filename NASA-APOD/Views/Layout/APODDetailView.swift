@@ -59,7 +59,7 @@ class APODDetailView: UIView {
         }
     }
     
-    var delegate: APODDetailViewDelegate?
+    weak var delegate: APODDetailViewDelegate?
     
     var isAnimatingHideTopBar = false
     
@@ -388,6 +388,6 @@ extension APODDetailView: UIScrollViewDelegate {
 }
 
 
-protocol APODDetailViewDelegate {
+protocol APODDetailViewDelegate: AnyObject {
     func dismiss(_ sender: AnyObject)
 }
