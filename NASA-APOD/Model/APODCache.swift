@@ -7,7 +7,7 @@
 
 import UIKit
 
-class APODCache {
+actor APODCache {
     
     // MARK: Model
     
